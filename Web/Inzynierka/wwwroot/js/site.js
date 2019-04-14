@@ -1,4 +1,17 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿'use strict';
 
-// Write your JavaScript code.
+(function () {
+    String.prototype.format = function () {
+        a = this;
+        for (k in arguments) {
+            a = a.replace("{" + k + "}", arguments[k]);
+        }
+        return a;
+    };
+
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $(this).find('i').toggleClass('fa-toggle-on fa-toggle-off');
+        $("#wrapper").toggleClass("toggled");
+    });
+}());
