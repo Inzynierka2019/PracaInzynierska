@@ -1,6 +1,4 @@
-﻿'use strict';
-
-(function () {
+﻿(function () {
     String.prototype.format = function () {
         a = this;
         for (k in arguments) {
