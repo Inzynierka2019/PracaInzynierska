@@ -1,12 +1,10 @@
 ﻿namespace Broker.Models
 {
     /// <summary>
-    /// Message class
+    /// This is a custom message class in Models namespace.
+    /// It is open for modification and other classes can be used for communication.
     /// </summary>
-    public class Message : IMessage
+    public class Message
     {
-        public long Id { get; set; }
-
-        public string Content { get; set; }
     }
 }

@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Custom Exception placeholder class
+    /// This is a custom exception class serving as a template.
     /// </summary>
     internal class CustomException : Exception
     {

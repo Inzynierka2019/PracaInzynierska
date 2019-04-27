@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Broker.Client", "Broker\Broker.Client.csproj", "{366C7D02-605F-40DE-82EF-BD7F44D8AC57}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Broker", "Broker.csproj", "{366C7D02-605F-40DE-82EF-BD7F44D8AC57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Broker.Tests", "Broker.Tests\Broker.Tests.csproj", "{8E9E9576-5D6D-4134-8E11-1BD4A0783733}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Broker.Tests", "..\Broker.Tests\Broker.Tests.csproj", "{8E9E9576-5D6D-4134-8E11-1BD4A0783733}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

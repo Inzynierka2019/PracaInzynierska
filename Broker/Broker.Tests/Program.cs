@@ -1,20 +1,28 @@
 ﻿namespace Broker.Tests
 {
     using System;
+    using System.Threading;
+    using System.Threading.Tasks;
     using Broker.Communication;
-    using Microsoft.AspNetCore.SignalR;
 
     public class Program
     {
         static void Main(string[] args)
         {
-            //add log4net!
-            ICommunicationHub hub = new MessageHub();
+            TestConnection();
+        }
 
-            var client1 = new FakeClient(hub);
-            var client2 = new FakeClient(hub);
-
-            client1.SendMessage("Hello there, General Kenobi");
+        private static async void TestConnection()
+        {
+            using (var client = new DebugClient())
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    Thread.Sleep(200);
+                    Console.Write($"{i}. \r");
+                    await client.SendAsync($"[{i}] Hello there, General Kenobi.");
+                }
+            }
         }
     }
 }
