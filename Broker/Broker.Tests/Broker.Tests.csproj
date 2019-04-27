@@ -50,7 +50,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Broker\Broker.Client.csproj">
+    <ProjectReference Include="..\Broker.Client\Broker.Client.csproj">
       <Project>{366c7d02-605f-40de-82ef-bd7f44d8ac57}</Project>
       <Name>Broker.Client</Name>
     </ProjectReference>

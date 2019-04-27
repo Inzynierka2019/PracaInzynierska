@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Broker.Client", "Broker\Broker.Client.csproj", "{366C7D02-605F-40DE-82EF-BD7F44D8AC57}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Broker.Client", "Broker.Client\Broker.Client.csproj", "{366C7D02-605F-40DE-82EF-BD7F44D8AC57}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Broker.Tests", "Broker.Tests\Broker.Tests.csproj", "{8E9E9576-5D6D-4134-8E11-1BD4A0783733}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Broker", "Broker", "{89AC93E9-92E5-4F22-8726-57BAF8F30213}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +26,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{366C7D02-605F-40DE-82EF-BD7F44D8AC57} = {89AC93E9-92E5-4F22-8726-57BAF8F30213}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3FE171AC-1FEA-41B3-BEE1-FE98E1B14914}
