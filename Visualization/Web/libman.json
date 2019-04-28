@@ -20,6 +20,11 @@
     {
       "library": "apexcharts@3.6.8",
       "destination": "wwwroot/lib/apexcharts/"
+    },
+    {
+      "library": "mappa-mundi@0.0.5",
+      "destination": "wwwroot/lib/mappa",
+      "provider": "unpkg"
     }
   ]
 }
