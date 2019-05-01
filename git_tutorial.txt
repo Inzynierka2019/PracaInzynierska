@@ -1,0 +1,5 @@
+Tworzymy brancha o schemacie:
+data-imie-opis, np. 05.01-Jacek-Adding-new-git-tutorial
+
+komend¹ git checkout -b nazwa_brancha
+

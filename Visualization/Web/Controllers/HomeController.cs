@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Inzynierka.Models;
-using Inzynierka.Services;
-using System.Threading;
-
-namespace Inzynierka.Controllers
+﻿namespace Web.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Mvc;
+
+    using Web.Models;
+
     public class HomeController : Controller
     {
         private readonly ILogger Log;
