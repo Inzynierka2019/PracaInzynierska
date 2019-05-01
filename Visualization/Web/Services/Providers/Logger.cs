@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Inzynierka.Services
+namespace Web.Services
 {
     /// <summary>
     /// ILogger
@@ -26,23 +23,23 @@ namespace Inzynierka.Services
             this.hub = hub;
         }
 
-        public void LogInformation(string message)
+        public void Info(string message)
         {
             this.LogMessage(this.SimConsole, message, LogType.INFO);
 
         }
 
-        public void LogDebug(string message)
+        public void Debug(string message)
         {
             this.LogMessage(this.SimConsole, message, LogType.NORMAL);
         }
 
-        public void LogError(string message)
+        public void Error(string message)
         {
             this.LogMessage(this.SysConsole, message, LogType.ERROR);
         }
 
-        public void LogWarning(string message)
+        public void Warning(string message)
         {
             this.LogMessage(this.SysConsole, message, LogType.WARNING);
         }

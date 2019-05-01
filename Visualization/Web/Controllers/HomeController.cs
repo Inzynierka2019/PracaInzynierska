@@ -1,14 +1,11 @@
 ﻿namespace Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
 
     using Web.Models;
+    using Web.Services;
 
     public class HomeController : Controller
     {
@@ -29,13 +26,13 @@
         [Route("Console")]
         public IActionResult Console()
         {
-            /* code example */
+            /* example code */
             var host = HttpContext.Request.Host;
-            var ip = HttpContext.Connection.LocalIpAddress;
-            Log.LogError($"System console started: {host}");
-            Log.LogWarning($"Your IP address is: {ip}");
-            Log.LogInformation("Simulation console started: Unity app not connected");
-            Log.LogDebug("Exit: 0");
+            var ip = HttpContext.Connection.RemoteIpAddress;
+            Log.Error($"System console started: {host}");
+            Log.Warning($"Your IP address is: {ip}");
+            Log.Info("Simulation console started: Unity app not connected");
+            Log.Debug("Exit: 0");
 
             return View();
         }
