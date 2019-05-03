@@ -7,6 +7,11 @@ body {
   overflow-x: hidden;
 }
 
+a:hover, a:visited, a:link, a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
 #sidebar-wrapper {
   min-height: 100vh;
   margin-left: -15rem;
@@ -27,7 +32,6 @@ body {
 
 #page-content-wrapper {
   min-width: 100vw;
-  padding: 5px;
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -54,3 +58,4 @@ body {
     margin-left: -15rem;
   }
 }
+
