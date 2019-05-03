@@ -1,5 +1,13 @@
-Tworzymy brancha o schemacie:
-data-imie-opis, np. 05.01-Jacek-Adding-new-git-tutorial
+Przed przyst¹pieniem do pracy tworzymy nowego lokalnego brancha o schemacie:
+miesiac.dzien-imie-opis, np. 05.01-Jacek-Dodanie-git-tutoriala
+komend¹: git checkout -b nazwa_brancha
 
-komend¹ git checkout -b nazwa_brancha
+WA¯NE!
+Zanim spushujemy do naszego repozytorium sprawdzamy czy jesteœmy aktualni z 'dev'
+komend¹: git pull origin dev
 
+Gdy chcemy zaci¹gn¹æ czyjœ remote branch mo¿emy u¿yæ komend:
+git fetch origin
+git checkout --track origin/nazwa_brancha, lub
+tworzymy lokalnego brancha o dowolnej nazwie i zaci¹gamy zmiany
+git pull origin nazwa_brancha
