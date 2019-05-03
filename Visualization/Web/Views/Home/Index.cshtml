@@ -1,7 +1,42 @@
 ﻿@{
-    ViewData["Title"] = "Visualization";
+    ViewData["Title"] = "Dashboard";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/dashboard-page.css" />
+}
+@section Scripts {
+    <script type="text/javascript" src="~/lib/apexcharts/apexcharts.min.js"></script>
+    <script type="text/javascript" src="~/lib/p5.js/p5.min.js"></script>
+    <script type="text/javascript" src="~/lib/mappa/dist/mappa.js"></script>
+    <script type="text/javascript" src="~/js/charts/line-chart.js"></script>
+    <script type="text/javascript" src="~/js/charts/donut-chart.js"></script>
 }
 
 <div class="text-center container-fluid">
-    <h1 class="display-4">Welcome</h1>
+    <p class="lead display-4">Dashboard</p>
+</div>
+
+<ul class="nav nav-tabs">
+    <li class="nav-item active">
+        <a data-toggle="tab" class="nav-link active" href="#charts">Charts</a>
+    </li>
+
+    <li class="nav-item">
+        <a data-toggle="tab" class="nav-link" href=".map-section">Heatmap</a>
+    </li>
+</ul>
+
+@*Add sections!*@
+<div class="tab-content">
+    <div id="charts" class="tab-pane fade show active">
+        <h5>Simulation charts</h5>
+        <div style="display:inline-flex;">
+            <div id="line-chart" class="chart"></div>
+            <div id="donut-chart" class="chart"></div>
+        </div>
+    </div>
+    <div class="tab-pane fade map-section">
+        <img src="~/img/map-eti.png" style="width:90%;height:90%"/>
+        @*<div id="heatmap"></div>*@
+    </div>
 </div>

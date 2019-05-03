@@ -4,7 +4,7 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)
  */
 body {
-  overflow-x: hidden;
+    overflow-x: hidden;
 }
 
 a:hover, a:visited, a:link, a:active {
@@ -13,49 +13,71 @@ a:hover, a:visited, a:link, a:active {
 }
 
 #sidebar-wrapper {
-  min-height: 100vh;
-  margin-left: -15rem;
-  -webkit-transition: margin .25s ease-out;
-  -moz-transition: margin .25s ease-out;
-  -o-transition: margin .25s ease-out;
-  transition: margin .25s ease-out;
+    min-height: 100vh;
+    margin-left: -15rem;
+    -webkit-transition: margin .25s ease-out;
+    -moz-transition: margin .25s ease-out;
+    -o-transition: margin .25s ease-out;
+    transition: margin .25s ease-out;
+    z-index: 1;
 }
 
-#sidebar-wrapper .sidebar-heading {
-  padding: 0.875rem 1.25rem;
-  font-size: 1.2rem;
-}
+    #sidebar-wrapper .sidebar-heading {
+        padding: 0.875rem 1.25rem;
+        font-size: 1.2rem;
+    }
 
-#sidebar-wrapper .list-group {
-  width: 15rem;
-}
+    #sidebar-wrapper .list-group {
+        width: 15rem;
+    }
 
 #page-content-wrapper {
-  min-width: 100vw;
+    min-width: 100vw;
 }
 
 #wrapper.toggled #sidebar-wrapper {
-  margin-left: 0;
+    margin-left: 0;
 }
 
-#menu-toggle {
-    position:fixed;
-    padding-left: 5px;
-    font-size: 23px;
+.wrapped {
+    font-size: 30px !important;
+    left: -5px !important;
+    border: 0px !important;
 }
+
+.menu-toggle-section {
+    position: relative;
+    top: -240px;
+    left: -27px;
+    background-color: white;
+    border: 2px outset rgba(0,0,0,.125);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin: auto;
+    z-index: 100;
+}
+
+    .menu-toggle-section:hover i {
+        color: darkslateblue;
+    }
+
+    .menu-toggle-section i {
+        font-size: 24px;
+        margin: 10px;
+    }
 
 @media (min-width: 768px) {
     #sidebar-wrapper {
-    margin-left: 0;
-  }
+        margin-left: 0;
+    }
 
-  #page-content-wrapper {
-    min-width: 0;
-    width: 100%;
-  }
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
 
-  #wrapper.toggled #sidebar-wrapper {
-    margin-left: -15rem;
-  }
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: -15rem;
+    }
 }
-

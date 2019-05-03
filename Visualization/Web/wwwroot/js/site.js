@@ -8,8 +8,10 @@
     };
 
     $("#menu-toggle").click(function (e) {
+        console.log("asd");
         e.preventDefault();
-        $(this).find('i').toggleClass('fa-toggle-on fa-toggle-off');
+        $(this).toggleClass('fa-toggle-on fa-chevron-right');
+        $(".menu-toggle-section").toggleClass('wrapped');
         $("#wrapper").toggleClass("toggled");
     });
 }());

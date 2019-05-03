@@ -1,8 +1,7 @@
 ﻿.console-container {
     background-color: rgb(1,36,86);
-    width: 50%;
-    height: 90vh;
-    margin-top: 50px;
+    height: 95vh;
+    margin-top: 15px;
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column-reverse;
