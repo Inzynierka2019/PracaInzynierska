@@ -1,9 +1,6 @@
 ﻿var options = {
     chart: {
-        type: 'line',
-        toolbar: {
-            show: false
-        }
+        type: 'line'
     },
     series: [{
         name: 'sales',

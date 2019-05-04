@@ -26,17 +26,12 @@
     </li>
 </ul>
 
-@*Add sections!*@
 <div class="tab-content">
     <div id="charts" class="tab-pane fade show active">
         <h5>Simulation charts</h5>
-        <div style="display:inline-flex;">
-            <div id="line-chart" class="chart"></div>
-            <div id="donut-chart" class="chart"></div>
-        </div>
+        <partial name="~/Views/Home/Charts.cshtml" />
     </div>
     <div class="tab-pane fade map-section">
-        <img src="~/img/map-eti.png" style="width:90%;height:90%"/>
-        @*<div id="heatmap"></div>*@
+        <partial name="~/Views/Home/Heatmap.cshtml" />
     </div>
 </div>
