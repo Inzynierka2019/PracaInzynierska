@@ -37,12 +37,6 @@
             return View();
         }
 
-        [Route("Dashboard")]
-        public IActionResult Dashboard()
-        {
-            return View();
-        }
-
         [Route("About")]
         public IActionResult About()
         {
