@@ -9,24 +9,25 @@
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/site.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js"></script>
 </head>
 <body>
     <div class="d-flex" id="wrapper">
-
         <!-- Sidebar -->
         <div class="bg-light border-right" id="sidebar-wrapper">
-            <div class="sidebar-heading">Home</div>
             <div class="list-group list-group-flush">
-                <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">About</a>
+                <a href="@Url.Action("Index")" class="list-group-item list-group-item-action sidebar-heading bg-light">Home</a>
+                <a href="@Url.Action("Dashboard")" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                <a href="@Url.Action("Console")" class="list-group-item list-group-item-action bg-light">Console</a>
+                <a href="@Url.Action("About")" class="list-group-item list-group-item-action bg-light">About</a>
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <span id="menu-toggle"><i class="fas fa-toggle-on"></i></span>
-
             <div class="container-fluid">
                 @RenderBody()
             </div>
@@ -35,9 +36,5 @@
 
     </div>
     <!-- /#wrapper -->
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
 </html>

@@ -1,0 +1,36 @@
+﻿.console-container {
+    background-color: rgb(1,36,86);
+    width: 50%;
+    height: 90vh;
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column-reverse;
+    overflow-y: scroll;
+}
+
+.log-message {
+    display: inline-block;
+    align-self: flex-end;
+    font-size: 20px;
+    font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+}
+
+.error {
+    background-color: black;
+    color: red;
+}
+
+.info {
+    background-color: white;
+    color: green;
+}
+
+.debug {
+    color: white;
+}
+
+.warning {
+    background-color: black;
+    color: yellow;
+}
