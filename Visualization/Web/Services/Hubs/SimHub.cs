@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Broker.Models;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,17 @@ namespace Web.Services.Hubs
 {
     public class SimHub : Hub
     {
-        public SimHub() : base() { }
+        private readonly ISignalLogger<SimHub> log;
+
+        public SimHub(ISignalLogger<SimHub> log) : base()
+        {
+            this.log = log;
+        }
+
+        public Task SimulationMessage(Message message)
+        {
+            log.Info(message.ToString());
+            return Clients.All.SendAsync("SimulationMessage", message);
+        }
     }
 }

@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.SignalR.Client;
     using System;
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -37,19 +38,20 @@
                 await connection.StartAsync();
             };
 
-            this.Connect();
+            Task.Run(async () => await this.Connect());
+            WaitForConnection();
         }
 
-        private async void Connect()
+        private async Task Connect()
         {
             try
             {
                 await connection.StartAsync();
-                log.Info($"{this.hubName} established a connection: {connection.ToString()}");
+                log.Info($"{this.hubName} established a connection with {this.hubAddress}");
             }
             catch (Exception ex)
             {
-                log.Error($"{this.hubName} could not connect", ex);
+                log.Error($"{this.hubName} could not connect to {this.hubAddress}", ex);
             }
         }
 
@@ -57,7 +59,7 @@
         {
             try
             {
-                await connection.InvokeAsync("SendMessage", message);
+                await connection.InvokeAsync(this.method, message);
             }
             catch (Exception ex)
             {
@@ -69,11 +71,19 @@
         {
             try
             {
-                await connection.SendAsync("SendMessage", message);
+                await connection.SendAsync(this.method, message);
             }
             catch (Exception ex)
             {
                 this.MessagesList.Add($"Message not sent to {this.hubAddress}: {ex}");
+            }
+        }
+
+        private void WaitForConnection()
+        {
+            while(this.connection.State.Equals(HubConnectionState.Disconnected))
+            {
+                Thread.Sleep(100);
             }
         }
 

@@ -22,4 +22,9 @@
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <ProjectReference Include="..\Broker.Client\Broker.Client.csproj" />
+  </ItemGroup>
+
 </Project>
