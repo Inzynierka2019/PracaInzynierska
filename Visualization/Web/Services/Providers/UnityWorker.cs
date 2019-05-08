@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Web.Models.Exceptions;
+using Web.Services.Hubs;
 
 namespace Web.Services
 {
@@ -12,9 +13,9 @@ namespace Web.Services
         public UnityState State { get; set; }
 
         private static readonly object sync = new object();
-        private readonly ILogger Log;
+        private readonly ISignalLogger<SimHub> Log;
 
-        public UnityWorker(ILogger log)
+        public UnityWorker(ISignalLogger<SimHub> log)
         {
             this.Log = log;
             Log.Info($"Unity worker started!");

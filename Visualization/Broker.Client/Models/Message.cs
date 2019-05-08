@@ -6,5 +6,9 @@
     /// </summary>
     public class Message
     {
+        public override string ToString()
+        {
+            return "Message";
+        }
     }
 }
