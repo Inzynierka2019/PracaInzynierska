@@ -1,8 +1,8 @@
 ﻿namespace SimulationCore
 {
-    public class Class1
+    public class IntegrationTest
     {
-        public string Test()
+        public override string ToString() 
         {
             return "It works !!!";
         }

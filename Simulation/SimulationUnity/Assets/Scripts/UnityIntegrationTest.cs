@@ -8,7 +8,7 @@ public class UnityIntegrationTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(new Class1().Test());
+        Debug.Log(new IntegrationTest());
     }
 
     // Update is called once per frame
