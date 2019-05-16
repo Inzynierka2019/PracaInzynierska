@@ -1,8 +1,11 @@
 ﻿namespace Broker.Communication
 {
+    using Broker.Models;
+    using log4net;
     using Microsoft.AspNetCore.SignalR.Client;
     using System;
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -14,13 +17,16 @@
         protected void ClearMessages() => MessagesList.Clear();
         protected readonly HubConnection connection;
 
-        private readonly string defaultChannel;
+        private readonly string hubName;
         private readonly string hubAddress;
+        private readonly string method;
+        private readonly ILog log = LogManager.GetLogger(typeof(HubClient));
 
-        public HubClient(string addr, string channel)
+        public HubClient(string hubName, string address, string method)
         {
-            this.hubAddress = addr;
-            this.defaultChannel = channel;
+            this.hubName = hubName;
+            this.hubAddress = address;
+            this.method = method;
 
             connection = new HubConnectionBuilder()
                 .WithUrl(this.hubAddress)
@@ -32,28 +38,20 @@
                 await connection.StartAsync();
             };
 
-            this.Connect();
+            Task.Run(async () => await this.Connect());
+            WaitForConnection();
         }
 
-        private async void Connect()
+        private async Task Connect()
         {
             try
             {
                 await connection.StartAsync();
-                this.MessagesList.Add("Connection started");
+                log.Info($"{this.hubName} established a connection with {this.hubAddress}");
             }
             catch (Exception ex)
             {
-                this.MessagesList.Add($"{ex.Message}: {ex}");
-            }
-        }
-
-        public virtual void DebugInfo()
-        {
-            foreach(var message in this.MessagesList)
-            {
-                System.Diagnostics.Debug.WriteLine(message);
-                Console.WriteLine(message);
+                log.Error($"{this.hubName} could not connect to {this.hubAddress}", ex);
             }
         }
 
@@ -61,23 +59,11 @@
         {
             try
             {
-                await connection.InvokeAsync(this.defaultChannel, message);
+                await connection.InvokeAsync(this.method, message);
             }
             catch (Exception ex)
             {
-                this.MessagesList.Add($"Message not sent to {this.defaultChannel}: {ex}");
-            }
-        }
-
-        public async Task Send<T>(string channel, T message)
-        {
-            try
-            {
-                await connection.InvokeAsync(channel, message);
-            }
-            catch (Exception ex)
-            {
-                this.MessagesList.Add($"Message not sent to {channel}: {ex}");
+                log.Error($"Message not sent to {this.hubAddress}: {ex}");
             }
         }
 
@@ -85,23 +71,19 @@
         {
             try
             {
-                await connection.SendAsync(this.defaultChannel, message);
+                await connection.SendAsync(this.method, message);
             }
             catch (Exception ex)
             {
-                this.MessagesList.Add($"Message not sent to {this.defaultChannel}: {ex}");
+                this.MessagesList.Add($"Message not sent to {this.hubAddress}: {ex}");
             }
         }
 
-        public async Task SendAsync<T>(string channel, T message)
+        private void WaitForConnection()
         {
-            try
+            while(this.connection.State.Equals(HubConnectionState.Disconnected))
             {
-                await connection.InvokeAsync(channel, message);
-            }
-            catch (Exception ex)
-            {
-                this.MessagesList.Add($"Message not sent to {channel}: {ex}");
+                Thread.Sleep(100);
             }
         }
 

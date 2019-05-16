@@ -1,52 +1,51 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.Threading;
 using System.Threading.Tasks;
+using Web.Services.Hubs;
 
 namespace Web.Services
 {
     /// <summary>
     /// ILogger
     /// </summary>
-    public class Logger : ILogger
+    public class SignalLogger<T> : ISignalLogger<T> where T : Hub
     {
-        private readonly IHubContext<ConsoleHub> hub;
+        private readonly IHubContext<T> hub;
 
-        private int Timeout { get; } = 500;
+        private int Timeout { get; } = 1000;
 
-        private string SysConsole { get; } = "NotifySystemConsole";
+        private string ConsoleName { get; }
 
-        private string SimConsole { get; } = "NotifySimConsole";
-
-
-        public Logger(IHubContext<ConsoleHub> hub)
+        public SignalLogger(IHubContext<T> hub)
         {
             this.hub = hub;
+            this.ConsoleName = typeof(T).Name;
         }
 
         public void Info(string message)
         {
-            this.LogMessage(this.SimConsole, message, LogType.INFO);
-
+            this.LogMessage(this.ConsoleName, message, LogType.INFO);
         }
 
         public void Debug(string message)
         {
-            this.LogMessage(this.SimConsole, message, LogType.NORMAL);
+            this.LogMessage(this.ConsoleName, message, LogType.NORMAL);
         }
 
         public void Error(string message)
         {
-            this.LogMessage(this.SysConsole, message, LogType.ERROR);
+            this.LogMessage(this.ConsoleName, message, LogType.ERROR);
         }
 
         public void Warning(string message)
         {
-            this.LogMessage(this.SysConsole, message, LogType.WARNING);
+            this.LogMessage(this.ConsoleName, message, LogType.WARNING);
         }
 
         private async void LogMessage(string channel, string message, LogType type)
         {
-            await Task.Run(() => {
+            await Task.Run(() =>
+            {
                 Thread.Sleep(this.Timeout);
                 hub.Clients.All.SendAsync(channel, message, type);
             });

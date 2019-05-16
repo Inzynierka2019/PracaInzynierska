@@ -1,11 +1,14 @@
 ﻿"use strict";
 
 const
-    connection = new signalR.HubConnectionBuilder().withUrl("/consoleHub").build(),
-    sysConsole = "NotifySystemConsole",
-    simConsole = "NotifySimConsole",
+    debugConn = new signalR.HubConnectionBuilder().withUrl("/hubs/debug").build(),
+    simConn = new signalR.HubConnectionBuilder().withUrl("/hubs/simulation").build(),
+
+    debug = "DebugHub",
+    sim = "SimHub",
     sysSelector = "#system-console",
     simSelector = "#sim-console",
+    timeout = 100000,
     logType = {
         0: "debug",
         1: "info",
@@ -17,24 +20,30 @@ function getLogTemplate(value, type) {
     return "<div class='log-message {0}'>{1}</div>".format(logType[type], value);
 }
 
-function configureHubConnection() {
-    connection.on(sysConsole, function (msg, type) {
+function configureHubConnections() {
+    debugConn.on(debug, function (msg, type) {
         var template = getLogTemplate(msg, type);
         $(sysSelector).prepend(template);
     });
 
-    connection.on(simConsole, function (msg, type) {
+    debugConn.start().then(function () {
+        debugConn.serverTimeoutInMilliseconds = timeout;
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    simConn.on(sim, function (msg, type) {
         var template = getLogTemplate(msg, type);
         $(simSelector).prepend(template);
     });
 
-    connection.start().then(function () {
-        connection.serverTimeoutInMilliseconds = 100000;
+    simConn.start().then(function () {
+        simConn.serverTimeoutInMilliseconds = timeout;
     }).catch(function (err) {
         return console.error(err.toString());
     });
 }
 
 (function () {
-    configureHubConnection();
+    configureHubConnections();
 })();

@@ -1,4 +1,6 @@
-﻿namespace Web.Services
+﻿using Microsoft.AspNetCore.SignalR;
+
+namespace Web.Services
 {
     public enum LogType
     {
@@ -8,7 +10,7 @@
         WARNING
     }
 
-    public interface ILogger
+    public interface ISignalLogger<T> where T : Hub
     {
         void Info(string message);
 

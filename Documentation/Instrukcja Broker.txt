@@ -1,0 +1,11 @@
+Broker.dll udostêpnia na zewn¹trz klasy DebugClient oraz SimClient, które mog¹ komunikowaæ siê z serwerem dziêki metodom Send. Przyk³adowa klasa Message umo¿liwia wysy³anie obiektów z³o¿onych poprzez funkcjê Send(). Serializacjê i poprawne przesy³anie wiadomoœci gwarantuje SignalR.
+Log4net loguje wszystkie wiadomoœci i komunikaty o zdarzeniach/wyj¹tkach do pliku broker.log znajduj¹cego siê w folderze wynikowym dowolnej aplikacji, która korzysta z biblioteki Broker, a tak¿e na standard output (konsola).
+
+Przyk³adowe wykorzystanie klasy SimClient:
+
+var client = new SimClient();
+await client.Send(new Message { PosX = 5, PosY = 10 });
+client.Dispose();
+
+Uwaga:
+Metody generyczne Send oraz SendAsync przyjmuj¹ dowolny typ, ale musi istnieæ metoda po stronie serwera, która umie go odebraæ!
