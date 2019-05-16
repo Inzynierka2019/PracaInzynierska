@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Inzynierka
+namespace Web
 {
     public class Program
     {
