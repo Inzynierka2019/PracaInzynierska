@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SimulationCore;
+using Simulation.Core;
 
 public class UnityIntegrationTest : MonoBehaviour
 {

@@ -7,8 +7,8 @@
     <ProjectGuid>{C36E5FB8-69E2-4A06-9220-655914D61EE7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimulationCore</RootNamespace>
-    <AssemblyName>SimulationCore</AssemblyName>
+    <RootNamespace>Simulation.Core</RootNamespace>
+    <AssemblyName>Core</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -47,6 +47,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /c /y $(TargetDir)*.dll $(SolutionDir)..\SimulationUnity\Assets\Libs\</PostBuildEvent>
+    <PostBuildEvent>xcopy /c /y $(TargetDir)*.dll $(SolutionDir)..\Unity\Assets\Libs\</PostBuildEvent>
   </PropertyGroup>
 </Project>

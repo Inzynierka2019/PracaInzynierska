@@ -1,4 +1,4 @@
-﻿namespace SimulationCore
+﻿namespace Simulation.Core
 {
     public class IntegrationTest
     {
