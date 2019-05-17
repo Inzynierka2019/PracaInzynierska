@@ -8,7 +8,6 @@ const
     sim = "SimHub",
     sysSelector = "#system-console",
     simSelector = "#sim-console",
-    timeout = 100000,
     logType = {
         0: "debug",
         1: "info",
@@ -27,7 +26,7 @@ function configureHubConnections() {
     });
 
     debugConn.start().then(function () {
-        debugConn.serverTimeoutInMilliseconds = timeout;
+        debugConn.serverTimeoutInMilliseconds = 100000;
     }).catch(function (err) {
         return console.error(err.toString());
     });
@@ -38,7 +37,7 @@ function configureHubConnections() {
     });
 
     simConn.start().then(function () {
-        simConn.serverTimeoutInMilliseconds = timeout;
+        simConn.serverTimeoutInMilliseconds = 100000;
     }).catch(function (err) {
         return console.error(err.toString());
     });
