@@ -1,4 +1,0 @@
-Zainstaluj Unity w wersji 2019.1.1f1
-Uruchom i zbuduj projekt SimulationCore w solution Simulation/SimulationLibs/SimulationLibs.sln
-Uruchom edytor unity i wciœnij Play
-Jeœli w konsoli wyœwietli siê napis "It works !!!", to wszystko jest skonfigurowane poprawnie.

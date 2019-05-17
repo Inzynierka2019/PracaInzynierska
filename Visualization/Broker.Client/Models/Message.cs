@@ -6,5 +6,13 @@
     /// </summary>
     public class Message
     {
+        public int PosX { get; set; }
+
+        public int PosY { get; set; }
+
+        public override string ToString()
+        {
+            return $"Car position: ({ PosX }, { PosY })";
+        }
     }
 }

@@ -6,12 +6,13 @@
 
     using Web.Models;
     using Web.Services;
+    using Web.Services.Hubs;
 
     public class HomeController : Controller
     {
-        private readonly ILogger Log;
+        private readonly ISignalLogger<SimHub> Log;
 
-        public HomeController(ILogger Log)
+        public HomeController(ISignalLogger<SimHub> Log)
         {
             this.Log = Log;
         }

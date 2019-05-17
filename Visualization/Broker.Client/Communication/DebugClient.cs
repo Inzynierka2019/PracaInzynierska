@@ -1,6 +1,7 @@
 ﻿namespace Broker.Communication
 {
-    using System;
+    using log4net;
+    using Microsoft.AspNetCore.SignalR.Client;
     using System.Configuration;
 
     /// <summary>
@@ -10,19 +11,17 @@
     {
         private readonly static string HubName = "debugHub";
         private readonly static string Address = ConfigurationManager.AppSettings["debugHub"];
+        private readonly static string Method = "DebugMessage";
+        private readonly ILog log = LogManager.GetLogger(typeof(DebugClient));
 
-        public DebugClient() : base(HubName, Address)
+        public DebugClient() : base(HubName, Address, Method)
         {
+            connection.On<string>(Method, LogMessage);
         }
 
-        public async override void DebugInfo()
+        private void LogMessage(string message)
         {
-            foreach (var message in this.MessagesList)
-            {
-                System.Diagnostics.Debug.WriteLine(message);
-                Console.WriteLine(message);
-                await Send(message);
-            }
+            log.Debug(message);
         }
     }
 }
