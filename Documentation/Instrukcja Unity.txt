@@ -4,3 +4,9 @@ Uruchom edytor unity.
 Za³aduj domyœln¹ scenê Scenes/Scene.unity
 Wciœnij Play.
 Jeœli w konsoli wyœwietli siê napis "It works !!!", to wszystko jest skonfigurowane poprawnie.
+
+Instalacja Mapbox SDK for Unity:
+
+https://www.mapbox.com/install/unity/
+
+Assets -> Import Package -> Custom Package -> wybierz plik z sdk
