@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  webapi:
+    container_name: webapi
+    build:
+      context: Visualization\Web.Api
+    ports:
+    - "5000:5000"
+    volumes:
+
+  webui:
+    container_name: webui
+    volumes:
+      - 'Visualization\WebUI\:/app'
+      - '/app/node_modules'
+    ports:
+      - '4201:4200'
+    depends_on:
+      - webapi
+    links:
+      - webapi
+
+networks:
+  backend:
+
+volumes:

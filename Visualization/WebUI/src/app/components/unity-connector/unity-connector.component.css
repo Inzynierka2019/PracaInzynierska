@@ -1,0 +1,27 @@
+svg {
+    transition: 0.5s;
+}
+
+svg:hover {
+    opacity: 0.8;
+}
+
+.unity-logo {
+    margin-right: 20px;
+}
+
+.active {
+    fill: white;
+}
+
+.inactive {
+    fill: gray;
+}
+
+.app-buttons {
+    margin: 20px;
+}
+
+.app-buttons button {
+    margin: 5px;
+}

@@ -1,0 +1,11 @@
+.loader {
+    position: relative;
+    top: 30vh;
+}
+
+.loader-msg {
+    position: relative;
+    top: 14vh;
+    font-size: 30px; 
+    color: #ad5389;
+}
