@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #757f9a;
+    background: -webkit-linear-gradient(to right, rgba(236, 233, 230,0.5), #FFFFFF); 
+    background: linear-gradient(to right, rgba(236, 233, 230, 0.5), #FFFFFF);
+}
+
+a:hover, a:visited, a:link, a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+.noselect {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+ }
