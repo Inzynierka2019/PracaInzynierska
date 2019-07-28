@@ -13,7 +13,7 @@ Dokumentacja pracy dyplomowej znajduje się w folderze [Documentation](https://g
     + Libs
       + Core
       + Core.Tests
-    + Unity
+    + App
 + Visualization
     + Web.Api
     + Web.Logic
@@ -50,33 +50,45 @@ Instalacja Mapbox SDK for Unity:
 https://www.mapbox.com/install/unity/
 > Assets -> Import Package -> Custom Package -> wybierz plik z sdk
 
-
 ### Instrukcja Visualization
 
 #### WebUI (Angular 8)
-Aktualizacja cli/core do najnowszej wersji
-> $> ng update @angular/cli @angular/core
-
 Instalacja @angular/cli
-> $> npm -g @angular/cli
+```
+$> npm install -g @angular/cli
+```
+
+Aktualizacja cli/core do najnowszej wersji
+```
+$> ng update @angular/cli @angular/core
+```
 
 Aktualizacja pakietów npm (w folderze Visualization/WebUI)
-> $> npm install
+```
+$> npm install
+```
 
 Uruchomienie WebUI (domyślnie http://localhost:4200/)
-> $> ng serve -o
+```
+$> ng serve -o
+```
 
 #### Web.Api (.netcore)
 Budowanie projektu
-> dotnet build
+```
+$> dotnet build
+```
 
 Uruchomienie projektu
-> dotnet run
-
+```
+$> dotnet run
+```
 
 ### Docker-compose
 W głównym folderze komenda:
-> docker-compose up
+```
+$> docker-compose up
+```
 stawia kontener linuxowy z aplikacją webową oraz kopiuje artefakty do folderu out.
 
 
