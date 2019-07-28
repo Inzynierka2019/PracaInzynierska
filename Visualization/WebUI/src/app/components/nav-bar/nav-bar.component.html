@@ -1,0 +1,17 @@
+<nav class="navbar fixed-top navbar-expand navbar-dark bg-light noselect">
+    <li class="navbar-brand">
+        <i class="dashboard-icon material-icons"> dashboard </i>
+    </li>
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item active">
+            <a [routerLink]="''" class="nav-link"> Dashboard </a>
+        </li>
+        <li class="nav-item">
+            <a [routerLink]="'/console'" class="nav-link"> Console </a>
+        </li>
+        <li class="nav-item">
+            <a [routerLink]="'/about'" class="nav-link"> About </a>
+        </li>
+    </ul>
+    <app-unity-connector></app-unity-connector>
+</nav>

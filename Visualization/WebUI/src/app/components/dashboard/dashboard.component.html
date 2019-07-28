@@ -1,0 +1,19 @@
+<div class="container main">
+    <div *ngIf="loaded" class="card">
+        <div class="card-body">
+            <h5 class="card-title">Dashboard</h5>
+            <div class="card-header">
+                Statystyki
+            </div>
+            <div class="d-flex justify-content-around">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="loader">
+        <ngx-spinner [fullScreen]="false" type="pacman" size="large" color="#3c1053">
+            <p class="loader-msg">{{loader}}</p>
+        </ngx-spinner>
+    </div>
+</div>
