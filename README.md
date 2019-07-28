@@ -1,4 +1,4 @@
-# Praca Inżynierska
+# [Praca dyplomowa inżynierska](https://github.com/Inzynierka2019/PracaInzynierska/tree/master/)
 Symulator ruchu miejskiego z wizualizacją w aplikacji
 internetowej.
 
@@ -6,7 +6,7 @@ Constructive simulation of city traffic with visualization on web
 application.
 
 ## Dokumentacja
-Dokumentacja pracy dyplomowej znajduje się w folderze [Documentation](https://github.com/Inzynierka2019/PracaInzynierska/tree/dev/Documentation)
+Dokumentacja pracy dyplomowej znajduje się w folderze [Documentation](https://github.com/Inzynierka2019/PracaInzynierska/tree/master/Documentation)
 
 ## Lista projektów:
 + Simulation

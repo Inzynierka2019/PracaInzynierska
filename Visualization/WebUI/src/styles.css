@@ -3,6 +3,9 @@
     padding: 0;
 }
 
+html {
+}
+
 body {
     background: #757f9a;
     background: -webkit-linear-gradient(to right, rgba(236, 233, 230, 0.5), #FFFFFF);
