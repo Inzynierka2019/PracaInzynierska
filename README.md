@@ -13,7 +13,7 @@ Dokumentacja pracy dyplomowej znajduje się w folderze [Documentation](https://g
     + Libs
       + Core
       + Core.Tests
-    + Unity
+    + App
 + Visualization
     + Web.Api
     + Web.Logic
@@ -54,11 +54,11 @@ https://www.mapbox.com/install/unity/
 ### Instrukcja Visualization
 
 #### WebUI (Angular 8)
+Instalacja @angular/cli
+> $> npm install -g @angular/cli
+
 Aktualizacja cli/core do najnowszej wersji
 > $> ng update @angular/cli @angular/core
-
-Instalacja @angular/cli
-> $> npm -g @angular/cli
 
 Aktualizacja pakietów npm (w folderze Visualization/WebUI)
 > $> npm install

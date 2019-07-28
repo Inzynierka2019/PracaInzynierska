@@ -10,6 +10,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { ConsoleComponent } from './components/console/console.component';
 import { UnityConnectorComponent } from './components/unity-connector/unity-connector.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AboutComponent } from './components/about/about.component';
 
 @NgModule({
   declarations: [
@@ -18,13 +19,14 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     DashboardComponent,
     ConsoleComponent,
     UnityConnectorComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ChartsModule,
-    NgxSpinnerModule,
+    NgxSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

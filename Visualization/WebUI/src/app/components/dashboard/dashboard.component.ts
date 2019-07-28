@@ -9,7 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class DashboardComponent implements OnInit {
 
   loaded = false;
-  timeout = 15000;
+  timeout = 1500;
   loader ="waiting for unity app...";
 
   constructor(private spinner: NgxSpinnerService) { }

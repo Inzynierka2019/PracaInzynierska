@@ -6,20 +6,20 @@ import { SignalRService } from './signal-r.service';
 })
 export class AppUnityConnectionStatusService {
 
-  isConnected: boolean;
+  // isConnected: boolean;
 
-  constructor(private signalR: SignalRService) {
-    this.isConnected = false;
-    this.registerSignalHandlers();
-   }
+  // constructor(private signalR: SignalRService) {
+  //   this.isConnected = false;
+  //   this.registerSignalHandlers();
+  //  }
 
-  registerSignalHandlers(): void {
-    this.signalR.registerHandler(
-      'CheckUnityAppConnectionStatus',
-      (isConnected: boolean) => {
-        this.isConnected = isConnected;
-      }
-    );
-  }
+  // registerSignalHandlers(): void {
+  //   this.signalR.registerHandler(
+  //     'CheckUnityAppConnectionStatus',
+  //     (isConnected: boolean) => {
+  //       this.isConnected = isConnected;
+  //     }
+  //   );
+  // }
   
 }
