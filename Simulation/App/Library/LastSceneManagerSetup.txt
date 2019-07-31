@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Mapbox/Examples/0_PrefabScenes/CitySimulator.unity
+- path: Assets/Scenes/CitySimulation.unity
   isLoaded: 1
   isActive: 1

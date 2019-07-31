@@ -8,7 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class DashboardComponent implements OnInit {
 
-  loaded = false;
+  connected = false;
   timeout = 1500;
   loader ="waiting for unity app...";
 
@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
-      this.loaded = true;
+      this.connected = true;
     }, this.timeout);
   }
 }

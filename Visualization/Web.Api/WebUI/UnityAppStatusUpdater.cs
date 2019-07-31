@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using Common.HubClient;
+using log4net;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,6 @@ namespace Web.Api.WebUI
 {
     public class UnityAppStatusUpdater
     {
-        private const string SignalForUnityAppConnectionStatus = "CheckUnityAppConnectionStatus";
-
         private static readonly ILog Log = LogManager.GetLogger(typeof(UnityAppStatusUpdater));
 
         private readonly IHubContext<UIHub> hub;
@@ -25,7 +24,7 @@ namespace Web.Api.WebUI
         {
             try
             {
-                this.hub.Clients.All.SendAsync(SignalForUnityAppConnectionStatus, isConnected);
+               // this.hub.Clients.All.SendAsync(SignalMethods.SignalForUnityAppConnectionStatus, isConnected);
             }
             catch (Exception ex)
             {

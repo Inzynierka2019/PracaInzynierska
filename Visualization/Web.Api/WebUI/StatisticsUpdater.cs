@@ -1,4 +1,6 @@
-﻿using log4net;
+﻿using Common.HubClient;
+using Common.Models;
+using log4net;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
@@ -10,8 +12,6 @@ namespace Web.Api.WebUI
 {
     public class StatisticsUpdater
     {
-        private const string SignalForVehiclePopulation = "VehiclePopulation";
-
         private static readonly ILog Log = LogManager.GetLogger(typeof(StatisticsUpdater));
 
         private readonly IHubContext<UIHub> hub;
@@ -21,11 +21,11 @@ namespace Web.Api.WebUI
             this.hub = hub;
         }
 
-        public void SendVehiclePopulation()
+        public void SendVehiclePopulation(VehiclePopulation population)
         {
             try
             {
-                this.hub.Clients.All.SendAsync()
+                //this.hub.Clients.All.SendAsync(SignalMethods.SignalForVehiclePopulation, population);
             }
             catch (Exception ex)
             {

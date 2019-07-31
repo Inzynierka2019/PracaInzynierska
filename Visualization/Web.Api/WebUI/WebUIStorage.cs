@@ -16,7 +16,6 @@ namespace Web.Api.WebUI
 
         public WebUIStorage()
         {
-
         }
     }
 }

@@ -1,0 +1,23 @@
+.container {
+    max-width: 50vw;
+}
+
+.icon {
+    font-size: 28px !important;
+    margin-left: 4px;
+}
+
+.card {
+    padding-top: 15px;
+}
+
+.card-body {
+    padding: 0;
+    padding-bottom: 5px;
+}
+
+.nav-link {
+    margin: 0;
+    padding: 5px;
+    padding-bottom: 0px;
+}

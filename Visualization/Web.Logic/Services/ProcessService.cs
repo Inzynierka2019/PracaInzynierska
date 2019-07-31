@@ -1,23 +1,24 @@
-﻿using log4net;
-using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-
-namespace Web.Logic.Services
+﻿namespace Web.Logic.Services
 {
+    using System.Diagnostics;
+    using System.IO;
+
+    using log4net;
+    using Microsoft.AspNetCore.Hosting;
+
     public class ProcessService : IProcessService
     {
         private readonly IHostingEnvironment hostingEnvironment;
         private static readonly ILog Log = LogManager.GetLogger(typeof(ProcessService));
+        private const string unityAppExecutable = @"out\Simulation.exe";
         private readonly string directoryPath;
+        private readonly string unityProjectPath;
 
         public ProcessService(IHostingEnvironment hostingEnvironment)
         {
             this.hostingEnvironment = hostingEnvironment;
             this.directoryPath = this.hostingEnvironment.ContentRootPath;
+            this.unityProjectPath += @"..\..\Simulation\App";
         }
 
         public void ExecuteBuildSimulation()
@@ -28,8 +29,7 @@ namespace Web.Logic.Services
 
         public void ExecuteRunSimulation()
         {
-            var cmd = Path.Combine(directoryPath, "Scripts", "run-simulation.bat");
-            ExecuteCommand(cmd);
+            ExecuteCommand(unityAppExecutable);
         }
 
         private bool ExecuteCommand(string command)
@@ -39,8 +39,9 @@ namespace Web.Logic.Services
             processInfo.UseShellExecute = false;
             processInfo.RedirectStandardError = true;
             processInfo.RedirectStandardOutput = true;
+            processInfo.WorkingDirectory = unityProjectPath;
 
-            var process = System.Diagnostics.Process.Start(processInfo);
+            var process = Process.Start(processInfo);
 
             process.OutputDataReceived += 
                 (object sender, DataReceivedEventArgs e) => Log.Debug(e.Data);

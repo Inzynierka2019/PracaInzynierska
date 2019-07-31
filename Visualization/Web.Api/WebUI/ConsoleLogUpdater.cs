@@ -7,8 +7,6 @@
 
     public class ConsoleLogUpdater
     {
-        private const string SimulationConsoleLogs = "SimulationConsoleLogs";
-
         private static readonly ILog Log = LogManager.GetLogger(typeof(ConsoleLogUpdater));
 
         private readonly IHubContext<UIHub> hubContext;
@@ -22,9 +20,9 @@
         {
             try
             {
-                this.hubContext.Clients.All.SendAsync(
-                    SimulationConsoleLogs,
-                    new { Message = message, Timestamp = DateTime.Now });
+                //this.hubContext.Clients.All.SendAsync(
+                //    SimulationConsoleLogs,
+                //    new { Message = message, Timestamp = DateTime.Now });
             }
             catch (Exception e)
             {

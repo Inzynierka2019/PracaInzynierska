@@ -1,0 +1,161 @@
+2019-07-28 21:52:13,475  WARN Visualization.Startup.? [?] - Visualization Api is starting...
+ 2019-07-28 21:52:36,413  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET http://localhost:5000/api/unity/build  
+ 2019-07-28 21:52:36,445  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request finished in 34.3653ms 307 
+ 2019-07-28 21:52:36,546  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET https://localhost:5001/api/unity/build  
+ 2019-07-28 21:52:36,592  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executing endpoint 'Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)'
+ 2019-07-28 21:52:36,601  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Route matched with {action = "BuildSimulation", controller = "Unity"}. Executing action Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)
+ 2019-07-28 21:52:36,682  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executing action method Web.Api.Controllers.UnityController.BuildSimulation (Web.Api) - Validation state: Valid
+ 2019-07-28 21:52:56,899  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action method Web.Api.Controllers.UnityController.BuildSimulation (Web.Api), returned result Microsoft.AspNetCore.Mvc.OkResult in 20214.5893ms.
+ 2019-07-28 21:52:56,906  INFO Microsoft.AspNetCore.Mvc.StatusCodeResult.? [?] - Executing HttpStatusCodeResult, setting HTTP status code 200
+ 2019-07-28 21:52:56,909  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action Web.Api.Controllers.UnityController.BuildSimulation (Web.Api) in 20304.8356ms
+ 2019-07-28 21:52:56,909  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executed endpoint 'Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)'
+ 2019-07-28 21:52:56,917  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request finished in 20371.4197ms 200 
+ 2019-07-28 21:52:57,038  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET https://localhost:5001/favicon.ico  
+ 2019-07-28 21:52:57,039  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request finished in 0.7708ms 404 
+ 2019-07-28 21:55:04,567  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET https://localhost:5001/api/unity/build  
+ 2019-07-28 21:55:17,458  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executing endpoint 'Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)'
+ 2019-07-28 21:55:17,459  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Route matched with {action = "BuildSimulation", controller = "Unity"}. Executing action Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)
+ 2019-07-28 21:55:17,474  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executing action method Web.Api.Controllers.UnityController.BuildSimulation (Web.Api) - Validation state: Valid
+ 2019-07-28 21:55:19,163  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action method Web.Api.Controllers.UnityController.BuildSimulation (Web.Api), returned result Microsoft.AspNetCore.Mvc.OkResult in 1688.4017ms.
+ 2019-07-28 21:55:19,164  INFO Microsoft.AspNetCore.Mvc.StatusCodeResult.? [?] - Executing HttpStatusCodeResult, setting HTTP status code 200
+ 2019-07-28 21:55:19,165  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action Web.Api.Controllers.UnityController.BuildSimulation (Web.Api) in 1705.3567ms
+ 2019-07-28 21:55:19,166  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executed endpoint 'Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)'
+ 2019-07-28 21:55:19,167  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request finished in 14599.3787ms 200 
+ 2019-07-28 21:57:10,416  WARN Visualization.Startup.? [?] - Visualization Api is starting...
+ 2019-07-28 22:07:19,244  WARN Visualization.Startup.? [?] - Visualization Api is starting...
+ 2019-07-28 22:07:21,185  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET https://localhost:5001/api/unity/build  
+ 2019-07-28 22:07:21,223  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executing endpoint 'Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)'
+ 2019-07-28 22:07:21,231  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Route matched with {action = "BuildSimulation", controller = "Unity"}. Executing action Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)
+ 2019-07-28 22:07:21,303  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executing action method Web.Api.Controllers.UnityController.BuildSimulation (Web.Api) - Validation state: Valid
+ 2019-07-28 22:07:39,664  INFO Web.Logic.Services.ProcessService.? [?] - D:\Dokumenty\Inzynierka\PracaInzynierska\Visualization\Web.Api
+ 2019-07-28 22:07:39,666  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action method Web.Api.Controllers.UnityController.BuildSimulation (Web.Api), returned result Microsoft.AspNetCore.Mvc.OkResult in 18360.2475ms.
+ 2019-07-28 22:07:39,671  INFO Microsoft.AspNetCore.Mvc.StatusCodeResult.? [?] - Executing HttpStatusCodeResult, setting HTTP status code 200
+ 2019-07-28 22:07:39,674  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action Web.Api.Controllers.UnityController.BuildSimulation (Web.Api) in 18441.1093ms
+ 2019-07-28 22:07:39,675  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executed endpoint 'Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)'
+ 2019-07-28 22:07:39,693  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request finished in 18508.9965ms 200 
+ 2019-07-28 22:07:53,135  WARN Visualization.Startup.? [?] - Visualization Api is starting...
+ 2019-07-28 22:07:58,238  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET https://localhost:5001/api/unity/build  
+ 2019-07-28 22:07:58,275  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executing endpoint 'Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)'
+ 2019-07-28 22:07:58,283  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Route matched with {action = "BuildSimulation", controller = "Unity"}. Executing action Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)
+ 2019-07-28 22:07:58,361  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executing action method Web.Api.Controllers.UnityController.BuildSimulation (Web.Api) - Validation state: Valid
+ 2019-07-28 22:08:47,447  WARN Visualization.Startup.? [?] - Visualization Api is starting...
+ 2019-07-28 22:08:56,872  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET https://localhost:5001/api/unity/build  
+ 2019-07-28 22:08:56,909  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executing endpoint 'Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)'
+ 2019-07-28 22:08:56,918  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Route matched with {action = "BuildSimulation", controller = "Unity"}. Executing action Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)
+ 2019-07-28 22:08:56,983  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executing action method Web.Api.Controllers.UnityController.BuildSimulation (Web.Api) - Validation state: Valid
+ 2019-07-28 22:12:03,181  WARN Visualization.Startup.? [?] - Visualization Api is starting...
+ 2019-07-28 22:12:15,742  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET https://localhost:5001/api/unity/build  
+ 2019-07-28 22:12:15,778  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executing endpoint 'Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)'
+ 2019-07-28 22:12:15,785  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Route matched with {action = "BuildSimulation", controller = "Unity"}. Executing action Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)
+ 2019-07-28 22:12:15,858  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executing action method Web.Api.Controllers.UnityController.BuildSimulation (Web.Api) - Validation state: Valid
+ 2019-07-28 22:12:16,094  INFO Web.Logic.Services.ProcessService.? [?] - D:\Dokumenty\Inzynierka\PracaInzynierska\Visualization\Web.Api
+ 2019-07-28 22:12:16,097  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action method Web.Api.Controllers.UnityController.BuildSimulation (Web.Api), returned result Microsoft.AspNetCore.Mvc.OkResult in 236.5428ms.
+ 2019-07-28 22:12:16,109  INFO Microsoft.AspNetCore.Mvc.StatusCodeResult.? [?] - Executing HttpStatusCodeResult, setting HTTP status code 200
+ 2019-07-28 22:12:16,112  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action Web.Api.Controllers.UnityController.BuildSimulation (Web.Api) in 324.7561ms
+ 2019-07-28 22:12:16,113  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executed endpoint 'Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)'
+ 2019-07-28 22:12:16,137  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request finished in 395.3128ms 200 
+ 2019-07-28 22:12:49,560  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET https://localhost:5001/api/unity/build  
+ 2019-07-28 22:12:49,562  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executing endpoint 'Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)'
+ 2019-07-28 22:12:49,563  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Route matched with {action = "BuildSimulation", controller = "Unity"}. Executing action Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)
+ 2019-07-28 22:12:49,577  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executing action method Web.Api.Controllers.UnityController.BuildSimulation (Web.Api) - Validation state: Valid
+ 2019-07-28 22:13:00,348  INFO Web.Logic.Services.ProcessService.? [?] - D:\Dokumenty\Inzynierka\PracaInzynierska\Visualization\Web.Api
+ 2019-07-28 22:13:00,348  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action method Web.Api.Controllers.UnityController.BuildSimulation (Web.Api), returned result Microsoft.AspNetCore.Mvc.OkResult in 10770.2154ms.
+ 2019-07-28 22:13:00,350  INFO Microsoft.AspNetCore.Mvc.StatusCodeResult.? [?] - Executing HttpStatusCodeResult, setting HTTP status code 200
+ 2019-07-28 22:13:00,350  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action Web.Api.Controllers.UnityController.BuildSimulation (Web.Api) in 10786.7706ms
+ 2019-07-28 22:13:00,352  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executed endpoint 'Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)'
+ 2019-07-28 22:13:00,353  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request finished in 10792.7327ms 200 
+ 2019-07-28 22:14:04,002  WARN Visualization.Startup.? [?] - Visualization Api is starting...
+ 2019-07-28 22:18:33,596  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET http://localhost:5000/api/unity/build  
+ 2019-07-28 22:18:33,599  INFO Microsoft.AspNetCore.Cors.Infrastructure.CorsService.? [?] - CORS policy execution successful.
+ 2019-07-28 22:18:33,630  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request finished in 28.8391ms 307 
+ 2019-07-28 22:18:33,702  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET https://localhost:5001/api/unity/build  
+ 2019-07-28 22:18:33,703  INFO Microsoft.AspNetCore.Cors.Infrastructure.CorsService.? [?] - CORS policy execution failed.
+ 2019-07-28 22:18:33,703  INFO Microsoft.AspNetCore.Cors.Infrastructure.CorsService.? [?] - Request origin null does not have permission to access the resource.
+ 2019-07-28 22:18:33,741  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executing endpoint 'Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)'
+ 2019-07-28 22:18:33,748  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Route matched with {action = "BuildSimulation", controller = "Unity"}. Executing action Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)
+ 2019-07-28 22:18:33,821  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executing action method Web.Api.Controllers.UnityController.BuildSimulation (Web.Api) - Validation state: Valid
+ 2019-07-28 22:19:00,988  WARN Visualization.Startup.? [?] - Visualization Api is starting...
+ 2019-07-28 22:19:23,572  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET http://localhost:5000/api/unity/build  
+ 2019-07-28 22:19:23,576  INFO Microsoft.AspNetCore.Cors.Infrastructure.CorsService.? [?] - CORS policy execution successful.
+ 2019-07-28 22:19:23,600  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request finished in 28.3727ms 307 
+ 2019-07-28 22:19:23,674  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET https://localhost:5001/api/unity/build  
+ 2019-07-28 22:19:23,674  INFO Microsoft.AspNetCore.Cors.Infrastructure.CorsService.? [?] - CORS policy execution failed.
+ 2019-07-28 22:19:23,675  INFO Microsoft.AspNetCore.Cors.Infrastructure.CorsService.? [?] - Request origin null does not have permission to access the resource.
+ 2019-07-28 22:19:23,708  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executing endpoint 'Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)'
+ 2019-07-28 22:19:23,715  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Route matched with {action = "BuildSimulation", controller = "Unity"}. Executing action Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)
+ 2019-07-28 22:19:23,779  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executing action method Web.Api.Controllers.UnityController.BuildSimulation (Web.Api) - Validation state: Valid
+ 2019-07-28 22:19:39,020  INFO Web.Logic.Services.ProcessService.? [?] - D:\Dokumenty\Inzynierka\PracaInzynierska\Visualization\Web.Api
+ 2019-07-28 22:19:39,022  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action method Web.Api.Controllers.UnityController.BuildSimulation (Web.Api), returned result Microsoft.AspNetCore.Mvc.OkResult in 15241.0425ms.
+ 2019-07-28 22:19:39,026  INFO Microsoft.AspNetCore.Mvc.StatusCodeResult.? [?] - Executing HttpStatusCodeResult, setting HTTP status code 200
+ 2019-07-28 22:19:39,029  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action Web.Api.Controllers.UnityController.BuildSimulation (Web.Api) in 15312.3427ms
+ 2019-07-28 22:19:39,030  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executed endpoint 'Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)'
+ 2019-07-28 22:19:39,034  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request finished in 15360.3155ms 200 
+ 2019-07-28 22:21:18,381  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET http://localhost:5000/api/unity/build  
+ 2019-07-28 22:21:18,383  INFO Microsoft.AspNetCore.Cors.Infrastructure.CorsService.? [?] - CORS policy execution successful.
+ 2019-07-28 22:21:18,384  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request finished in 2.6219ms 307 
+ 2019-07-28 22:21:18,396  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET https://localhost:5001/api/unity/build  
+ 2019-07-28 22:21:18,397  INFO Microsoft.AspNetCore.Cors.Infrastructure.CorsService.? [?] - CORS policy execution failed.
+ 2019-07-28 22:21:18,398  INFO Microsoft.AspNetCore.Cors.Infrastructure.CorsService.? [?] - Request origin null does not have permission to access the resource.
+ 2019-07-28 22:21:18,400  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executing endpoint 'Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)'
+ 2019-07-28 22:21:18,403  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Route matched with {action = "BuildSimulation", controller = "Unity"}. Executing action Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)
+ 2019-07-28 22:21:18,417  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executing action method Web.Api.Controllers.UnityController.BuildSimulation (Web.Api) - Validation state: Valid
+ 2019-07-28 22:21:29,244  INFO Web.Logic.Services.ProcessService.? [?] - D:\Dokumenty\Inzynierka\PracaInzynierska\Visualization\Web.Api
+ 2019-07-28 22:21:29,244  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action method Web.Api.Controllers.UnityController.BuildSimulation (Web.Api), returned result Microsoft.AspNetCore.Mvc.OkResult in 10825.1403ms.
+ 2019-07-28 22:21:29,244  INFO Microsoft.AspNetCore.Mvc.StatusCodeResult.? [?] - Executing HttpStatusCodeResult, setting HTTP status code 200
+ 2019-07-28 22:21:29,245  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action Web.Api.Controllers.UnityController.BuildSimulation (Web.Api) in 10841.1877ms
+ 2019-07-28 22:21:29,245  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executed endpoint 'Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)'
+ 2019-07-28 22:21:29,246  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request finished in 10849.3453ms 200 
+ 2019-07-28 22:29:21,820  WARN Visualization.Startup.? [?] - Visualization Api is starting...
+ 2019-07-28 22:29:28,422  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET https://localhost:5001/api/unity/run  
+ 2019-07-28 22:29:28,457  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executing endpoint 'Web.Api.Controllers.UnityController.RunSimulation (Web.Api)'
+ 2019-07-28 22:29:28,464  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Route matched with {action = "RunSimulation", controller = "Unity"}. Executing action Web.Api.Controllers.UnityController.RunSimulation (Web.Api)
+ 2019-07-28 22:29:28,539  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executing action method Web.Api.Controllers.UnityController.RunSimulation (Web.Api) - Validation state: Valid
+ 2019-07-28 22:29:33,960  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action method Web.Api.Controllers.UnityController.RunSimulation (Web.Api), returned result Microsoft.AspNetCore.Mvc.OkResult in 5418.7551ms.
+ 2019-07-28 22:29:33,967  INFO Microsoft.AspNetCore.Mvc.StatusCodeResult.? [?] - Executing HttpStatusCodeResult, setting HTTP status code 200
+ 2019-07-28 22:29:33,971  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action Web.Api.Controllers.UnityController.RunSimulation (Web.Api) in 5504.6838ms
+ 2019-07-28 22:29:33,972  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executed endpoint 'Web.Api.Controllers.UnityController.RunSimulation (Web.Api)'
+ 2019-07-28 22:29:33,986  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request finished in 5564.7321ms 200 
+ 2019-07-28 22:29:37,338  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET http://localhost:5000/api/unity/run  
+ 2019-07-28 22:29:37,341  INFO Microsoft.AspNetCore.Cors.Infrastructure.CorsService.? [?] - CORS policy execution successful.
+ 2019-07-28 22:29:37,355  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request finished in 16.4587ms 307 
+ 2019-07-28 22:29:37,363  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET https://localhost:5001/api/unity/run  
+ 2019-07-28 22:29:37,363  INFO Microsoft.AspNetCore.Cors.Infrastructure.CorsService.? [?] - CORS policy execution failed.
+ 2019-07-28 22:29:37,364  INFO Microsoft.AspNetCore.Cors.Infrastructure.CorsService.? [?] - Request origin null does not have permission to access the resource.
+ 2019-07-28 22:29:37,366  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executing endpoint 'Web.Api.Controllers.UnityController.RunSimulation (Web.Api)'
+ 2019-07-28 22:29:37,367  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Route matched with {action = "RunSimulation", controller = "Unity"}. Executing action Web.Api.Controllers.UnityController.RunSimulation (Web.Api)
+ 2019-07-28 22:29:37,391  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executing action method Web.Api.Controllers.UnityController.RunSimulation (Web.Api) - Validation state: Valid
+ 2019-07-28 22:29:47,915  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action method Web.Api.Controllers.UnityController.RunSimulation (Web.Api), returned result Microsoft.AspNetCore.Mvc.OkResult in 10523.5015ms.
+ 2019-07-28 22:29:47,916  INFO Microsoft.AspNetCore.Mvc.StatusCodeResult.? [?] - Executing HttpStatusCodeResult, setting HTTP status code 200
+ 2019-07-28 22:29:47,917  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action Web.Api.Controllers.UnityController.RunSimulation (Web.Api) in 10549.0058ms
+ 2019-07-28 22:29:47,917  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executed endpoint 'Web.Api.Controllers.UnityController.RunSimulation (Web.Api)'
+ 2019-07-28 22:29:47,918  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request finished in 10555.3384ms 200 
+ 2019-07-28 22:33:47,019  WARN Visualization.Startup.? [?] - Visualization Api is starting...
+ 2019-07-28 22:34:23,339  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET http://localhost:5000/api/unity/build  
+ 2019-07-28 22:34:23,343  INFO Microsoft.AspNetCore.Cors.Infrastructure.CorsService.? [?] - CORS policy execution successful.
+ 2019-07-28 22:34:23,350  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request finished in 11.8392ms 307 
+ 2019-07-28 22:34:23,410  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET https://localhost:5001/api/unity/build  
+ 2019-07-28 22:34:23,411  INFO Microsoft.AspNetCore.Cors.Infrastructure.CorsService.? [?] - CORS policy execution failed.
+ 2019-07-28 22:34:23,411  INFO Microsoft.AspNetCore.Cors.Infrastructure.CorsService.? [?] - Request origin null does not have permission to access the resource.
+ 2019-07-28 22:34:23,434  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executing endpoint 'Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)'
+ 2019-07-28 22:34:23,440  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Route matched with {action = "BuildSimulation", controller = "Unity"}. Executing action Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)
+ 2019-07-28 22:34:23,446  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executing action method Web.Api.Controllers.UnityController.BuildSimulation (Web.Api) - Validation state: Valid
+ 2019-07-28 22:34:33,613  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action method Web.Api.Controllers.UnityController.BuildSimulation (Web.Api), returned result Microsoft.AspNetCore.Mvc.OkResult in 10165.4512ms.
+ 2019-07-28 22:34:33,617  INFO Microsoft.AspNetCore.Mvc.StatusCodeResult.? [?] - Executing HttpStatusCodeResult, setting HTTP status code 200
+ 2019-07-28 22:34:33,618  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action Web.Api.Controllers.UnityController.BuildSimulation (Web.Api) in 10176.4745ms
+ 2019-07-28 22:34:33,619  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executed endpoint 'Web.Api.Controllers.UnityController.BuildSimulation (Web.Api)'
+ 2019-07-28 22:34:33,623  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request finished in 10213.317ms 200 
+ 2019-07-28 22:34:36,896  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET http://localhost:5000/api/unity/run  
+ 2019-07-28 22:34:36,896  INFO Microsoft.AspNetCore.Cors.Infrastructure.CorsService.? [?] - CORS policy execution successful.
+ 2019-07-28 22:34:36,897  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request finished in 1.3298ms 307 
+ 2019-07-28 22:34:36,902  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request starting HTTP/1.1 GET https://localhost:5001/api/unity/run  
+ 2019-07-28 22:34:36,902  INFO Microsoft.AspNetCore.Cors.Infrastructure.CorsService.? [?] - CORS policy execution failed.
+ 2019-07-28 22:34:36,902  INFO Microsoft.AspNetCore.Cors.Infrastructure.CorsService.? [?] - Request origin null does not have permission to access the resource.
+ 2019-07-28 22:34:36,903  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executing endpoint 'Web.Api.Controllers.UnityController.RunSimulation (Web.Api)'
+ 2019-07-28 22:34:36,904  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Route matched with {action = "RunSimulation", controller = "Unity"}. Executing action Web.Api.Controllers.UnityController.RunSimulation (Web.Api)
+ 2019-07-28 22:34:36,906  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executing action method Web.Api.Controllers.UnityController.RunSimulation (Web.Api) - Validation state: Valid
+ 2019-07-28 22:34:48,289  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action method Web.Api.Controllers.UnityController.RunSimulation (Web.Api), returned result Microsoft.AspNetCore.Mvc.OkResult in 11382.7533ms.
+ 2019-07-28 22:34:48,290  INFO Microsoft.AspNetCore.Mvc.StatusCodeResult.? [?] - Executing HttpStatusCodeResult, setting HTTP status code 200
+ 2019-07-28 22:34:48,291  INFO Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.? [?] - Executed action Web.Api.Controllers.UnityController.RunSimulation (Web.Api) in 11385.7057ms
+ 2019-07-28 22:34:48,292  INFO Microsoft.AspNetCore.Routing.EndpointMiddleware.? [?] - Executed endpoint 'Web.Api.Controllers.UnityController.RunSimulation (Web.Api)'
+ 2019-07-28 22:34:48,293  INFO Microsoft.AspNetCore.Hosting.Internal.WebHost.? [?] - Request finished in 11391.0921ms 200 
+ 

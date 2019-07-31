@@ -4,7 +4,8 @@ import * as $ from 'jquery';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  styles: [`.router-link-active { background-color: red; }`]
 })
 export class AppComponent {
   title = 'Visualization';
