@@ -12,6 +12,10 @@ namespace Common.HubClient
 
         public HubConnection Connection { get; set; }
         public string Address { get; set; }
+
+        /// <summary>
+        /// The name is only necessary for logging purposes.
+        /// </summary>
         public string Name { get; set; }
 
         public BaseClient(string name)

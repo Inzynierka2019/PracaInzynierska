@@ -10,14 +10,22 @@ namespace Common.HubClient.Tests
 {
     public static class DummyDataManager
     {
-        public static VehiclePopulation GetVehiclePopulation(int min = 200, int max = 600)
+        private static int InitialCount { get; set; }
+
+        static DummyDataManager()
         {
             var r = new Random();
-            int count = (int)(min + (double)Process.GetCurrentProcess().StartTime.Millisecond * (double)(max-min) / 1000.0);
+            InitialCount = r.Next(100, 600);
+        }
+
+        public static VehiclePopulation GetVehiclePopulation()
+        {
+            var r = new Random();
+            var dev = r.Next(0, 25);
 
             return new VehiclePopulation
             {
-                Count = count + r.Next(-50, 50)
+                Count = InitialCount + r.Next(-dev, dev)
             };
         }
     }

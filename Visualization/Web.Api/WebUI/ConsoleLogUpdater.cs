@@ -1,28 +1,37 @@
 ﻿namespace Web.Api.WebUI
 {
-    using log4net;
-    using Microsoft.AspNetCore.SignalR;
     using System;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.SignalR;
+
+    using log4net;
+
+    using Common.HubClient;
+    using Common.Models;
+    using Common.Models.Enums;
     using Web.Api.Hubs;
 
-    public class ConsoleLogUpdater
+    public class ConsoleLogUpdater : IConsoleLogUpdater
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ConsoleLogUpdater));
 
-        private readonly IHubContext<UIHub> hubContext;
+        private readonly IHubContext<UIHub> hub;
 
-        public ConsoleLogUpdater(IHubContext<UIHub> hubContext)
+        public ConsoleLogUpdater(IHubContext<UIHub> hub)
         {
-            this.hubContext = hubContext;
+            this.hub = hub;
         }
 
-        public void SendConsoleLogs(string message)
+        public async Task SendConsoleLog(string message, LogMessageType type)
         {
             try
             {
-                //this.hubContext.Clients.All.SendAsync(
-                //    SimulationConsoleLogs,
-                //    new { Message = message, Timestamp = DateTime.Now });
+                var log = new ConsoleLog(message, type);
+
+                await Task.Run(() =>
+                {
+                    this.hub.Clients.All.SendAsync(SignalMethods.SignalForConsoleLogs.Method, log);
+                });
             }
             catch (Exception e)
             {

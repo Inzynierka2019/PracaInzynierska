@@ -9,11 +9,14 @@ namespace Common.HubClient
 {
     public class SignalMethods
     {
+        public static readonly SignalMethod SignalForConsoleLogs
+            = new SignalMethod(typeof(ConsoleLog), "SignalForConsoleLogs");
+
         public static readonly SignalMethod SignalForVehiclePopulation
             = new SignalMethod(typeof(VehiclePopulation), "SignalForVehiclePopulation");
 
         public static readonly SignalMethod SignalForUnityAppConnectionStatus
-            = new SignalMethod(typeof(bool), "CheckUnityAppConnectionStatus");
+            = new SignalMethod(typeof(bool), "UnityAppConnectionStatus");
     }
 
     public class SignalMethod
@@ -26,6 +29,11 @@ namespace Common.HubClient
         {
             this.Model = model;
             this.Method = method;
+        }
+
+        public override string ToString()
+        {
+            return this.Method;
         }
     }
 }

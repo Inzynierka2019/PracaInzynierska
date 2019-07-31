@@ -1,4 +1,4 @@
-﻿namespace Web.Api.IoC
+﻿namespace Web.Api
 {
     using System;
     using Microsoft.AspNetCore.Mvc;
@@ -8,6 +8,7 @@
 
     using Web.Logic.Services;
     using Web.Utils.Mapping;
+    using Web.Api.WebUI;
 
     public static class Registry
     {
@@ -36,6 +37,7 @@
             config.AssertConfigurationIsValid();
             services.AddSingleton<IMapper>(new Mapper(config));
             services.AddTransient<IProcessService, ProcessService>();
+            services.AddTransient<IConsoleLogUpdater, ConsoleLogUpdater>();
         }
     }
 }

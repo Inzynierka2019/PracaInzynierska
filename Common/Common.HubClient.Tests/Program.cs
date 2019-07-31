@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Common.HubClient.Tests
@@ -10,13 +7,13 @@ namespace Common.HubClient.Tests
     {
         static void Main(string[] args)
         {
-            TestConnection();
+            Task.Run(() => TestConnection());
             Console.ReadKey();
         }
 
-        private static async void TestConnection()
+        private static void TestConnection()
         {
-            using (var client = new HubClient("HubClient"))
+            using (var client = new HubClient("TestClient"))
             {
                 var timer = new DummyTimer(
                     async () => await client.Send(
