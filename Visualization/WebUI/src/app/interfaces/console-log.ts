@@ -1,14 +1,21 @@
-import { LogMessageType, ConsoleColor, LogMessageTypeToColorMap } from '../interfaces/log-message-type.enum';
+import { LogType, ConsoleColor, LogTypeToColorMap } from '../interfaces/log-message-type.enum';
 
 export class ConsoleLog {
     message: string;
     
     timeStamp: string;
     
-    logType: LogMessageType;
+    logType: LogType;
+
+    public constructor(message: string, timeStamp: string, logType: LogType) {
+        this.message = message;
+        this.timeStamp = timeStamp;
+        this.logType = logType;
+    }
 
     getConsoleColor(): ConsoleColor {
-        return LogMessageTypeToColorMap.get(this.logType);
+        var test = LogTypeToColorMap.get(this.logType);
+        return LogTypeToColorMap.get(this.logType);
     };
 }
 

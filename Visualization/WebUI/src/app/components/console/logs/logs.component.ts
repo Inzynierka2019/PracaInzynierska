@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ConsoleColor } from '../../../interfaces/log-message-type.enum';
+import { ConsoleColor, LogType } from '../../../interfaces/log-message-type.enum';
 import { ConsoleLog } from '../../../interfaces/console-log';
+import { SignalRService } from 'src/app/services/signal-r.service';
 import * as $ from 'jquery';
 
 @Component({
@@ -10,19 +11,19 @@ import * as $ from 'jquery';
 })
 export class LogsComponent implements OnInit {
 
-  @Input() logs : ConsoleLog[] = [];
+  logs : ConsoleLog[] = [];
 
-  constructor() { }
+  hubMethod = "SignalForConsoleLogs";
+
+  constructor(private hub: SignalRService) { }
 
   ngOnInit() {
-    let log = new ConsoleLog();
-    log.message = "this is example log";
-    log.timeStamp = "15:23:33";
-    log.logType = 0;
+    this.logs = [];
 
-    for(var i = 0; i < 50; i++) {
+    this.hub.registerHandler(this.hubMethod, (data) => {
+      var log = new ConsoleLog(data.message, data.timeStamp, data.logType);
       this.logs.push(log);
-    }
+    });
   }
 
   logsToText(logs: ConsoleLog[]): string {
@@ -35,7 +36,7 @@ export class LogsComponent implements OnInit {
     if(!log) {
       return '';
     }
-    console.log("console-color-${ConsoleColor[log.getConsoleColor()]}");
+    
     return `console-color-${ConsoleColor[log.getConsoleColor()]}`;
   }
 

@@ -7,16 +7,16 @@
     {
         public string Message { get; set; }
 
-        public DateTime TimeStamp { get; } = DateTime.Now;
+        public string TimeStamp { get; } = DateTime.Now.ToString("hh:mm:ss");
 
-        public LogType Type { get; set; }
+        public LogType LogType { get; set; }
 
         public ConsoleLog() { }
 
         public ConsoleLog(string message, LogType type)
         {
             this.Message = message;
-            this.Type = type;
+            this.LogType = type;
         }
     }
 }

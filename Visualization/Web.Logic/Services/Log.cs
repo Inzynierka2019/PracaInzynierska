@@ -17,7 +17,7 @@
         {
             if ((string)message != "" && message != null)
             {
-                log.Debug(message);
+                log.Fatal(message);
                 this.consoleLog.SendConsoleLog(message as string, type);
             }
         }
@@ -26,7 +26,7 @@
         {
             if ((string)message != "" && message != null)
             {
-                log.Debug(message);
+                log.Error(message);
                 this.consoleLog.SendConsoleLog(message as string, type);
             }
         }
@@ -35,7 +35,7 @@
         {
             if ((string)message != "" && message != null)
             {
-                log.Debug(message);
+                log.Warn(message);
                 this.consoleLog.SendConsoleLog(message as string, type);
             }
         }
@@ -53,7 +53,7 @@
         {
             if ((string)message != "" && message != null)
             {
-                log.Debug(message);
+                log.Info(message);
                 this.consoleLog.SendConsoleLog(message as string, type);
             }
         }

@@ -18,14 +18,13 @@
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
-                    builder => builder.WithOrigins(
-                        "http://localhost:4200",
-                        "https://localhost:4200",
-                        "http://+:5000",
-                        "https://+:5001")
+                    builder => builder
+                    .SetIsOriginAllowed((host) => true)
                     .AllowAnyHeader()
                     .AllowAnyMethod()
-                    .AllowAnyOrigin() //without this doesnt work... fix
+                    .AllowCredentials()
+                    .WithOrigins("http://localhost:4200")
+                    .Build()
                     );
             });
 
@@ -41,7 +40,7 @@
             services.AddSignalR(hubOptions =>
             {
                 hubOptions.HandshakeTimeout = TimeSpan.FromMinutes(10.0);
-                hubOptions.KeepAliveInterval = TimeSpan.FromMinutes(10.0);
+                hubOptions.KeepAliveInterval = TimeSpan.FromSeconds(10.0);
                 hubOptions.ClientTimeoutInterval = TimeSpan.FromMinutes(10.0);
                 hubOptions.EnableDetailedErrors = true;
             });

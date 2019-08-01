@@ -2,6 +2,7 @@
 {
     using System;
     using Common.Models.Enums;
+    using Microsoft.AspNetCore.Cors;
     using Microsoft.AspNetCore.Mvc;
 
     using Web.Logic.Services;
@@ -22,10 +23,12 @@
 
         [HttpGet]
         [Route("build")]
+        [EnableCors("CorsPolicy")]
         public IActionResult BuildSimulation()
         {
             try
             {
+                Log.Info("Simulation build has started.", LogType.Info);
                 this.processService.ExecuteBuildSimulation();
             }
             catch (Exception e)
@@ -40,10 +43,12 @@
 
         [HttpGet]
         [Route("run")]
+        [EnableCors("CorsPolicy")]
         public IActionResult RunSimulation()
         {
             try
             {
+                Log.Info("Simulation.exe has started.", LogType.Warning);
                 this.processService.ExecuteRunSimulation();
             }
             catch (Exception e)

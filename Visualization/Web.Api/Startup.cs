@@ -47,7 +47,7 @@
             });
             app.UseMvc();
 
-            Log.Warn("Visualization Api is starting...");
+            Log.Warn("Visualization App is starting...");
         }
     }
 }
