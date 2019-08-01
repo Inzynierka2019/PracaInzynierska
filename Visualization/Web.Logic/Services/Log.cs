@@ -15,46 +15,46 @@
 
         public void Fatal(object message, LogType type)
         {
-            if ((string)message != "" && message != null)
+            if (message as string != "" && message != null)
             {
                 log.Fatal(message);
-                this.consoleLog.SendConsoleLog(message as string, type);
+                this.consoleLog.SendConsoleLog(message.ToString(), type);
             }
         }
 
         public void Error(object message, LogType type)
         {
-            if ((string)message != "" && message != null)
+            if (message as string != "" && message != null)
             {
                 log.Error(message);
-                this.consoleLog.SendConsoleLog(message as string, type);
+                this.consoleLog.SendConsoleLog(message.ToString(), type);
             }
         }
 
         public void Warn(object message, LogType type)
         {
-            if ((string)message != "" && message != null)
+            if (message as string != "" && message != null)
             {
                 log.Warn(message);
-                this.consoleLog.SendConsoleLog(message as string, type);
+                this.consoleLog.SendConsoleLog(message.ToString(), type);
             }
         }
 
         public void Debug(object message, LogType type)
         {
-            if ((string)message != "" && message != null)
+            if (message as string != "" && message != null)
             {
                 log.Debug(message);
-                this.consoleLog.SendConsoleLog(message as string, type);
+                this.consoleLog.SendConsoleLog(message.ToString(), type);
             }
         }
 
         public void Info(object message, LogType type)
         {
-            if ((string)message != "" && message != null)
+            if (message as string != "" && message != null)
             {
                 log.Info(message);
-                this.consoleLog.SendConsoleLog(message as string, type);
+                this.consoleLog.SendConsoleLog(message.ToString(), type);
             }
         }
     }

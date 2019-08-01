@@ -13,7 +13,12 @@ namespace Common.HubClient
 
         public HubClient(string name) : base(name)
         {
-            MethodInfo method = typeof(HubClient).GetMethod("RegisterConnection");
+            MethodInfo method = this.GetType().GetMethod("RegisterConnection", 
+                BindingFlags.NonPublic | BindingFlags.Instance, 
+                null,
+                CallingConventions.Any,
+                new Type[] { typeof(string) },
+                null);
 
             foreach (var m in GetMethods())
             {
@@ -25,14 +30,7 @@ namespace Common.HubClient
 
         private void RegisterConnection<T>(string method)
         {
-            //foreach (var m in GetMethods())
-            //{
-             // Type type = m.Model;
-             //   MethodInfo generic = method.MakeGenericMethod(type);
-             //   generic.Invoke(this, m.Method);
-                base.Connection.On<dynamic>(method, LogMessage);
-                //???
-            //}
+            base.Connection.On<T>(method, LogMessage);
         }
 
         private List<SignalMethod> GetMethods()

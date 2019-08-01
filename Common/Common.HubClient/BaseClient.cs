@@ -21,7 +21,7 @@ namespace Common.HubClient
         public BaseClient(string name)
         {
             this.Name = name;
-            this.Address = "http://localhost:5000/UIHub/";
+            this.Address = "http://localhost:5000/UIHub";
             this.Connection = new HubConnectionBuilder()
                 .WithUrl(this.Address)
                 .Build();

@@ -7,20 +7,20 @@ namespace Common.HubClient.Tests
     {
         static void Main(string[] args)
         {
-            Task.Run(() => TestConnection());
+            TestConnection();
             Console.ReadKey();
         }
 
         private static void TestConnection()
         {
-            using (var client = new HubClient("TestClient"))
-            {
-                var timer = new DummyTimer(
-                    async () => await client.Send(
-                        SignalMethods.SignalForVehiclePopulation.Method, 
-                        DummyDataManager.GetVehiclePopulation()
-                        ));
-            }
+            Console.WriteLine("Started test connection.");
+            var client = new HubClient("TestClient");
+
+            var timer = new DummyTimer(
+                async () => await client.Send(
+                    SignalMethods.SignalForVehiclePopulation.Method,
+                    DummyDataManager.GetVehiclePopulation()
+                    ));
         }
     }
 }

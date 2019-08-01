@@ -7,6 +7,7 @@
     using Web.Logic.Hubs;
     using Web.Logic.Services;
     using Common.Models.Enums;
+    using Common.HubClient;
 
     public class StatisticsUpdater
     {
@@ -17,18 +18,6 @@
         {
             this.hub = hub;
             this.Log = log;
-        }
-
-        public void SendVehiclePopulation(VehiclePopulation population)
-        {
-            try
-            {
-                //this.hub.Clients.All.SendAsync(SignalMethods.SignalForVehiclePopulation, population);
-            }
-            catch (Exception ex)
-            {
-                Log.Error($"Exception occured while sending statistics: {ex.Message}", LogType.Error);
-            }
         }
     }
 }
