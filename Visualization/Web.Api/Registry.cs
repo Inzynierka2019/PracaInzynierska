@@ -14,15 +14,6 @@
     {
         public static void Configure(this IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.WithOrigins("http://localhost:4200")
-                    .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowCredentials());
-            });
-
             services.AddSignalR(hubOptions =>
             {
                 hubOptions.HandshakeTimeout = TimeSpan.FromMinutes(10.0);

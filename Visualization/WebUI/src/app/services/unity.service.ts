@@ -11,11 +11,11 @@ export class UnityService {
   constructor(private httpClient: HttpClient) { }
 
   build() {
-    this.httpClient.get(this.url + '/build').subscribe();
+    return this.httpClient.get(this.url + '/build');
   }
 
   run() {
-    this.httpClient.get(this.url + '/run').subscribe();
+    return this.httpClient.get(this.url + '/run');
   }
 
   handleError(error) {

@@ -26,6 +26,21 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.WithOrigins(
+                        "http://localhost:4200", 
+                        "https://localhost:4200",
+                        "http://localhost:5000",
+                        "https://localhost:5001")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin()
+                    .Build()
+                    );
+            });
+
             services.Configure();
         }
 

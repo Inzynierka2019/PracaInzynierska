@@ -1,7 +1,6 @@
 <div class="container-flex margin-top-lg">
-    <div *ngIf="connected else loading" class="card">
+    <div *ngIf="!isLoading else loading" class="card">
         <div class="card-body">
-
         <h2 class="card-title"><span class="badge badge-dark">Dashboard</span></h2>
         
             <div class="card-header">
@@ -24,9 +23,14 @@
 
 <ng-template #loading>
     <div class="loader">
-        <ngx-spinner [fullScreen]="false" type="pacman" size="large" color="#3c1053">
-            <p class="loader-msg">{{ loader }}</p>
-        </ngx-spinner>
+        <ng-container *ngIf="!connected">
+            <ngx-spinner [fullScreen]="false" type="pacman" size="large" color="#3c1053">
+                <p class="loader-msg">{{ loaderMsg }}</p>
+            </ngx-spinner>
+
+            <ng-container *ngIf="connectionError">
+                    <p class="loader-msg">{{ errorMsg }}</p>
+                </ng-container>
+        </ng-container>
     </div>
 </ng-template>
-

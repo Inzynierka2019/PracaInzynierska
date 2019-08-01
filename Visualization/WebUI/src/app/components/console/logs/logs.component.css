@@ -6,6 +6,12 @@
 	height: 70vh;
 }
 
+.log-message {
+	margin-left: 3px;
+	color: inherit;
+	background-color: transparent;
+}
+
 .console-color-White {
 	color:white;
 }
@@ -66,5 +72,6 @@
 }
 
 .console-color-DarkRed {
-	color: rgb(255, 94, 0);
+	color: red;
+	background-color: white;
 }
