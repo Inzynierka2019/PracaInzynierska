@@ -1,4 +1,4 @@
-﻿namespace Web.Api.WebUI
+﻿namespace Web.Logic.WebUI
 {
     using System.Threading.Tasks;
 
@@ -6,6 +6,6 @@
 
     public interface IConsoleLogUpdater
     {
-        Task SendConsoleLog(string message, LogMessageType type);
+        Task SendConsoleLog(string message, LogType type);
     }
 }

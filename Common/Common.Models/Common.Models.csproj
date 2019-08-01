@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleLog.cs" />
-    <Compile Include="Enums\LogMessageType.cs" />
+    <Compile Include="Enums\LogType.cs" />
     <Compile Include="Enums\UnityAppState.cs" />
     <Compile Include="VehiclePopulation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

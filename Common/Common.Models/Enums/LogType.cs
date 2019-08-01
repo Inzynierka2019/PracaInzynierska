@@ -1,11 +1,12 @@
 ﻿namespace Common.Models.Enums
 {
-    public enum LogMessageType
+    public enum LogType
     {
         Info = 0,
         Warning = 1,
         Error = 2,
         Debug = 3,
-        Fatal = 4
+        Fatal = 4,
+        Success = 5
     }
 }

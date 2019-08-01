@@ -1,4 +1,4 @@
-﻿namespace Web.Api.WebUI
+﻿namespace Web.Logic.WebUI
 {
     using System;
     using System.Threading.Tasks;
@@ -9,20 +9,20 @@
     using Common.HubClient;
     using Common.Models;
     using Common.Models.Enums;
-    using Web.Api.Hubs;
+    using Web.Logic.Hubs;
 
     public class ConsoleLogUpdater : IConsoleLogUpdater
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(ConsoleLogUpdater));
-
         private readonly IHubContext<UIHub> hub;
+
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ConsoleLogUpdater));
 
         public ConsoleLogUpdater(IHubContext<UIHub> hub)
         {
             this.hub = hub;
         }
 
-        public async Task SendConsoleLog(string message, LogMessageType type)
+        public async Task SendConsoleLog(string message, LogType type)
         {
             try
             {
@@ -35,7 +35,7 @@
             }
             catch (Exception e)
             {
-                Log.Error("Exception was thrown while sending Console Log messages", e);
+                Log.Error($"Exception was thrown while sending Console Log messages", e);
             }
 
         }

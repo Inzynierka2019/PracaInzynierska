@@ -9,11 +9,11 @@
 
         public DateTime TimeStamp { get; } = DateTime.Now;
 
-        public LogMessageType Type { get; set; }
+        public LogType Type { get; set; }
 
         public ConsoleLog() { }
 
-        public ConsoleLog(string message, LogMessageType type)
+        public ConsoleLog(string message, LogType type)
         {
             this.Message = message;
             this.Type = type;

@@ -1,9 +1,8 @@
 ﻿namespace Web.Api.Controllers
 {
     using System;
+    using Common.Models.Enums;
     using Microsoft.AspNetCore.Mvc;
-
-    using log4net;
 
     using Web.Logic.Services;
 
@@ -13,11 +12,12 @@
     {
         private readonly IProcessService processService;
 
-        private static readonly ILog Log = LogManager.GetLogger(typeof(UnityController));
+        private readonly ILog Log;
 
-        public UnityController(IProcessService processService)
+        public UnityController(IProcessService processService, ILog log)
         {
             this.processService = processService;
+            this.Log = log;
         }
 
         [HttpGet]
@@ -30,7 +30,8 @@
             }
             catch (Exception e)
             {
-                Log.Error("An error occured in building simulation: ", e);
+                Log.Error($"An error occured in building simulation: {e.Message}", LogType.Error);
+
                 return this.BadRequest();
             }
 
@@ -47,7 +48,8 @@
             }
             catch (Exception e)
             {
-                Log.Error("An error occured in running simulation: ", e);
+                Log.Error($"An error occured in running simulation: {e.Message}", LogType.Error);
+
                 return this.BadRequest();
             }
 
