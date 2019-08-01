@@ -6,17 +6,23 @@ import * as signalR from "@aspnet/signalr";
 })
 export class SignalRService {
 
+  timeout = 3000;
   private hubConnection: signalR.HubConnection
 
   public startConnection = () => {
     this.hubConnection = new signalR.HubConnectionBuilder()
-                              .withUrl('http://localhost:5000/UIHub')
+                              .withUrl('https://localhost:5001/UIHub')
                               .build();
 
     this.hubConnection
       .start()
       .then(() => console.log('SignalR started'))
-      .catch(err => console.log('Error while starting connection: ' + err))
+      // add snackbar notification
+      .catch(err => {
+        setTimeout(() => {
+          this.startConnection();
+        }, this.timeout);
+      });
   }
 
   public registerHandler(methodName: string, method: (...args: any[]) => void): void {

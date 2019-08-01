@@ -1,60 +1,75 @@
-﻿using log4net;
-using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-
-namespace Web.Logic.Services
+﻿namespace Web.Logic.Services
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using Microsoft.AspNetCore.Hosting;
+
+    using Common.Models.Enums;
+
     public class ProcessService : IProcessService
     {
         private readonly IHostingEnvironment hostingEnvironment;
-        private static readonly ILog Log = LogManager.GetLogger(typeof(ProcessService));
+        private readonly ILog Log;
+        private const string unityAppExecutable = @"out\Simulation.exe";
         private readonly string directoryPath;
+        private readonly string unityProjectPath;
 
-        public ProcessService(IHostingEnvironment hostingEnvironment)
+        public ProcessService(IHostingEnvironment hostingEnvironment, ILog log)
         {
             this.hostingEnvironment = hostingEnvironment;
-            this.directoryPath = this.hostingEnvironment.ContentRootPath;
+            this.Log = log;
+            this.directoryPath = this.unityProjectPath = this.hostingEnvironment.ContentRootPath;
+            this.unityProjectPath += @"\..\..\Simulation\App";
         }
 
         public void ExecuteBuildSimulation()
         {
             var cmd = Path.Combine(directoryPath, "Scripts", "build-simulation.bat");
-            ExecuteCommand(cmd);
+            if(ExecuteCommand(cmd, true))
+            {
+                Log.Info("Build has successfully finished!", LogType.Success);
+            }
         }
 
         public void ExecuteRunSimulation()
         {
-            var cmd = Path.Combine(directoryPath, "Scripts", "run-simulation.bat");
-            ExecuteCommand(cmd);
+            ExecuteCommand(unityAppExecutable, false);
         }
 
-        private bool ExecuteCommand(string command)
+        [System.Runtime.InteropServices.DllImport("User32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr handle);
+
+        private bool ExecuteCommand(string command, bool waitForExit)
         {
             var processInfo = new ProcessStartInfo("cmd.exe", "/c " + command);
             processInfo.CreateNoWindow = false;
             processInfo.UseShellExecute = false;
             processInfo.RedirectStandardError = true;
             processInfo.RedirectStandardOutput = true;
+            processInfo.WorkingDirectory = unityProjectPath;
+            processInfo.CreateNoWindow = true;
 
-            var process = System.Diagnostics.Process.Start(processInfo);
+            var process = Process.Start(processInfo);
+            SetForegroundWindow(process.Handle);
 
-            process.OutputDataReceived += 
-                (object sender, DataReceivedEventArgs e) => Log.Debug(e.Data);
+            process.OutputDataReceived +=
+                (object sender, DataReceivedEventArgs e) => Log.Info(e.Data, LogType.Info);
             process.ErrorDataReceived +=
-                (object sender, DataReceivedEventArgs e) => Log.Debug(e.Data);
+                (object sender, DataReceivedEventArgs e) => Log.Info(e.Data, LogType.Info);
 
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
-            process.WaitForExit();
 
-            var exitCode= process.ExitCode;
-            process.Close();
+            if (waitForExit)
+            {
+                process.WaitForExit();
+                var exitCode = process.ExitCode;
+                process.Close();
+                return exitCode == 0;
+            }
 
-            return exitCode == 0;
+            return true;
         }
     }
 }

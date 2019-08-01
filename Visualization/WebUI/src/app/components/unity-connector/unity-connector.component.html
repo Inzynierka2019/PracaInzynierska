@@ -1,7 +1,15 @@
 <div class="unity-controls">
     <div class="app-buttons navbar-text">
-        <button type="button" class="btn btn-light" (click)="run()"> Run </button>
-        <button type="button" class="btn btn-outline-light" (click)="build()"> Build </button>
+        <button type="button" class="btn btn-light" (click)="run()">
+            <ng-container *ngIf="!error; else errorTemplate">
+                <ng-container *ngIf="!isLoading; else loading">Run</ng-container>
+            </ng-container>
+        </button>
+        <button type="button" class="btn btn-outline-light" (click)="build()">
+            <ng-container *ngIf="!error; else errorTemplate">
+                <ng-container *ngIf="!isLoading; else loading">Build</ng-container>
+            </ng-container>
+        </button>
     </div>
 
     <div class="navbar-text">
@@ -17,3 +25,13 @@
         </div>
     </div>
 </div>
+
+<ng-template #loading>
+    <div class="spinner-border text-info" role="status">
+    </div>
+</ng-template>
+<ng-template #errorTemplate>
+        <i class="material-icons">
+            error_outline
+        </i>
+</ng-template>

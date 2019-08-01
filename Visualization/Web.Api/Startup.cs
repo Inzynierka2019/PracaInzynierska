@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using log4net;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Web.Api.Hubs;
-using Web.Api.IoC;
-
-namespace Visualization
+﻿namespace Web.Api
 {
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+
+    using log4net;
+    using Web.Logic.Hubs;
+
     public class Startup
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(Startup));
@@ -46,7 +39,6 @@ namespace Visualization
                 app.UseHsts();
             }
 
-            loggerFactory.AddLog4Net();
             app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
             app.UseSignalR(routes =>
@@ -55,7 +47,7 @@ namespace Visualization
             });
             app.UseMvc();
 
-            Log.Warn("Visualization Api is starting...");
+            Log.Warn("Visualization App is starting...");
         }
     }
 }

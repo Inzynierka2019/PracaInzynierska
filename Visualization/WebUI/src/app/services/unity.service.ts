@@ -8,29 +8,14 @@ import { retry, catchError } from 'rxjs/operators';
 export class UnityService {
   url = 'http://localhost:5000/api/unity';
 
-  constructor(private http: HttpClient) { }
-
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  }  
+  constructor(private httpClient: HttpClient) { }
 
   build() {
-    console.log(this.url + '/build');
-    console.log(this.http.get(this.url + '/build'))
-    // .pipe(
-    //   retry(1),
-    //   catchError(this.handleError)
-    // )
+    return this.httpClient.get(this.url + '/build');
   }
 
   run() {
-    return this.http.get(this.url + '/run')
-    .pipe(
-      retry(1),
-      catchError(this.handleError)
-    )
+    return this.httpClient.get(this.url + '/run');
   }
 
   handleError(error) {

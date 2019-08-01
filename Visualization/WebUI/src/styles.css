@@ -3,6 +3,9 @@
     padding: 0;
 }
 
+html {
+}
+
 body {
     background: #757f9a;
     background: -webkit-linear-gradient(to right, rgba(236, 233, 230, 0.5), #FFFFFF);
@@ -17,8 +20,12 @@ a:active {
     color: inherit;
 }
 
-.margin-top {
+.margin-top-md {
     margin-top: 60px;
+}
+
+.margin-top-lg {
+    margin-top: 80px;
 }
 
 .noselect {
@@ -28,3 +35,24 @@ a:active {
     -ms-user-select: none;
     user-select: none;
 }
+
+/* scrollbar styling */
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }

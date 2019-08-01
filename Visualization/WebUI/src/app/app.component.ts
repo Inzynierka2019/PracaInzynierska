@@ -4,7 +4,8 @@ import * as $ from 'jquery';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  styles: [`.router-link-active { background-color: red; }`]
 })
 export class AppComponent {
   title = 'Visualization';
@@ -16,7 +17,6 @@ export class AppComponent {
   }
 
   onPageUp() {
-
     $('html').animate({ scrollTop: 0 }, {
       duration: 400,
       queue: false,
@@ -24,6 +24,9 @@ export class AppComponent {
   }
 
   animateNavBar() {
+
+    console.log("working");
+
     const navbar = $('nav');
     const hasShowOffClass = navbar.hasClass('scroll-effect');
     const windowOffset = window.pageYOffset;
@@ -31,10 +34,12 @@ export class AppComponent {
 
     if (!hasShowOffClass && targetScaleInClass) {
       navbar.addClass('scroll-effect');
+      console.log("add");
     }
 
     if (hasShowOffClass && !targetScaleInClass) {
       navbar.removeClass('scroll-effect');
+      console.log("remove");
     }
   }
 

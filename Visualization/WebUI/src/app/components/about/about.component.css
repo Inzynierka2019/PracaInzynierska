@@ -1,6 +1,8 @@
 iframe {
+    overflow-y: hidden;
+    position: absolute;
     display: block;
     border: none;
-    height: 100vh;
+    height: 92vh;
     width: 100%;
 }
