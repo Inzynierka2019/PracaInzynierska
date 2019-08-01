@@ -8,17 +8,23 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class DashboardComponent implements OnInit {
 
-  loaded = false;
-  timeout = 1500;
-  loader ="waiting for unity app...";
-
+  connected = false;
+  connectionError = false;
+  timeout = 3000;
+  isLoading = false;
+  loaderMsg = "waiting for unity app...";
+  errorMsg = "could not connect :(";
+  
   constructor(private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
-      this.loaded = true;
+      this.isLoading = false;
+      this.connectionError = true;
+      // this.connected = true;
     }, this.timeout);
   }
 }

@@ -9,29 +9,40 @@ import { AppUnityConnectionStatusService } from '../../services/app-unity-connec
 })
 export class UnityConnectorComponent implements OnInit {
 
-  isConnected: Boolean;
+  isConnected: Boolean = false;
+  isLoading: Boolean = false;
+  error: Boolean = false;
 
   constructor(
     private unityApi: UnityService, 
-    private appConnection: AppUnityConnectionStatusService) {
-    
-      this.isConnected = false;
-  }
+    private appConnection: AppUnityConnectionStatusService) { }
 
   ngOnInit() {
-    // this.appConnection.
   }
   
   build() : void{
-    this.unityApi.build();
+    this.error = false;
+    this.isLoading = true;
+    this.unityApi.build().subscribe(
+      (data: any) => {
+        this.isLoading = false;
+      },
+      error => this.error = true
+    );
   }
 
   run() : void {
-    this.unityApi.run();
+    this.error = false;
+    this.isLoading = true;
+    this.unityApi.run().subscribe(
+      (data: any) => {
+        this.isLoading = false;
+      },
+      error => this.error = true
+    );
   }
 
   getConnectionClass() : string {
     return this.isConnected ? "active" : "inactive";
   }
-
 }

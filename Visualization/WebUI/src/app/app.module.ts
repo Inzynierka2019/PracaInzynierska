@@ -6,20 +6,20 @@ import { NgxSpinnerModule } from "ngx-spinner";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { ConsoleComponent } from './components/console/console.component';
 import { UnityConnectorComponent } from './components/unity-connector/unity-connector.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AboutComponent } from './components/about/about.component';
+import { LogsComponent } from './components/console/logs/logs.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavBarComponent,
     DashboardComponent,
     ConsoleComponent,
     UnityConnectorComponent,
     AboutComponent,
+    LogsComponent,
   ],
   imports: [
     BrowserModule,
