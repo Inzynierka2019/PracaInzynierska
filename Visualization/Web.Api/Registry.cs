@@ -10,11 +10,16 @@
     using Web.Logic.Services;
     using Web.Utils.Mapping;
     using Web.Logic.WebUI;
+    using Microsoft.Extensions.Configuration;
+    using Web.Logic.Configuration;
 
     public static class Registry
     {
-        public static void Configure(this IServiceCollection services)
+        public static void Configure(this IServiceCollection services, IConfiguration Configuration)
         {
+            var unityConfig = new UnityConfiguration();
+            Configuration.Bind("UnityApp", unityConfig);
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -50,6 +55,7 @@
             var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
             config.AssertConfigurationIsValid();
             services.AddSingleton<IMapper>(new Mapper(config));
+            services.AddSingleton<IUnityConfiguration>(unityConfig);
             services.AddTransient<IProcessService, ProcessService>();
             services.AddTransient<ILog, Log>();
             services.AddTransient<IConsoleLogUpdater, ConsoleLogUpdater>();

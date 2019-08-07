@@ -28,8 +28,9 @@
         {
             try
             {
-                Log.Info("Simulation build has started.", LogType.Info);
-                this.processService.ExecuteBuildSimulation();
+                Log.Info("Simulation build has started.", LogType.Warning);
+                if(this.processService.ExecuteBuildSimulation())
+                    Log.Info("Build has successfully finished!", LogType.Success);
             }
             catch (Exception e)
             {

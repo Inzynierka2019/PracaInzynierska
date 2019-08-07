@@ -6,35 +6,34 @@
     using Microsoft.AspNetCore.Hosting;
 
     using Common.Models.Enums;
+    using Web.Logic.Configuration;
 
     public class ProcessService : IProcessService
     {
-        private readonly IHostingEnvironment hostingEnvironment;
+        private readonly IUnityConfiguration unityConfig;
         private readonly ILog Log;
-        private const string unityAppExecutable = @"out\Simulation.exe";
         private readonly string directoryPath;
-        private readonly string unityProjectPath;
 
-        public ProcessService(IHostingEnvironment hostingEnvironment, ILog log)
+        public ProcessService(IHostingEnvironment hostingEnvironment, IUnityConfiguration unityConfig, ILog log)
         {
-            this.hostingEnvironment = hostingEnvironment;
+            this.directoryPath = hostingEnvironment.ContentRootPath;
+            this.unityConfig = unityConfig;
             this.Log = log;
-            this.directoryPath = this.unityProjectPath = this.hostingEnvironment.ContentRootPath;
-            this.unityProjectPath += @"\..\..\Simulation\App";
         }
 
-        public void ExecuteBuildSimulation()
+        public bool ExecuteBuildSimulation()
         {
-            var cmd = Path.Combine(directoryPath, "Scripts", "build-simulation.bat");
-            if(ExecuteCommand(cmd, true))
-            {
-                Log.Info("Build has successfully finished!", LogType.Success);
-            }
+            var path = Path.Combine(directoryPath, "Scripts", "build-simulation.bat");
+            var unityAppDir = Path.Combine(this.directoryPath, this.unityConfig.ProjectPath);
+            var cmd = string.Join(" ", path, this.unityConfig.UnityExe, unityAppDir);
+
+            return ExecuteCommand(cmd, true);
         }
 
         public void ExecuteRunSimulation()
         {
-            ExecuteCommand(unityAppExecutable, false);
+            var cmd = Path.Combine(directoryPath, this.unityConfig.OutputDirectory, this.unityConfig.UnityAppExe);
+            ExecuteCommand(cmd, false);
         }
 
         [System.Runtime.InteropServices.DllImport("User32.dll")]
@@ -47,7 +46,6 @@
             processInfo.UseShellExecute = false;
             processInfo.RedirectStandardError = true;
             processInfo.RedirectStandardOutput = true;
-            processInfo.WorkingDirectory = unityProjectPath;
             processInfo.CreateNoWindow = true;
 
             var process = Process.Start(processInfo);

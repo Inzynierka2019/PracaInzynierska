@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { OverlayModule } from "@angular/cdk/overlay";
+import { MatSnackBarModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,7 +29,10 @@ import { LogsComponent } from './components/console/logs/logs.component';
     AppRoutingModule,
     HttpClientModule,
     ChartsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    OverlayModule,
+    MatSnackBarModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
