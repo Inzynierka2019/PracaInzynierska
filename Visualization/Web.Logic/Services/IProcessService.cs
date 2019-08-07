@@ -6,7 +6,7 @@ namespace Web.Logic.Services
 {
     public interface IProcessService
     {
-        void ExecuteBuildSimulation();
+        bool ExecuteBuildSimulation();
 
         void ExecuteRunSimulation();
     }

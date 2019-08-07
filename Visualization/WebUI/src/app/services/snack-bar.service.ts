@@ -3,6 +3,7 @@ import { OverlayModule } from "@angular/cdk/overlay";
 import {
   MatSnackBar,
   MatSnackBarConfig,
+  MatSnackBarModule,
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material';

@@ -8,13 +8,9 @@ namespace Web.Logic.Configuration
     public class UnityConfiguration : IUnityConfiguration
     {
         public string UnityExe { get; set; }
-
         public string UnityAppExe { get; set; }
-
         public string ProjectPath { get; set; }
-
+        public string OutputDirectory { get; set; }
         public string BuildSimulationBatch { get; set; }
-
-        public string RunSimulationBatch { get; set; }
     }
 }

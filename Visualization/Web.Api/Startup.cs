@@ -25,7 +25,7 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure();
+            services.Configure(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
