@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1266830439395337564}
   - component: {fileID: 1266830439395337563}
   - component: {fileID: 1266830439395337562}
-  - component: {fileID: -8997249912077833211}
+  - component: {fileID: -5093737838492431340}
   m_Layer: 0
   m_Name: NodePrefab
   m_TagString: Node
@@ -92,7 +92,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-8997249912077833211
+--- !u!114 &-5093737838492431340
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,8 +101,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1266830439395337561}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5312636355762e64fadb3d6b9407dbfb, type: 3}
+  m_Script: {fileID: 11500000, guid: 0dbc0bf094b1a364eab5741bbc7aa126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neighbours: []
-  isSmallNode: 0

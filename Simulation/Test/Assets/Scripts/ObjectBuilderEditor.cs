@@ -1,7 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
 using UnityEditor;
-using System;
-using System.Collections.Generic;
+using UnityEngine;
 
 [CustomEditor(typeof(ObjectBuilderScript))]
 public class ObjectBuilderEditor : Editor
@@ -26,6 +25,11 @@ public class ObjectBuilderEditor : Editor
 
     public static GameObject GetNodesContainer(Containers container)
     {
+        // to szukanie co chwilę jest jakieś brzydkie
+        // (np. przy tworzeniu dróg - dużo małych node'ów napiernicza Find przy powstawaniu)
+        // (a to Find jeżeli leci dfsem to przeszukuje wszystkie node'y porównując do tej jednej nazwy)
+        // na pewno się da coś wymyśleć lepszego
+
         var nodesContainer = GameObject.Find(container.ToString());
         if(nodesContainer == null)
         {
@@ -49,7 +53,7 @@ public class ObjectBuilderEditor : Editor
                 break;
             case EventType.MouseUp:
                 GUIUtility.hotControl = 0;
-                Fun();
+                HandleClick();
                 e.Use();
                 break;
             case EventType.MouseDrag:
@@ -106,7 +110,7 @@ public class ObjectBuilderEditor : Editor
         return false;
     }
 
-    void Fun()
+    void HandleClick()
     {
         if (m_editMode)
         {
@@ -123,7 +127,7 @@ public class ObjectBuilderEditor : Editor
                     newObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y);
                     newObject.name = "Node" + m_count.ToString("00");
 
-                    selectedNode?.GetComponent<Node>().AddNeighbour(newObject.GetComponent<Node>());
+                    selectedNode?.GetComponent<Junction>().AddConsequent(newObject.GetComponent<Junction>());
 
                     EditorUtility.SetDirty(newObject);
                     Transform container = GetNodesContainer(Containers.BigNodesContainer).transform;
@@ -131,7 +135,7 @@ public class ObjectBuilderEditor : Editor
                     m_count++;
                 }
                 else
-                    selectedNode?.GetComponent<Node>().AddNeighbour(hitInfo.transform.GetComponent<Node>());
+                    selectedNode?.GetComponent<Junction>().AddConsequent(hitInfo.transform.GetComponent<Junction>());
             }
             else
                 Debug.Log("Coś poszło nie tak :/");
@@ -146,21 +150,21 @@ public class ObjectBuilderEditor : Editor
         GameObject.DestroyImmediate(smallNodes);
 
         var bigNodes = GetNodesContainer(Containers.BigNodesContainer);
-        var cache = new Dictionary<Node, List<Node>>();
+        var cache = new Dictionary<Junction, List<Junction>>();
         foreach (Transform node in bigNodes.transform)
         {
-            var nodeComponent = node.GetComponent<Node>();
+            var nodeComponent = node.GetComponent<Junction>();
             nodeComponent.ClearConnectionsAndPaths();
-            cache.Add(nodeComponent, nodeComponent.neighbours);
-            nodeComponent.neighbours = new List<Node>();
+            cache.Add(nodeComponent, nodeComponent.consequent);
+            nodeComponent.consequent = new List<Junction>();
         }
 
         foreach (Transform node in bigNodes.transform)
         {
-            var nodeComponent = node.GetComponent<Node>();
+            var nodeComponent = node.GetComponent<Junction>();
             var nodeNeighbours = cache[nodeComponent];
             foreach (var neighbour in nodeNeighbours)
-                nodeComponent.AddNeighbour(neighbour);
+                nodeComponent.AddConsequent(neighbour);
         }
         Debug.Log("Recreating paths. Done.");
     }
@@ -173,6 +177,7 @@ public class ObjectBuilderEditor : Editor
             if (GUILayout.Button("Disable Editing"))
             {
                 m_editMode = false;
+                Mark(selectedNode, select: false);
             }
         }
         else
@@ -180,14 +185,13 @@ public class ObjectBuilderEditor : Editor
             if (GUILayout.Button("Enable Editing"))
             {
                 m_editMode = true;
-                ChangeSelection(selectedNode);
             }
         }
 
-        if(GUILayout.Button("Clean road editor memory"))
-        {
-            selectedNode = null;
-        }
+        //if(GUILayout.Button("Clean road editor memory"))
+        //{
+        //    selectedNode = null;
+        //}
 
         if(GUILayout.Button("Re-create paths"))
         {
