@@ -30,7 +30,7 @@ public class Junction : MonoBehaviour
         GameObject newVehicle = Instantiate(Resources.Load<GameObject>("VehiclePrefab"));
         Node sourceNode = exits[Random.Range(0, exits.Count)].startNode;
 
-        newVehicle.GetComponent<Vehicle>().currentTarget = sourceNode.consequent.Keys.ToList()[Random.Range(0, sourceNode.consequent.Count)];
+        newVehicle.GetComponent<Vehicle>().currentIntermidiateTarget = sourceNode.consequent.Keys.ToList()[Random.Range(0, sourceNode.consequent.Count)];
         newVehicle.transform.position = sourceNode.transform.position;
         sourceNode.GetComponent<Node>().vehicles.Add(newVehicle.GetComponent<Vehicle>());
     }
