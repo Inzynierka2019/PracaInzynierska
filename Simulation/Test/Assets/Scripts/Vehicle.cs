@@ -1,41 +1,54 @@
-﻿using System.Collections;
+﻿using PathCreation;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class RoadInfo
+{
+    public bool isRoadClear = false;
+    public float distanceToNearestObstacle = 0;
+    public float nearestObstacleVelocity = 0;
+}
+
 public class Vehicle : MonoBehaviour
 {
+    public float velocity;
+    public float acceleration;
+    public float deceleration;
+    public float safeDistance;
+    public float criticalDistance;
+    public float distanceOnCurrentRoadSegment;
+    public VertexPath currentPath;
+    public Node currentIntermidiateTarget;
+    public bool isWaitingAtNode = false;
 
-    public int hops = 0;
-    public float velocity = 0;
-    public float currentRoadSegmentDistance;
-    public Node currentTarget;
-
-    private void Awake()
+    public void Awake()
     {
-        hops = Random.Range(50, 100);
-        velocity = Random.Range(0.5f, 1f);
+        velocity = Random.Range(1f, 7);
+        acceleration = 2;
+        deceleration = 2;
+        safeDistance = 2.5f;
+        criticalDistance = 1.5f;
+        distanceOnCurrentRoadSegment = 0;
     }
 
-    void Start()
+    public void UpdateRoadInfo(RoadInfo info)
     {
-        
-    }
+        var calculatedMoveDistance = velocity * Time.deltaTime;
 
-    public Node IntersectionDecision(List<Node> intersectionRoutes)
-    {
-        if (hops-- < 0 || intersectionRoutes.Count == 0)
-            return null;
+        if (info.isRoadClear)
+        {
+            distanceOnCurrentRoadSegment += calculatedMoveDistance;
+        }
         else
         {
-            var newDestination = intersectionRoutes[Random.Range(0, intersectionRoutes.Count)];
-            currentTarget = newDestination;
-            currentRoadSegmentDistance = 0;
-            return newDestination;
+            if (info.distanceToNearestObstacle - calculatedMoveDistance > safeDistance)
+                distanceOnCurrentRoadSegment += calculatedMoveDistance;
         }
     }
 
-    public void UpdatePositionOnRoadSegment()
+    public Node GetNextTargetNode(List<Node> nodes)
     {
-        currentRoadSegmentDistance += velocity * Time.deltaTime;
+        return nodes[Random.Range(0, nodes.Count)];
     }
 }
+

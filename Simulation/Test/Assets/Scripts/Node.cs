@@ -8,45 +8,128 @@ public class Node : MonoBehaviour
     public Dictionary<Node, VertexPath> consequent = new Dictionary<Node, VertexPath>();
 
     public List<Vehicle> vehicles = new List<Vehicle>();
+    public bool occupied;
+    public object occupiedGuard = new object();
 
     //Update is called once per frame
     void Update()
     {
-        var vehiclesToTransfer = new Dictionary<Vehicle, Node>();
+        var vehilcesToTransfer = new Dictionary<Vehicle, Node>();
         var vehiclesToRemove = new List<Vehicle>();
+
         foreach (var vehicle in vehicles)
         {
-            // Tutaj można poinformować pojazd o sytuacji przed nim.
-            vehicle.UpdatePositionOnRoadSegment();
-            if (vehicle.currentRoadSegmentDistance > 1)
+            if (!vehicle.isWaitingAtNode)
             {
-                //Tutaj można powiedzieć pojazdowi, że poruszanie się to tego węzła jest w tej chwili nie możliwe
-                //np. nie można teraz zmienić pasa ruchu lub stoi na skrzyżowaniu i jest czerwone światło
-                var vehicleArrivedAtThisNode = vehicle.currentTarget;
-                var decision = vehicle.IntersectionDecision(vehicle.currentTarget.consequent.Keys.ToList());
-                if (decision == null)
+                var nearestInFront = FindNearestVehicleInFront(vehicle);
+                var info = new RoadInfo();
+                info.isRoadClear = nearestInFront == null ? true : false;
+                if (!info.isRoadClear)
+                {
+                    info.distanceToNearestObstacle = nearestInFront.distanceOnCurrentRoadSegment - vehicle.distanceOnCurrentRoadSegment;
+                    info.nearestObstacleVelocity = nearestInFront.velocity;
+                }
+                else
+                {
+                    if (vehicle.currentIntermidiateTarget.occupied)
+                    {
+                        info.isRoadClear = false;
+                        info.distanceToNearestObstacle = consequent[vehicle.currentIntermidiateTarget].length - vehicle.distanceOnCurrentRoadSegment;
+                        info.nearestObstacleVelocity = 0;
+                    }
+                }
+                vehicle.UpdateRoadInfo(info);
+            }
+
+            if (vehicle.distanceOnCurrentRoadSegment > consequent[vehicle.currentIntermidiateTarget].length)
+            {
+                if (vehicle.currentIntermidiateTarget.consequent.Count == 0)
                     vehiclesToRemove.Add(vehicle);
                 else
-                    vehiclesToTransfer.Add(vehicle, vehicleArrivedAtThisNode);
+                {
+                    var nextHop = vehicle.GetNextTargetNode(vehicle.currentIntermidiateTarget.consequent.Keys.ToList());
+                    var nearestInFront = vehicle.currentIntermidiateTarget.FindNearestVehicleInFront(0, nextHop);
+                    vehicle.isWaitingAtNode = true;
+                    lock (vehicle.currentIntermidiateTarget.occupiedGuard)
+                    {
+                        vehicle.currentIntermidiateTarget.occupied = true;
+                    }
+
+                    if (nearestInFront == null || nearestInFront.distanceOnCurrentRoadSegment > vehicle.safeDistance)
+                    {
+                        vehilcesToTransfer.Add(vehicle, vehicle.currentIntermidiateTarget);
+                        lock (vehicle.currentIntermidiateTarget.occupiedGuard)
+                        {
+                            vehicle.currentIntermidiateTarget.occupied = false;
+                        }
+                        vehicle.currentIntermidiateTarget = nextHop;
+                        vehicle.distanceOnCurrentRoadSegment = 0;
+                        vehicle.isWaitingAtNode = false;
+                    }
+                }
             }
             else
             {
-                var path = consequent[vehicle.currentTarget];
-                var newPosition = path.GetPoint(vehicle.currentRoadSegmentDistance, EndOfPathInstruction.Stop);
-                vehicle.transform.position = newPosition;
+                vehicle.transform.position = consequent[vehicle.currentIntermidiateTarget].GetPointAtDistance(vehicle.distanceOnCurrentRoadSegment, EndOfPathInstruction.Stop);
             }
         }
 
-        foreach (var v in vehiclesToRemove)
-        {
-            vehicles.Remove(v);
-            Destroy(v.gameObject);
-        }
-
-        foreach (var pair in vehiclesToTransfer)
+        foreach (var pair in vehilcesToTransfer)
         {
             vehicles.Remove(pair.Key);
             pair.Value.vehicles.Add(pair.Key);
         }
+
+        foreach (var item in vehiclesToRemove)
+        {
+            Debug.Log(item.velocity);
+            DestroyImmediate(item.gameObject);
+            vehicles.Remove(item);
+        }
+    }
+
+    public Vehicle FindNearestVehicleInFront(Vehicle thisVehicle)
+    {
+        var vehiclesOnRoad = vehicles.FindAll((Vehicle vehicle) =>
+        {
+            return vehicle.currentIntermidiateTarget == thisVehicle.currentIntermidiateTarget && vehicle != thisVehicle;
+        });
+
+        Vehicle result = null;
+        foreach (var v in vehiclesOnRoad)
+        {
+            if (result == null && v.distanceOnCurrentRoadSegment > thisVehicle.distanceOnCurrentRoadSegment)
+                result = v;
+            else if (
+                v.distanceOnCurrentRoadSegment > thisVehicle.distanceOnCurrentRoadSegment &&
+                v.distanceOnCurrentRoadSegment < result.distanceOnCurrentRoadSegment)
+            {
+                result = v;
+            }
+        }
+        return result;
+    }
+
+    public Vehicle FindNearestVehicleInFront(float position, Node target)
+    {
+        var vehiclesOnRoad = vehicles.FindAll((Vehicle vehicle) =>
+        {
+            return vehicle.currentIntermidiateTarget == target;
+        });
+
+        Vehicle result = null;
+        foreach (var v in vehiclesOnRoad)
+        {
+            if (result == null && v.distanceOnCurrentRoadSegment > position)
+                result = v;
+            else if (
+                v.distanceOnCurrentRoadSegment > position &&
+                v.distanceOnCurrentRoadSegment < result.distanceOnCurrentRoadSegment)
+            {
+                result = v;
+            }
+        }
+        return result;
     }
 }
+
