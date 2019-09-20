@@ -15,9 +15,10 @@
         /// <summary>
         /// Timespan in milliseconds before sending first 'keep-alive' message.
         /// </summary>
-        private const int dueTime = 2000;
+        // It should be linked with period time of loading unity app!
+        private const int dueTime = 3000;
 
-        private readonly TimeSpan interval = new TimeSpan(0, 0, 5);
+        private readonly TimeSpan interval = new TimeSpan(0, 0, 0, 0, 2000);
 
         private readonly string keepAlive = SignalMethods.SignalForUnityAppConnectionStatus.Method;
 
@@ -29,20 +30,23 @@
         public void KeepAlive()
         {
             Timer = new ActionTimer(
-              async () => await this.HubClient.Send(keepAlive, true),
+              async () => {
+                  Console.WriteLine("Sending keep-alive");
+                  await this.HubClient.Send(keepAlive, true); 
+                  },
               interval,
               dueTime);
         }
 
         public async void Disconnect()
         {
-            Timer.Dispose();
             await this.HubClient.Send(keepAlive, false);
         }
 
         public void Dispose()
         {
             Disconnect();
+            ((IDisposable)Timer).Dispose();
             ((IDisposable)HubClient).Dispose();
         }
     }

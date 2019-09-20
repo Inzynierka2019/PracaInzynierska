@@ -24,12 +24,30 @@ svg:hover {
     margin-right: 20px;
 }
 
-.active {
-    fill: white;
+.simulator-title {
+    position: relative;
+    top: 8px;
+    margin: 20px;
+    font-size: 40px;
+    font-family: 'ITC Avant Garde';
+    transition: 1s ease-in;
 }
 
-.inactive {
-    fill: gray;
+.connected {
+    fill: white;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-width: 0.5px;
+    -webkit-text-stroke-color: black;
+}
+
+.disconnected {
+    fill: #3c1053;
+    color: #3c1053;
+    transition: all 3s ease;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    text-shadow: 2px 2px 2px rgba(255,255,255,0.5);
 }
 
 .app-buttons {

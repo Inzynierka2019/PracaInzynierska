@@ -24,9 +24,6 @@ export class AppComponent {
   }
 
   animateNavBar() {
-
-    console.log("working");
-
     const navbar = $('nav');
     const hasShowOffClass = navbar.hasClass('scroll-effect');
     const windowOffset = window.pageYOffset;
@@ -34,12 +31,10 @@ export class AppComponent {
 
     if (!hasShowOffClass && targetScaleInClass) {
       navbar.addClass('scroll-effect');
-      console.log("add");
     }
 
     if (hasShowOffClass && !targetScaleInClass) {
       navbar.removeClass('scroll-effect');
-      console.log("remove");
     }
   }
 

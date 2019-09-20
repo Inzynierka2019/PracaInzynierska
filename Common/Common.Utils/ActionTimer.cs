@@ -28,12 +28,13 @@ namespace Common.Utils
         {
             _action = action;
             _autoResetEvent = new AutoResetEvent(false);
-            _timer = new Timer(Execute, _autoResetEvent, dueTime, interval.Milliseconds);
+            _timer = new Timer(Execute, _autoResetEvent, dueTime, (int)interval.TotalMilliseconds);
             TimerStarted = DateTime.Now;
         }
 
         public void Execute(object stateInfo)
         {
+
             _action();
         }
 

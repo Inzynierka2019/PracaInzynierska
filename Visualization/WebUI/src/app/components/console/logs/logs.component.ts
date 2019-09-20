@@ -22,7 +22,6 @@ export class LogsComponent implements OnInit {
 
     this.hub.registerHandler(this.hubMethod, (data) => {
       var log = new ConsoleLog(data.message, data.timeStamp, data.logType);
-      console.log(log);
       this.logs.push(log);
     });
   }

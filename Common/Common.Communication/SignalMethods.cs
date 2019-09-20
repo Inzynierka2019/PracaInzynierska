@@ -15,7 +15,7 @@
             = new SignalMethod(typeof(VehiclePopulation), "SignalForVehiclePopulation");
 
         public static readonly SignalMethod SignalForUnityAppConnectionStatus
-            = new SignalMethod(typeof(bool), "UnityAppConnectionStatus");
+            = new SignalMethod(typeof(bool), "SignalForUnityAppConnectionStatus");
     }
 
     public class SignalMethod

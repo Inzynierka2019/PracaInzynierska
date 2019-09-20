@@ -9,19 +9,31 @@
         public UnityAppCommunicationManager(ILog log)
         {
             Log = log;
-            Log.Success("Unity App Communication Manager is now running...");
+            Log.Success("Unity App Communication Manager is now running.");
         }
 
-        public void Connected()
+        public void Connected(bool keepAlive)
         {
-            IsConnectedWithApp = true;
-            Log.Success("Unity App is now connected!");
+            if (!keepAlive)
+            {
+                IsConnectedWithApp = true;
+                Log.Success("Simulation App is now connected!");
+            }
+            else // app is already connected here.
+            {
+            }
         }
 
         public void Disconnected()
         {
-            IsConnectedWithApp = true;
-            Log.Warn("Unity App has disconnected.");
+            Log.Warn("Simulation App has disconnected.");
+        }
+
+        public void CheckStatus(bool status)
+        {
+            if (status)
+                Connected(status == IsConnectedWithApp);
+            else Disconnected();
         }
     }
 }
