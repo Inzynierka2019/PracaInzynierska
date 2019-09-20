@@ -13,14 +13,18 @@ namespace Common.Utils
         private AutoResetEvent _autoResetEvent;
         private Action _action;
 
-        /// <summary>
-        /// Time in milliseconds before first execution.
-        /// </summary>
-        private const int dueTime = 0;
-
         public DateTime TimerStarted { get; }
 
-        public ActionTimer(Action action, TimeSpan interval)
+        public TimeSpan TimeElapsed { get => TimerStarted.Subtract(DateTime.Now); }
+
+        /// <summary>
+        /// Initializes a new instance of the ActionTimer class
+        /// for a scheduled invocation of an action method.
+        /// </summary>
+        /// <param name="action">The method delegate.</param>
+        /// <param name="interval">The interval of the callback.</param>
+        /// <param name="dueTime">The time in milliseconds before first callback.</param>
+        public ActionTimer(Action action, TimeSpan interval, int dueTime = 0)
         {
             _action = action;
             _autoResetEvent = new AutoResetEvent(false);

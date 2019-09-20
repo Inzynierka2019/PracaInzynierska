@@ -1,12 +1,14 @@
 ﻿namespace Web.Logic.Hubs
 {
-    using Common.HubClient;
+    using System;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.SignalR;
+
+    using Common.Communication;
     using Common.Models;
     using Common.Models.Enums;
     using Common.Models.Exceptions;
-    using Microsoft.AspNetCore.SignalR;
-    using System;
-    using System.Threading.Tasks;
+
     using Web.Logic.Services;
 
     public class UIHub : Hub
@@ -22,12 +24,12 @@
         {
             try
             {
-                Log.Debug(population, LogType.Debug);
+                Log.Debug(population);
                 return Clients.All.SendAsync(SignalMethods.SignalForVehiclePopulation.Method, population);
             }
             catch (Exception ex)
             {
-                Log.Error($"Exception occured while sending statistics: {ex.Message}", LogType.Error);
+                Log.Error($"Exception occured while sending statistics: {ex.Message}");
                 throw new SignalHubException($"Error in SignalForVehiclePopulation method", ex);
             }
         }

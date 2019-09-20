@@ -59,6 +59,7 @@
             services.AddTransient<IProcessService, ProcessService>();
             services.AddTransient<ILog, Log>();
             services.AddTransient<IConsoleLogUpdater, ConsoleLogUpdater>();
+            services.AddSingleton<UnityAppCommunicationManager>();
         }
     }
 }

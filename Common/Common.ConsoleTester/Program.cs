@@ -1,8 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace Common.HubClient.Tests
+﻿namespace Common.ConsoleTester
 {
+    using System;
+    using Common.Communication;
+    using Common.Utils;
+
     class Program
     {
         static void Main(string[] args)
@@ -11,16 +12,21 @@ namespace Common.HubClient.Tests
             Console.ReadKey();
         }
 
-        private static void TestConnection()
+        static void TestConnection()
+        {
+            new AppConnector().KeepAlive();
+        }
+
+        static void TestSignalMethod()
         {
             Console.WriteLine("Started test connection.");
             var client = new HubClient("TestClient");
 
-            var timer = new DummyTimer(
+            var timer = new ActionTimer(
                 async () => await client.Send(
                     SignalMethods.SignalForVehiclePopulation.Method,
                     DummyDataManager.GetVehiclePopulation()
-                    ));
+                    ), new TimeSpan(0,0,1));
         }
     }
 }

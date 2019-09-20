@@ -1,11 +1,11 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using log4net;
-using Microsoft.AspNetCore.SignalR.Client;
-
-namespace Common.HubClient
+﻿namespace Common.Communication
 {
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using log4net;
+    using Microsoft.AspNetCore.SignalR.Client;
+
     public abstract class BaseClient : IDisposable
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(BaseClient));
@@ -29,7 +29,7 @@ namespace Common.HubClient
 
         #endregion
 
-        protected BaseClient(string name = "Client")
+        protected BaseClient(string name)
         {
             this.Name = name;
             this.Address = "http://localhost:5000/UIHub";

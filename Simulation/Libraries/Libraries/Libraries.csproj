@@ -42,20 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Web\AppUpdater.cs" />
-    <Compile Include="Web\Hubs\AppConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Web\IAppUpdater.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Common.HubClient.Tests\Common.HubClient.Tests.csproj">
-      <Project>{077ac4b1-02ca-4a54-a30c-8b10590dd9bd}</Project>
-      <Name>Common.HubClient.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Common\Common.HubClient\Common.HubClient.csproj">
-      <Project>{0ebd9120-815c-419e-aca4-ce1e85d36b1b}</Project>
-      <Name>Common.HubClient</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Common\Common.Models\Common.Models.csproj">
       <Project>{fe826082-bf86-4f16-9698-9561c81b4b8d}</Project>
       <Name>Common.Models</Name>

@@ -4,14 +4,16 @@
 
     public interface ILog
     {
-        void Fatal(object message, LogType type);
+        void Fatal(object message);
 
-        void Error(object message, LogType type);
+        void Error(object message);
 
-        void Warn(object message, LogType type);
+        void Warn(object message);
 
-        void Info(object message, LogType type);
+        void Info(object message);
 
-        void Debug(object message, LogType type);
+        void Debug(object message);
+
+        void Success(object message);
     }
 }
