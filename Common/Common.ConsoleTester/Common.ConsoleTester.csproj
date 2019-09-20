@@ -44,7 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DummyDataManager.cs" />
-    <Compile Include="DummyTimer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -52,13 +51,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.HubClient\Common.HubClient.csproj">
+    <ProjectReference Include="..\Common.Communication\Common.Communication.csproj">
       <Project>{0ebd9120-815c-419e-aca4-ce1e85d36b1b}</Project>
-      <Name>Common.HubClient</Name>
+      <Name>Common.Communication</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common.Models\Common.Models.csproj">
       <Project>{FE826082-BF86-4F16-9698-9561C81B4B8D}</Project>
       <Name>Common.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common.Utils\Common.Utils.csproj">
+      <Project>{9B185DC0-C70E-40C5-ADE8-729781A274A4}</Project>
+      <Name>Common.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -6,7 +6,7 @@
 
     using log4net;
 
-    using Common.HubClient;
+    using Common.Communication;
     using Common.Models;
     using Common.Models.Enums;
     using Web.Logic.Hubs;
@@ -26,11 +26,11 @@
         {
             try
             {
-                var log = new ConsoleLog(message, type);
-
                 await Task.Run(() =>
                 {
-                    this.hub.Clients.All.SendAsync(SignalMethods.SignalForConsoleLogs.Method, log);
+                    this.hub.Clients.All.SendAsync(
+                        SignalMethods.SignalForConsoleLogs.Method,
+                        new ConsoleLog(message, type));
                 });
             }
             catch (Exception e)

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common.HubClient\Common.HubClient.csproj" />
+    <ProjectReference Include="..\..\Common\Common.Communication\Common.Communication.csproj" />
     <ProjectReference Include="..\..\Common\Common.Models\Common.Models.csproj" />
     <ProjectReference Include="..\..\Common\Common.Utils\Common.Utils.csproj" />
     <ProjectReference Include="..\Web.Utils\Web.Utils.csproj" />

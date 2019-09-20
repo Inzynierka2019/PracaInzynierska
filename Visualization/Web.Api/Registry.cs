@@ -56,9 +56,11 @@
             config.AssertConfigurationIsValid();
             services.AddSingleton<IMapper>(new Mapper(config));
             services.AddSingleton<IUnityConfiguration>(unityConfig);
+            services.AddSingleton<IConsoleLogUpdater, ConsoleLogUpdater>();
             services.AddTransient<IProcessService, ProcessService>();
             services.AddTransient<ILog, Log>();
-            services.AddTransient<IConsoleLogUpdater, ConsoleLogUpdater>();
+            services.AddSingleton<UnityAppCommunicationManager>();
+            services.AddSingleton<WebUIStorage>();
         }
     }
 }

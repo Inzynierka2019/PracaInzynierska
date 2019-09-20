@@ -28,13 +28,13 @@
         {
             try
             {
-                Log.Info("Simulation build has started.", LogType.Warning);
+                Log.Warn("Simulation build has started.");
                 if(this.processService.ExecuteBuildSimulation())
-                    Log.Info("Build has successfully finished!", LogType.Success);
+                    Log.Success("Build has successfully finished!");
             }
             catch (Exception e)
             {
-                Log.Error($"An error occured in building simulation: {e.Message}", LogType.Error);
+                Log.Error($"An error occured in building simulation: {e.Message}");
 
                 return this.BadRequest();
             }
@@ -49,12 +49,12 @@
         {
             try
             {
-                Log.Info("Simulation.exe has started.", LogType.Warning);
+                Log.Warn("Simulation.exe has started.");
                 this.processService.ExecuteRunSimulation();
             }
             catch (Exception e)
             {
-                Log.Error($"An error occured in running simulation: {e.Message}", LogType.Error);
+                Log.Error($"An error occured in running simulation: {e.Message}");
 
                 return this.BadRequest();
             }

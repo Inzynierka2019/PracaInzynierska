@@ -1,12 +1,11 @@
-﻿using Common.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Common.HubClient
+﻿namespace Common.Communication
 {
+    using Common.Models;
+    using System;
+
+    /// <summary>
+    /// The list of signal methods
+    /// </summary>
     public class SignalMethods
     {
         public static readonly SignalMethod SignalForConsoleLogs
@@ -16,7 +15,7 @@ namespace Common.HubClient
             = new SignalMethod(typeof(VehiclePopulation), "SignalForVehiclePopulation");
 
         public static readonly SignalMethod SignalForUnityAppConnectionStatus
-            = new SignalMethod(typeof(bool), "UnityAppConnectionStatus");
+            = new SignalMethod(typeof(bool), "SignalForUnityAppConnectionStatus");
     }
 
     public class SignalMethod
