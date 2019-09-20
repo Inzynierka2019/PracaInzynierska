@@ -6,11 +6,20 @@ using Microsoft.AspNetCore.SignalR.Client;
 
 namespace Common.HubClient
 {
-    public abstract class BaseClient : IClient, IDisposable
+    public abstract class BaseClient : IDisposable
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(BaseClient));
 
+        #region Public Properties
+
+        /// <summary>
+        /// The client's SignalR connection.
+        /// </summary>
         public HubConnection Connection { get; set; }
+
+        /// <summary>
+        /// The hub's URL address.
+        /// </summary>
         public string Address { get; set; }
 
         /// <summary>
@@ -18,7 +27,9 @@ namespace Common.HubClient
         /// </summary>
         public string Name { get; set; }
 
-        public BaseClient(string name)
+        #endregion
+
+        protected BaseClient(string name = "Client")
         {
             this.Name = name;
             this.Address = "http://localhost:5000/UIHub";
@@ -36,7 +47,8 @@ namespace Common.HubClient
             WaitForConnection();
         }
 
-        public async Task Connect()
+        #region Private Methods
+        private async Task Connect()
         {
             try
             {
@@ -49,6 +61,16 @@ namespace Common.HubClient
             }
         }
 
+        private void WaitForConnection()
+        {
+            while (this.Connection.State.Equals(HubConnectionState.Disconnected))
+            {
+                Thread.Sleep(100);
+            }
+        }
+        #endregion
+
+        #region Public Methods
         public async Task Send<T>(string method, T message)
         {
             try
@@ -73,14 +95,6 @@ namespace Common.HubClient
             }
         }
 
-        public void WaitForConnection()
-        {
-            while (this.Connection.State.Equals(HubConnectionState.Disconnected))
-            {
-                Thread.Sleep(100);
-            }
-        }
-
         public void Dispose()
         {
             try
@@ -92,5 +106,6 @@ namespace Common.HubClient
                 Log.Fatal("Connection could not be disposed!", ex);
             }
         }
+        #endregion
     }
 }

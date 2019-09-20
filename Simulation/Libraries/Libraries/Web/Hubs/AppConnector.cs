@@ -1,10 +1,8 @@
-﻿namespace Libraries.Hubs
+﻿namespace Libraries.Web.Hubs
 {
     using System;
     using System.Collections.Generic;
     using Common.HubClient;
-    using Common.Utils;
-
 
     public class AppConnector : IDisposable
     {

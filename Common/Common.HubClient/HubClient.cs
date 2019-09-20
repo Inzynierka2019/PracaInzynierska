@@ -13,12 +13,24 @@ namespace Common.HubClient
 
         public HubClient(string name) : base(name)
         {
-            MethodInfo method = this.GetType().GetMethod("RegisterConnection", 
-                BindingFlags.NonPublic | BindingFlags.Instance, 
-                null,
-                CallingConventions.Any,
-                new Type[] { typeof(string) },
-                null);
+            InitClient();
+        }
+
+        public HubClient() : base()
+        {
+            InitClient();
+        }
+
+        private void InitClient()
+        {
+            MethodInfo method = this.GetType()
+                .GetMethod(
+                    "RegisterConnection",
+                    BindingFlags.NonPublic | BindingFlags.Instance,
+                    null,
+                    CallingConventions.Any,
+                    new Type[] { typeof(string) },
+                    null);
 
             foreach (var m in GetMethods())
             {
