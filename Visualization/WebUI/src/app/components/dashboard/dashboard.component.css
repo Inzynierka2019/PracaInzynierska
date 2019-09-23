@@ -5,12 +5,43 @@
 
 .loader {
     position: relative;
-    top: 30vh;
+    margin: 5px;
+    min-height: 150px;
+    width: 400px;
 }
 
 .loader-msg {
     position: relative;
-    top: 14vh;
-    font-size: 30px; 
+    top: 8vh;
+    font-size: 20px; 
     color: #ad5389;
+}
+
+:host >>> .icon {
+    position: relative;
+    bottom: 5px;
+    font-size: 30px;
+}
+
+:host >>> .chart-card {
+    width: 500px;
+}
+
+:host >>> .chart-header {
+    margin-bottom: -20px;
+}
+
+:host >>> .chart-title {
+    margin: 0 -10px;
+}
+
+:host >>> hr {
+    margin-left: -16px;
+    width: calc(100% + 32px);
+}
+
+:host >>> .chart {
+    margin-top: 10px;
+    width: calc(100% + 16px);
+    margin: 0 -8px 8px -8px;
 }

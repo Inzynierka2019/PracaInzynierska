@@ -21,12 +21,15 @@
             this.communicationManager = communicationManager;
         }
 
-        public Task SignalForVehiclePopulation(VehiclePopulation population)
+        public async Task SignalForVehiclePopulation(VehiclePopulation population)
         {
             try
             {
                 Log.Debug(population);
-                return Clients.All.SendAsync(SignalMethods.SignalForVehiclePopulation.Method, population);
+                await Task.Run(() =>
+                {
+                    Clients.All.SendAsync(SignalMethods.SignalForVehiclePopulation.Method, population);
+                });
             }
             catch (Exception ex)
             {

@@ -37,7 +37,7 @@
             {
                 builder.SetMinimumLevel(LogLevel.Trace);
                 builder.AddFilter("Microsoft", LogLevel.Warning);
-                builder.AddFilter("System", LogLevel.Error);
+                builder.AddFilter("System", LogLevel.Trace);
                 builder.AddFilter("Engine", LogLevel.Error);
                 builder.AddLog4Net();
             });

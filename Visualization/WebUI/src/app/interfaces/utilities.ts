@@ -34,3 +34,11 @@ export const LogTypeToColorMap: Map<number, ConsoleColor> = new Map<number, Cons
    [LogType.Fatal, ConsoleColor.DarkRed],
    [LogType.Success, ConsoleColor.Green]
 ]);
+
+export enum HubMethod {
+    VehiclePopulation,
+}
+
+export const StatisticsMethods: Map<HubMethod, string> = new Map<HubMethod, string>([
+    [HubMethod.VehiclePopulation, "SignalForVehiclePopulation"]
+]);

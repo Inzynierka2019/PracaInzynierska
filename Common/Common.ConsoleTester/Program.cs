@@ -9,7 +9,9 @@
     {
         static void Main(string[] args)
         {
+            TestSignalMethod();
             TestConnection();
+            Console.ReadKey();
         }
 
         static void TestConnection()

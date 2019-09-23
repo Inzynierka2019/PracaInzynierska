@@ -18,7 +18,7 @@ class SimulationBuilder {
 
     static void BuildWebGL()
     {
-        string pathToDeploy = @"D:\Dokumenty\Inzynierka\PracaInzynierska\Simulation\App\out\";
+        string pathToDeploy = @"D:\Dokumenty\Inzynierka\PracaInzynierska\Simulation\App\out\WebGL\";
 
         BuildPipeline.BuildPlayer(GetScenes(), pathToDeploy, BuildTarget.WebGL, BuildOptions.ShowBuiltPlayer);
     }

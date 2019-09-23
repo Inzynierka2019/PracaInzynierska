@@ -1,4 +1,4 @@
 export interface VehiclePopulation {
-    label: string,
-    count: number
+    data: [],
+    label: string
 }

@@ -6,8 +6,10 @@ services:
     build:
       context: Visualization\Web.Api
     ports:
-    - "5000:5000"
+      - "5000:5000"
     volumes:
+    networks:
+      - backend
 
   webui:
     container_name: webui

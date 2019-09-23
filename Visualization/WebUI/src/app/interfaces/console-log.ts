@@ -1,4 +1,4 @@
-import { LogType, ConsoleColor, LogTypeToColorMap } from '../interfaces/log-message-type.enum';
+import { LogType, ConsoleColor, LogTypeToColorMap } from './utilities';
 
 export class ConsoleLog {
     message: string;
@@ -14,7 +14,6 @@ export class ConsoleLog {
     }
 
     getConsoleColor(): ConsoleColor {
-        var test = LogTypeToColorMap.get(this.logType);
         return LogTypeToColorMap.get(this.logType);
     };
 }

@@ -5,7 +5,9 @@ import { ChartsModule } from 'ng2-charts';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { OverlayModule } from "@angular/cdk/overlay";
 import { MatSnackBarModule } from '@angular/material';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material/card';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +16,7 @@ import { UnityConnectorComponent } from './components/unity-connector/unity-conn
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AboutComponent } from './components/about/about.component';
 import { LogsComponent } from './components/console/logs/logs.component';
+import { VehiclePopulationComponent } from './components/dashboard/charts/vehicle-population/vehicle-population.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,7 @@ import { LogsComponent } from './components/console/logs/logs.component';
     UnityConnectorComponent,
     AboutComponent,
     LogsComponent,
+    VehiclePopulationComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,7 +36,9 @@ import { LogsComponent } from './components/console/logs/logs.component';
     NgxSpinnerModule,
     OverlayModule,
     MatSnackBarModule,
-    BrowserAnimationsModule
+    MatExpansionModule,
+    BrowserAnimationsModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

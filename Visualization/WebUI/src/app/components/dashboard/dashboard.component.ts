@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AppUnityConnectionStatusService } from 'src/app/services/app-unity-connection-status.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,24 +8,37 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
-  connected = false;
-  connectionError = false;
-  timeout = 3000;
-  isLoading = false;
-  loaderMsg = "waiting for unity app...";
+  loaderMsg = "waiting for simulation app...";
   errorMsg = "could not connect :(";
-  
-  constructor(private spinner: NgxSpinnerService) { }
+  connectionStatus: any;
+  constructor(
+    private appStatus: AppUnityConnectionStatusService,
+    private spinner: NgxSpinnerService) { 
+     
+  }
+
+  get connected(): Boolean {
+    return this.appStatus.isConnected;
+  }
 
   ngOnInit() {
-    this.isLoading = true;
+    this.spinner.show();
+    this.connectionStatus = this.appStatus.status$.subscribe(connection => {
+      if(connection) {
+        this.spinner.hide();
+        this.connectionStatus.unsubscribe();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.connectionStatus.unsubscribe();
+  }
+
+  showSpinner() {
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
-      this.isLoading = false;
-      this.connectionError = true;
-      // this.connected = true;
-    }, this.timeout);
+    }, 5000);
   }
 }
