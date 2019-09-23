@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SnackBarService } from './snack-bar.service';
 import * as signalR from "@aspnet/signalr";
 
 @Injectable({
@@ -16,8 +17,7 @@ export class SignalRService {
 
     this.hubConnection
       .start()
-      .then(() => console.log('SignalR started'))
-      // add snackbar notification
+      .then(() => this.snackBar.open('SignalR started'))
       .catch(err => {
         setTimeout(() => {
           this.startConnection();
@@ -33,7 +33,7 @@ export class SignalRService {
     this.hubConnection.off(methodName, method);
   }
 
-  constructor() {
+  constructor(private snackBar: SnackBarService) {
     this.startConnection();
   }
 

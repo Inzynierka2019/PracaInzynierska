@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SignalRService } from 'src/app/services/signal-r.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,17 +15,30 @@ export class DashboardComponent implements OnInit {
   isLoading = false;
   loaderMsg = "waiting for unity app...";
   errorMsg = "could not connect :(";
-  
-  constructor(private spinner: NgxSpinnerService) { }
+
+  constructor(
+    public hub: SignalRService,
+    private spinner: NgxSpinnerService) { 
+     
+  }
 
   ngOnInit() {
-    this.isLoading = true;
     this.spinner.show();
-    setTimeout(() => {
+    this.asyncInit();
+  }
+
+  async asyncInit() {
+    await this.waitForConnection().then(() => {
+      this.connected = true;
       this.spinner.hide();
-      this.isLoading = false;
-      this.connectionError = true;
-      // this.connected = true;
-    }, this.timeout);
+    });
+  }
+
+  waitForConnection() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve();
+      }, 3000);
+    });
   }
 }

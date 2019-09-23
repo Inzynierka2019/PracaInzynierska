@@ -18,12 +18,15 @@
             this.Log = log;
         }
 
-        public Task SignalForVehiclePopulation(VehiclePopulation population)
+        public async Task SignalForVehiclePopulation(VehiclePopulation population)
         {
             try
             {
                 Log.Debug(population, LogType.Debug);
-                return Clients.All.SendAsync(SignalMethods.SignalForVehiclePopulation.Method, population);
+                await Task.Run(() =>
+                {
+                    Clients.All.SendAsync(SignalMethods.SignalForVehiclePopulation.Method, population);
+                });
             }
             catch (Exception ex)
             {

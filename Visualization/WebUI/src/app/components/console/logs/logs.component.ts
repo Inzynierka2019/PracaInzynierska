@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ConsoleColor, LogType } from '../../../interfaces/log-message-type.enum';
+import { ConsoleColor, LogType } from './../../../interfaces/utilities';
 import { ConsoleLog } from '../../../interfaces/console-log';
 import { SignalRService } from 'src/app/services/signal-r.service';
 import * as $ from 'jquery';

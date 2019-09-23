@@ -1,6 +1,7 @@
 ﻿namespace Web.Logic.Services
 {
     using Common.Models.Enums;
+    using System;
     using Web.Logic.WebUI;
 
     public class Log : ILog

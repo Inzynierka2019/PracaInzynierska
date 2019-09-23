@@ -25,6 +25,10 @@
     <ProjectReference Include="..\Web.Utils\Web.Utils.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Communication\" />
+  </ItemGroup>
+
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES2015</TypeScriptTarget>
     <TypeScriptJSXEmit>Preserve</TypeScriptJSXEmit>

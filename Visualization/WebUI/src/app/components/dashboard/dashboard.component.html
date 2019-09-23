@@ -1,25 +1,26 @@
-<div class="container-flex margin-top-lg">
-    <div *ngIf="connected else loading" class="card">
-        <div class="card-body">
-        <h2 class="card-title"><span class="badge badge-dark">Dashboard</span></h2>
-        
-            <div class="card-header">
-                Statystyki
-            </div>
-            <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Cras justo odio
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </li>
-                </ul>
+<ng-container *ngIf="connected else loading">
+    <div class="container-flex margin-top-lg">
+        <mat-accordion>
+            <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                            Podsumowanie
+                    </mat-expansion-panel-header>
+                    <ng-template matExpansionPanelContent>
+                    </ng-template>
+            </mat-expansion-panel>
 
-            <div class="card-header">
-                Heatmapa
-            </div>
-            <br/>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        </div>
+            <mat-expansion-panel >
+                <mat-expansion-panel-header>
+                        Statystyki
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                    <app-vehicle-population></app-vehicle-population>
+                </ng-template>
+
+            </mat-expansion-panel>
+        </mat-accordion>
     </div>
-</div>
+</ng-container>
 
 <ng-template #loading>
     <div class="loader">

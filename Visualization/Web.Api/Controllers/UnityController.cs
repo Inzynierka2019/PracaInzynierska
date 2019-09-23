@@ -30,7 +30,15 @@
             {
                 Log.Info("Simulation build has started.", LogType.Warning);
                 if(this.processService.ExecuteBuildSimulation())
+                {
                     Log.Info("Build has successfully finished!", LogType.Success);
+                    return this.Ok();
+                }
+                else
+                {
+                    Log.Error("There were building errors...", LogType.Error);
+                    return this.BadRequest();
+                }
             }
             catch (Exception e)
             {
@@ -39,7 +47,6 @@
                 return this.BadRequest();
             }
 
-            return this.Ok();
         }
 
         [HttpGet]

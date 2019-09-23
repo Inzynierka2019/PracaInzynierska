@@ -6,4 +6,5 @@ echo Unity.exe directory: %unityPath%
 echo Project directory: %projectPath%
 echo Working directory: %cd%
 
+@echo on
 call %unityPath% -quit -batchmode -logFile stdout.log -projectPath %projectPath% -executeMethod SimulationBuilder.BuildWindows

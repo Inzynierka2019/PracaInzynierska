@@ -15,17 +15,19 @@ namespace Common.HubClient.Tests
         static DummyDataManager()
         {
             var r = new Random();
-            InitialCount = r.Next(100, 600);
+            InitialCount = r.Next(0, 1000);
         }
 
         public static VehiclePopulation GetVehiclePopulation()
         {
             var r = new Random();
-            var dev = r.Next(0, 25);
+            var dev = r.Next(0, 500);
+            var newCount = InitialCount + r.Next(-dev, dev);
+            if (newCount < 0) newCount = Math.Abs(dev);
 
             return new VehiclePopulation
             {
-                Count = InitialCount + r.Next(-dev, dev)
+                Data = new int[] { newCount }
             };
         }
     }

@@ -46,15 +46,14 @@
             processInfo.UseShellExecute = false;
             processInfo.RedirectStandardError = true;
             processInfo.RedirectStandardOutput = true;
-            processInfo.CreateNoWindow = true;
 
             var process = Process.Start(processInfo);
-            SetForegroundWindow(process.Handle);
+            //SetForegroundWindow(process.Handle);
 
             process.OutputDataReceived +=
                 (object sender, DataReceivedEventArgs e) => Log.Info(e.Data, LogType.Info);
             process.ErrorDataReceived +=
-                (object sender, DataReceivedEventArgs e) => Log.Info(e.Data, LogType.Info);
+                (object sender, DataReceivedEventArgs e) => Log.Error(e.Data, LogType.Error);
 
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
