@@ -31,12 +31,12 @@
                 Log.Warn("Simulation build has started.");
                 if(this.processService.ExecuteBuildSimulation())
                 {
-                    Log.Info("Build has successfully finished!", LogType.Success);
+                    Log.Success("Build has successfully finished!");
                     return this.Ok();
                 }
                 else
                 {
-                    Log.Error("There were building errors...", LogType.Error);
+                    Log.Error("There were building errors...");
                     return this.BadRequest();
                 }
             }

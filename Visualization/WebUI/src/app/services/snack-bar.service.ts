@@ -15,7 +15,7 @@ export class SnackBarService {
   snackBarConfig: MatSnackBarConfig;
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-  snackBarAutoHide = '2000';
+  snackBarAutoHide = '3000';
 
   constructor(private snackBar: MatSnackBar) { }
 

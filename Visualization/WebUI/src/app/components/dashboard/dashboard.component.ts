@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { SignalRService } from 'src/app/services/signal-r.service';
+import { AppUnityConnectionStatusService } from 'src/app/services/app-unity-connection-status.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,37 +8,37 @@ import { SignalRService } from 'src/app/services/signal-r.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
-  connected = false;
-  connectionError = false;
-  timeout = 3000;
-  isLoading = false;
-  loaderMsg = "waiting for unity app...";
+  loaderMsg = "waiting for simulation app...";
   errorMsg = "could not connect :(";
-
+  connectionStatus: any;
   constructor(
-    public hub: SignalRService,
+    private appStatus: AppUnityConnectionStatusService,
     private spinner: NgxSpinnerService) { 
      
   }
 
+  get connected(): Boolean {
+    return this.appStatus.isConnected;
+  }
+
   ngOnInit() {
     this.spinner.show();
-    this.asyncInit();
+    this.connectionStatus = this.appStatus.status$.subscribe(connection => {
+      if(connection) {
+        this.spinner.hide();
+        this.connectionStatus.unsubscribe();
+      }
+    });
   }
 
-  async asyncInit() {
-    await this.waitForConnection().then(() => {
-      this.connected = true;
+  ngOnDestroy() {
+    this.connectionStatus.unsubscribe();
+  }
+
+  showSpinner() {
+    this.spinner.show();
+    setTimeout(() => {
       this.spinner.hide();
-    });
-  }
-
-  waitForConnection() {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve();
-      }, 3000);
-    });
+    }, 5000);
   }
 }

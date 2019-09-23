@@ -22,10 +22,7 @@ export class SignalRService {
       .start()
       .then(() => this.snackBar.open('Visualization App now started!'))  
       .catch(err => {
-        setTimeout(() => {
-          this.snackBar.open("Can't connect with the visualization App!")
-          this.startConnection();
-        }, this.timeout);
+          this.snackBar.open("Can't connect with the Visualization App!");
       });
   }
 

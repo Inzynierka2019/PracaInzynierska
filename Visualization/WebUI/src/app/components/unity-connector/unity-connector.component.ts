@@ -14,6 +14,7 @@ export class UnityConnectorComponent implements OnInit {
   isBuilding: Boolean = false;
   runError: Boolean = false;
   buildError: Boolean = false;
+  connectionStatus: any;
 
   constructor(
     private unityApi: UnityService, 

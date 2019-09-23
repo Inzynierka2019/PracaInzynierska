@@ -25,7 +25,7 @@
         {
             try
             {
-                Log.Debug(population, LogType.Debug);
+                Log.Debug(population);
                 await Task.Run(() =>
                 {
                     Clients.All.SendAsync(SignalMethods.SignalForVehiclePopulation.Method, population);
