@@ -15,15 +15,16 @@ export class SnackBarService {
   snackBarConfig: MatSnackBarConfig;
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-  snackBarAutoHide = '3000';
 
   constructor(private snackBar: MatSnackBar) { }
 
-  open(message) {
+  /** snackBarAutoHide: indicates duration of displaying message.
+   *  value -1 means infinity. */ 
+  open(message: string, snackBarAutoHide: number = 3000) {
     this.snackBarConfig = new MatSnackBarConfig();
     this.snackBarConfig.horizontalPosition = this.horizontalPosition;
     this.snackBarConfig.verticalPosition = this.verticalPosition;
-    this.snackBarConfig.duration = parseInt(this.snackBarAutoHide, 0);
+    this.snackBarConfig.duration = snackBarAutoHide;
     this.snackBarConfig.panelClass = 'snackbar';
     this.snackBar.open(message, 'Close', this.snackBarConfig);
   }

@@ -16,7 +16,7 @@
         /// Timespan in milliseconds before sending first 'keep-alive' message.
         /// </summary>
         // It should be linked with period time of loading unity app!
-        private const int dueTime = 3000;
+        private const int dueTime = 500;
 
         private readonly TimeSpan interval = new TimeSpan(0, 0, 0, 0, 2000);
 
