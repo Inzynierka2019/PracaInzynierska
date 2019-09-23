@@ -1,5 +1,6 @@
 ﻿namespace Web.Api
 {
+    using System;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -8,6 +9,7 @@
 
     using log4net;
     using Web.Logic.Hubs;
+    using Services = Web.Logic.Services;
 
     public class Startup
     {
@@ -28,7 +30,7 @@
             services.Configure(Configuration);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -48,6 +50,7 @@
             app.UseMvc();
 
             Log.Warn("Visualization App is starting...");
+            serviceProvider.GetService<Services.UnityAppCommunicationManager>();
         }
     }
 }

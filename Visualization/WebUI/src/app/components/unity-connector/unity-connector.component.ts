@@ -10,7 +10,6 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
 })
 export class UnityConnectorComponent implements OnInit {
 
-  isConnected: Boolean = false;
   isRunning: Boolean = false;
   isBuilding: Boolean = false;
   runError: Boolean = false;
@@ -18,7 +17,7 @@ export class UnityConnectorComponent implements OnInit {
 
   constructor(
     private unityApi: UnityService, 
-    private appConnection: AppUnityConnectionStatusService,
+    private appStatus: AppUnityConnectionStatusService,
     private snackBar: SnackBarService) { }
 
   ngOnInit() {
@@ -55,7 +54,7 @@ export class UnityConnectorComponent implements OnInit {
     );
   }
 
-  getConnectionClass() : string {
-    return this.isConnected ? "active" : "inactive";
+  getAppStatusClass() : string {
+    return this.appStatus.isConnected ? "connected" : "disconnected";
   }
 }

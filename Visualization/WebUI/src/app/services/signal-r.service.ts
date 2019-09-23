@@ -6,9 +6,12 @@ import * as signalR from "@aspnet/signalr";
   providedIn: 'root'
 })
 export class SignalRService {
-
-  timeout = 3000;
+  timeout = 10000;
   private hubConnection: signalR.HubConnection
+
+  constructor(private snackBar: SnackBarService) {
+    this.startConnection();
+  }
 
   public startConnection = () => {
     this.hubConnection = new signalR.HubConnectionBuilder()
@@ -17,9 +20,10 @@ export class SignalRService {
 
     this.hubConnection
       .start()
-      .then(() => this.snackBar.open('SignalR started'))
+      .then(() => this.snackBar.open('Visualization App now started!'))  
       .catch(err => {
         setTimeout(() => {
+          this.snackBar.open("Can't connect with the visualization App!")
           this.startConnection();
         }, this.timeout);
       });
@@ -32,10 +36,4 @@ export class SignalRService {
   public removeHandler(methodName: string, method: (...args: any[]) => void): void {
     this.hubConnection.off(methodName, method);
   }
-
-  constructor(private snackBar: SnackBarService) {
-    this.startConnection();
-  }
-
-
 }

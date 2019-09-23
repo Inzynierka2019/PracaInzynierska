@@ -13,11 +13,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Common.HubClient.Tests\Common.HubClient.Tests.csproj" />
-    <ProjectReference Include="..\..\..\Common\Common.HubClient\Common.HubClient.csproj" />
+    <ProjectReference Include="..\..\..\Common\Common.HubClient.Tests\Common.ConsoleTester.csproj" />
+    <ProjectReference Include="..\..\..\Common\Common.HubClient\Common.Communication.csproj" />
     <ProjectReference Include="..\..\..\Common\Common.Models\Common.Models.csproj" />
     <ProjectReference Include="..\..\..\Common\Common.Utils\Common.Utils.csproj" />
     <ProjectReference Include="..\Libraries\Libraries.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Web.Tests\" />
   </ItemGroup>
 
 </Project>

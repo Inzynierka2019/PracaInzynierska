@@ -5,7 +5,6 @@
     using System.IO;
     using Microsoft.AspNetCore.Hosting;
 
-    using Common.Models.Enums;
     using Web.Logic.Configuration;
 
     public class ProcessService : IProcessService
@@ -51,9 +50,9 @@
             //SetForegroundWindow(process.Handle);
 
             process.OutputDataReceived +=
-                (object sender, DataReceivedEventArgs e) => Log.Info(e.Data, LogType.Info);
+                (object sender, DataReceivedEventArgs e) => Log.Info(e.Data);
             process.ErrorDataReceived +=
-                (object sender, DataReceivedEventArgs e) => Log.Error(e.Data, LogType.Error);
+                (object sender, DataReceivedEventArgs e) => Log.Info(e.Data);
 
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
