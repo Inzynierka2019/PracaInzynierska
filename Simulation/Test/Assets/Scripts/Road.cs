@@ -103,7 +103,9 @@ public class Road : MonoBehaviour
         var smallNode = Instantiate(Resources.Load<GameObject>("SmallNodePrefab"));
         smallNode.name = (nodeId++).ToString();
         smallNode.transform.position = position;
+#if(UNITY_EDITOR)
         smallNode.tag = ObjectBuilderEditor.Tags.Untagged.ToString();
+#endif
         smallNode.transform.parent = transform;
 
         return smallNode;

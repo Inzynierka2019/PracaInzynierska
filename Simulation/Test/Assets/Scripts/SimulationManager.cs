@@ -4,33 +4,52 @@ using UnityEngine;
 
 public class SimulationManager : MonoBehaviour
 {
-    //private void OnDrawGizmos()
-    //{
-    //    var container = ObjectBuilderEditor.GetNodesContainer(ObjectBuilderEditor.Containers.SmallNodesContainer);
-
-    //    foreach (Transform child in container.transform)
-    //    {
-    //        foreach (var path in child.GetComponent<Node>().paths)
-    //        {
-    //            //Gizmos.DrawLine(path.Value.vertices[0], path.Value.vertices[path.Value.vertices.Length - 1]);
-    //            for (var i = 1; i < path.Value.vertices.Length; i++)
-    //            {
-    //                Gizmos.DrawLine(path.Value.vertices[i - 1], path.Value.vertices[i]);
-    //            }
-
-    //            Gizmos.DrawSphere(path.Value.GetPointAtDistance(path.Value.length - 0.15f, PathCreation.EndOfPathInstruction.Stop), 0.08f);
-    //        }
-    //    }
-    //}
-    // Start is called before the first frame update
     void Start()
     {
-        ObjectBuilderEditor.RecreatePaths();
+        RecreatePaths();
     }
 
-    // Update is called once per frame
-    void Update()
+    // ten system totalnie absolutnie do zmiany
+    public enum Containers
     {
-        
+        BigNodesContainer,
+        SmallNodesContainer
+    }
+
+    public static GameObject GetNodesContainer(Containers container)
+    {
+        var nodesContainer = GameObject.Find(container.ToString());
+        if (nodesContainer == null)
+        {
+            nodesContainer = new GameObject();
+            nodesContainer.name = container.ToString();
+        }
+        return nodesContainer;
+    }
+
+    public static void RecreatePaths()
+    {
+        Debug.Log("Recreating paths. Please hold");
+        var smallNodes = GetNodesContainer(Containers.SmallNodesContainer);
+        GameObject.DestroyImmediate(smallNodes);
+
+        var bigNodes = GetNodesContainer(Containers.BigNodesContainer);
+        var cache = new Dictionary<Junction, List<Junction>>();
+        foreach (Transform node in bigNodes.transform)
+        {
+            var nodeComponent = node.GetComponent<Junction>();
+            nodeComponent.ClearConnectionsAndPaths();
+            cache.Add(nodeComponent, nodeComponent.consequent);
+            nodeComponent.consequent = new List<Junction>();
+        }
+
+        foreach (Transform node in bigNodes.transform)
+        {
+            var nodeComponent = node.GetComponent<Junction>();
+            var nodeNeighbours = cache[nodeComponent];
+            foreach (var neighbour in nodeNeighbours)
+                nodeComponent.AddConsequent(neighbour);
+        }
+        Debug.Log("Recreating paths. Done.");
     }
 }
