@@ -74,16 +74,19 @@ public class Road : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        foreach(var node in nodes)
+        if(nodes != null)
         {
-            foreach (var path in node.consequent.Values)
+            foreach (var node in nodes)
             {
-                for (var i = 1; i < path.vertices.Length; i++)
+                foreach (var path in node.consequent.Values)
                 {
-                    Gizmos.DrawLine(path.vertices[i - 1], path.vertices[i]);
-                }
+                    for (var i = 1; i < path.vertices.Length; i++)
+                    {
+                        Gizmos.DrawLine(path.vertices[i - 1], path.vertices[i]);
+                    }
 
-                Gizmos.DrawSphere(path.GetPointAtDistance(path.length - 0.15f, PathCreation.EndOfPathInstruction.Stop), 0.08f);
+                    Gizmos.DrawSphere(path.GetPointAtDistance(path.length - 0.15f, PathCreation.EndOfPathInstruction.Stop), 0.08f);
+                }
             }
         }
     }
