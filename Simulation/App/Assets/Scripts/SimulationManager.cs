@@ -13,10 +13,11 @@ public class SimulationManager : MonoBehaviour
     public enum Containers
     {
         BigNodesContainer,
-        SmallNodesContainer
+        SmallNodesContainer,
+        RoadsContainer
     }
 
-    public static GameObject GetNodesContainer(Containers container)
+    public static GameObject GetObjectsContainer(Containers container)
     {
         var nodesContainer = GameObject.Find(container.ToString());
         if (nodesContainer == null)
@@ -27,13 +28,18 @@ public class SimulationManager : MonoBehaviour
         return nodesContainer;
     }
 
+    public static void PlaceObjectInContainer(GameObject gameObject, Containers container)
+    {
+        gameObject.transform.parent = GetObjectsContainer(container).transform;
+    }
+
     public static void RecreatePaths()
     {
         Debug.Log("Recreating paths. Please hold");
-        var smallNodes = GetNodesContainer(Containers.SmallNodesContainer);
+        var smallNodes = GetObjectsContainer(Containers.SmallNodesContainer);
         GameObject.DestroyImmediate(smallNodes);
 
-        var bigNodes = GetNodesContainer(Containers.BigNodesContainer);
+        var bigNodes = GetObjectsContainer(Containers.BigNodesContainer);
         var cache = new Dictionary<Junction, List<Junction>>();
         foreach (Transform node in bigNodes.transform)
         {

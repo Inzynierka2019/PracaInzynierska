@@ -38,7 +38,7 @@ public class Node : MonoBehaviour
                         info.nearestObstacleVelocity = 0;
                     }
                 }
-                vehicle.UpdateRoadInfo(info);
+                vehicle.UpdatePosition(info);
             }
 
             if (vehicle.distanceOnCurrentRoadSegment > consequent[vehicle.currentIntermidiateTarget].length)
@@ -71,6 +71,7 @@ public class Node : MonoBehaviour
             else
             {
                 vehicle.transform.position = consequent[vehicle.currentIntermidiateTarget].GetPointAtDistance(vehicle.distanceOnCurrentRoadSegment, EndOfPathInstruction.Stop);
+                vehicle.transform.rotation = consequent[vehicle.currentIntermidiateTarget].GetRotationAtDistance(vehicle.distanceOnCurrentRoadSegment, EndOfPathInstruction.Stop);
             }
         }
 
@@ -82,7 +83,6 @@ public class Node : MonoBehaviour
 
         foreach (var item in vehiclesToRemove)
         {
-            Debug.Log(item.velocity);
             DestroyImmediate(item.gameObject);
             vehicles.Remove(item);
         }

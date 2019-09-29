@@ -43,6 +43,8 @@ public class Junction : MonoBehaviour
 
     public void AddConsequent(Junction consequent)
     {
-        Instantiate(Resources.Load<GameObject>("RoadPrefab")).GetComponent<Road>().Create(this, consequent);
+        var road = Instantiate(Resources.Load<GameObject>("RoadPrefab")).GetComponent<Road>();
+        road.Create(this, consequent);
+        SimulationManager.PlaceObjectInContainer(road.gameObject, SimulationManager.Containers.RoadsContainer);
     }
 }
