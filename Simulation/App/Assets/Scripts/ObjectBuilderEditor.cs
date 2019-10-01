@@ -7,21 +7,13 @@ using UnityEngine;
 [CustomEditor(typeof(ObjectBuilderScript))]
 public class ObjectBuilderEditor : Editor
 {
-    private static bool m_editMode = false;
-    private static int m_count = 0;
+    private static bool editMode = true;
     public static GameObject selectedNode;
     public bool isLeftCtrPressed = false;
 
-    public enum Tags
-    {
-        Selected,
-        Node,
-        Untagged
-    }
-
     void OnSceneGUI()
     {
-        if (!m_editMode)
+        if (!editMode)
             return;
         Event e = Event.current;
         int controlID = GUIUtility.GetControlID(FocusType.Passive);
@@ -44,92 +36,105 @@ public class ObjectBuilderEditor : Editor
                 if (e.keyCode == KeyCode.LeftControl)
                     isLeftCtrPressed = true;
                 break;
+
             case EventType.KeyUp:
-                if (e.keyCode == KeyCode.LeftControl)
-                    isLeftCtrPressed = false;
+                switch (e.keyCode)
+                {
+                    case KeyCode.LeftControl:
+                        isLeftCtrPressed = false;
+                        break;
+                    case KeyCode.D:
+                        HandleDelete();
+                        break;
+                }
                 break;
         }
     }
 
     private void Mark(GameObject node, bool select = true)
     {
-        if(select)
+        if (node != null)
         {
-            node.transform.tag = Tags.Selected.ToString();
-            Color newColor = new Color(1, 0, 0, 89 / 255f);
-            node.transform.GetComponent<Renderer>().material.color = newColor;
-            selectedNode = node.transform.gameObject;
-        }
-        else
-        {
-            node.transform.tag = Tags.Node.ToString();
-            Color newColor = new Color(0, 0, 1, 89 / 255f);
-            node.transform.GetComponent<Renderer>().material.color = newColor;
-            selectedNode = null;
+            if (select)
+            {
+                Color newColor = new Color(1, 0, 0, 89 / 255f);
+                node.transform.GetComponent<Renderer>().material.color = newColor;
+                selectedNode = node.gameObject;
+            }
+            else
+            {
+                Color newColor = new Color(0, 0, 1, 89 / 255f);
+                node.transform.GetComponent<Renderer>().material.color = newColor;
+                selectedNode = null;
+            }
+
+            EditorUtility.SetDirty(node);
         }
     }
 
-    /// <summary>
-    /// Zaznacza wezel na czerwono i zwraca true jesli dany wezel został zaznaczony.
-    /// </summary>
-    private bool ChangeSelection(GameObject node)
+    private void ChangeSelection(GameObject node)
     {
-        if (node?.transform.tag == Tags.Node.ToString())
+        if (node != selectedNode)
         {
-            if(selectedNode)
-                Mark(selectedNode, select: false);
-
+            Mark(selectedNode, select: false);
             Mark(node, select: true);
-            return true;
         }
-        else if(node?.transform.tag == Tags.Selected.ToString())
+        else
         {
             Mark(node, select: false);
-            return true;
         }
-        return false;
     }
 
     void HandleClick()
     {
-        if (m_editMode)
+        if (editMode)
         {
             Ray worldRay = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
-            
+
             if (Physics.Raycast(worldRay, out RaycastHit hitInfo))
             {
+                var junction = hitInfo.transform.GetComponent<Junction>();
+
                 if (!isLeftCtrPressed)
                 {
-                    if (ChangeSelection(hitInfo.transform.gameObject))
-                        return;
+                    if (junction == null)
+                    {
+                        EditorUtility.SetDirty(SimulationManager.JunctionManager.Create(new Vector3(hitInfo.point.x, hitInfo.point.y), selectedNode?.GetComponent<Junction>()));
+                    }
+                    else
+                    {
+                        ChangeSelection(junction.gameObject);
+                    }
 
-                    var newObject = Instantiate(Resources.Load<GameObject>("NodePrefab"));
-                    newObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y);
-                    newObject.name = "Node" + m_count.ToString("00");
-
-                    selectedNode?.GetComponent<Junction>().AddConsequent(newObject.GetComponent<Junction>());
-
-                    EditorUtility.SetDirty(newObject);
-                    Transform container = SimulationManager.GetNodesContainer(SimulationManager.Containers.BigNodesContainer).transform;
-                    newObject.transform.parent = container;
-                    m_count++;
                 }
                 else
-                    selectedNode?.GetComponent<Junction>().AddConsequent(hitInfo.transform.GetComponent<Junction>());
+                    selectedNode?.GetComponent<Junction>().AddConsequent(junction);
             }
             else
                 Debug.Log("Coś poszło nie tak :/");
         }
     }
 
+    void HandleDelete()
+    {
+        if (editMode)
+        {
+            if (selectedNode != null)
+            {
+                SimulationManager.JunctionManager.Delete(selectedNode.GetComponent<Junction>());
+                selectedNode = null;
+            }
+        }
+    }
+
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
-        if (m_editMode)
+        if (editMode)
         {
             if (GUILayout.Button("Disable Editing"))
             {
-                m_editMode = false;
+                editMode = false;
                 Mark(selectedNode, select: false);
             }
         }
@@ -137,18 +142,13 @@ public class ObjectBuilderEditor : Editor
         {
             if (GUILayout.Button("Enable Editing"))
             {
-                m_editMode = true;
+                editMode = true;
             }
         }
 
-        //if(GUILayout.Button("Clean road editor memory"))
-        //{
-        //    selectedNode = null;
-        //}
-
-        if(GUILayout.Button("Re-create paths"))
+        if (GUILayout.Button("Rebuild"))
         {
-            SimulationManager.RecreatePaths();
+            SimulationManager.Rebuild();
         }
     }
 }

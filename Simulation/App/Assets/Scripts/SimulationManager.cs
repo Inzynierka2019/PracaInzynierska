@@ -2,54 +2,66 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class SimulationManager : MonoBehaviour
 {
+    static SimulationManager instance = null;
+
+    [SerializeField] JunctionManager junctionManager;
+    [SerializeField] RoadManager roadManager;
+    [SerializeField] VehicleManager vehicleManager;
+
+    public static JunctionManager JunctionManager
+    {
+        get => instance?.junctionManager;
+        set { if (instance != null) instance.junctionManager = value; }
+    }
+
+    public static RoadManager RoadManager
+    {
+        get => instance?.roadManager;
+        set { if (instance != null) instance.roadManager = value; }
+    }
+
+    public static VehicleManager VehicleManager
+    {
+        get => instance?.vehicleManager;
+        set { if (instance != null) instance.vehicleManager = value; }
+    }
+
+
+    public static void Rebuild()
+    {
+        Debug.Log("Rebuilding. Please hold");
+        JunctionManager.RebuildRoads();
+        Debug.Log("Rebuilding. Done.");
+    }
+
     void Start()
     {
-        RecreatePaths();
-    }
+        if (instance != null)
+            Debug.LogError("Too many simulation managers! Leave just one in hierarchy.");
+        instance = this;
 
-    // ten system totalnie absolutnie do zmiany
-    public enum Containers
-    {
-        BigNodesContainer,
-        SmallNodesContainer
-    }
-
-    public static GameObject GetNodesContainer(Containers container)
-    {
-        var nodesContainer = GameObject.Find(container.ToString());
-        if (nodesContainer == null)
+        if(junctionManager == null)
         {
-            nodesContainer = new GameObject();
-            nodesContainer.name = container.ToString();
+            GameObject go = new GameObject("JunctionManager");
+            go.transform.SetParent(transform);
+            junctionManager = go.AddComponent<JunctionManager>();
         }
-        return nodesContainer;
-    }
-
-    public static void RecreatePaths()
-    {
-        Debug.Log("Recreating paths. Please hold");
-        var smallNodes = GetNodesContainer(Containers.SmallNodesContainer);
-        GameObject.DestroyImmediate(smallNodes);
-
-        var bigNodes = GetNodesContainer(Containers.BigNodesContainer);
-        var cache = new Dictionary<Junction, List<Junction>>();
-        foreach (Transform node in bigNodes.transform)
+        if (roadManager == null)
         {
-            var nodeComponent = node.GetComponent<Junction>();
-            nodeComponent.ClearConnectionsAndPaths();
-            cache.Add(nodeComponent, nodeComponent.consequent);
-            nodeComponent.consequent = new List<Junction>();
+            GameObject go = new GameObject("RoadManager");
+            go.transform.SetParent(transform);
+            roadManager = go.AddComponent<RoadManager>();
+        }
+        if (vehicleManager == null)
+        {
+            GameObject go = new GameObject("VehicleManager");
+            go.transform.SetParent(transform);
+            vehicleManager = go.AddComponent<VehicleManager>();
         }
 
-        foreach (Transform node in bigNodes.transform)
-        {
-            var nodeComponent = node.GetComponent<Junction>();
-            var nodeNeighbours = cache[nodeComponent];
-            foreach (var neighbour in nodeNeighbours)
-                nodeComponent.AddConsequent(neighbour);
-        }
-        Debug.Log("Recreating paths. Done.");
+        Rebuild();
     }
 }

@@ -19,6 +19,9 @@ public class Road : MonoBehaviour
 
     public void Create(Junction from, Junction to)
     {
+        if (from == null || to == null)
+            return;
+
         nodes = new List<Node>();
 
         transform.position = (from.transform.position + to.transform.position) / 2;
@@ -103,9 +106,6 @@ public class Road : MonoBehaviour
         var smallNode = Instantiate(Resources.Load<GameObject>("SmallNodePrefab"));
         smallNode.name = (nodeId++).ToString();
         smallNode.transform.position = position;
-#if(UNITY_EDITOR)
-        smallNode.tag = ObjectBuilderEditor.Tags.Untagged.ToString();
-#endif
         smallNode.transform.parent = transform;
 
         return smallNode;

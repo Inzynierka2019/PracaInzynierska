@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[ExecuteInEditMode]
 public class Junction : MonoBehaviour
 {
     public List<Road> entries = new List<Road>();
@@ -13,18 +14,17 @@ public class Junction : MonoBehaviour
 
     public List<Junction> consequent = new List<Junction>();
 
-    public void ClearConnectionsAndPaths()
+    void Update()
     {
-        //paths.Clear();
-        foreach (var r in exits)
+        if (!Application.isPlaying && transform.hasChanged)
         {
-            DestroyImmediate(r.gameObject);
+            SimulationManager.JunctionManager.RebuildRoads();
+            transform.hasChanged = false;
         }
-        entries.Clear();
-        exits.Clear();
     }
 
-    public void OnMouseDown()
+    // działa tylko w Application.isPlaying
+    void OnMouseDown()
     {
         Debug.Log($"Creating vehicle on {name}");
         GameObject newVehicle = Instantiate(Resources.Load<GameObject>("VehiclePrefab"));
@@ -35,6 +35,17 @@ public class Junction : MonoBehaviour
         sourceNode.GetComponent<Node>().vehicles.Add(newVehicle.GetComponent<Vehicle>());
     }
 
+    public void ClearConnectionsAndPaths()
+    {
+        foreach (var r in entries.Concat(exits))
+        {
+            if(r != null)
+                DestroyImmediate(r.gameObject);
+        }
+        entries.Clear();
+        exits.Clear();
+    }
+
     private VertexPath CreateVertexPath(Vector3[] points)
     {
         BezierPath bezierPath = new BezierPath(points, isClosed: false, PathSpace.xy);
@@ -43,6 +54,7 @@ public class Junction : MonoBehaviour
 
     public void AddConsequent(Junction consequent)
     {
-        Instantiate(Resources.Load<GameObject>("RoadPrefab")).GetComponent<Road>().Create(this, consequent);
+        if(consequent != null)
+            Instantiate(Resources.Load<GameObject>("RoadPrefab")).GetComponent<Road>().Create(this, consequent);
     }
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1266830439395337562}
   - component: {fileID: -5093737838492431340}
   m_Layer: 0
-  m_Name: NodePrefab
+  m_Name: JunctionPrefab
   m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,3 +104,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dbc0bf094b1a364eab5741bbc7aa126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entries: []
+  exits: []
+  consequent: []
