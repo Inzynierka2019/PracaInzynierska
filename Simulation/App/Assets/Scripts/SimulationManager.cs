@@ -1,12 +1,31 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SimulationManager : MonoBehaviour
 {
+
+    private static ConcurrentQueue<Action> MainThreadTaskQueue = new ConcurrentQueue<Action>();
+
+    public static void ScheduleTaskOnMainThread(Action action)
+    {
+        MainThreadTaskQueue.Enqueue(action);
+    }
+
     void Start()
     {
         RecreatePaths();
+    }
+
+    public void Update()
+    {
+        while(!MainThreadTaskQueue.IsEmpty)
+        {
+            if(MainThreadTaskQueue.TryDequeue(out Action action))
+                action();
+        }
     }
 
     // ten system totalnie absolutnie do zmiany

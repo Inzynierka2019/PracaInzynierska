@@ -1,27 +1,66 @@
 ﻿using PathCreation;
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Junction : MonoBehaviour
 {
-    public List<Road> entries = new List<Road>();
+    public ConcurrentBag<Road> entries = new ConcurrentBag<Road>();
     public List<Road> exits = new List<Road>();
 
     public List<Junction> consequent = new List<Junction>();
+    private Task trafficLightsControllerThread;
+    private bool isApplicationClosing = false;
 
     public void ClearConnectionsAndPaths()
     {
-        //paths.Clear();
         foreach (var r in exits)
         {
             DestroyImmediate(r.gameObject);
         }
-        entries.Clear();
+        entries = new ConcurrentBag<Road>();
         exits.Clear();
+    }
+
+    public void OnApplicationQuit()
+    {
+        isApplicationClosing = true;
+        trafficLightsControllerThread.Wait();
+    }
+
+    public void Start()
+    {
+        trafficLightsControllerThread = Task.Factory.StartNew(() =>
+        {
+            try
+            {
+                var rand = new System.Random();
+                while(!isApplicationClosing)
+                {
+                    entries.ToList().ForEach(e =>
+                    {
+                        SimulationManager.ScheduleTaskOnMainThread(() => e.endNode.ChangeLightsToRed());
+                    });
+
+                    SimulationManager.ScheduleTaskOnMainThread(() =>
+                    {
+                        if(!entries.IsEmpty)
+                            entries.ToArray().ElementAt(rand.Next(0, entries.Count)).endNode.ChangeLightsToGreen();
+                    });
+                    Thread.Sleep(3500);
+                }
+
+            }catch(Exception e)
+            {
+                Debug.Log($"TrafficLightsControllerThread exception: {e.ToString()}");
+            }
+        }, TaskCreationOptions.LongRunning);
     }
 
     public void OnMouseDown()

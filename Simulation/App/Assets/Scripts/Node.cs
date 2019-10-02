@@ -8,8 +8,61 @@ public class Node : MonoBehaviour
     public Dictionary<Node, VertexPath> consequent = new Dictionary<Node, VertexPath>();
 
     public List<Vehicle> vehicles = new List<Vehicle>();
-    public bool occupied;
-    public object occupiedGuard = new object();
+    public bool isRedLightOn;
+
+    RoadInfo CreateRoadInfoForVehicle(Vehicle vehicle)
+    {
+        var info = new RoadInfo();
+        int searchDeep = 4;
+
+        List<Node> nextHops = new List<Node>();
+        nextHops.Add(this);
+        nextHops.Add(vehicle.currentIntermidiateTarget);
+
+        for(int i = 2; i < searchDeep; i++)
+        {
+            var nextHop = vehicle.GetNextTargetNode(nextHops[i - 1].consequent.Keys.ToList());
+            if (nextHop == null)
+                break;
+            nextHops.Add(nextHop);
+        }
+
+        float distance = 0f;
+        for(int i = 1; i < nextHops.Count; i++)
+        {
+            Vehicle nearestInFront = null;
+            if (i == 1)
+                nearestInFront = nextHops[i - 1].FindNearestVehicleInFront(vehicle);
+            else
+                nearestInFront = nextHops[i - 1].FindNearestVehicleInFront(0, nextHops[i]);
+
+            if(nearestInFront == null)
+            {
+                distance += nextHops[i - 1].consequent[nextHops[i]].length;
+                if(nextHops[i].isRedLightOn)
+                {
+                    info.distanceToNearestObstacle = distance - vehicle.distanceOnCurrentRoadSegment;
+                    info.nearestObstacleVelocity = 0;
+                    break;
+                }
+            }
+            else
+            {
+                distance += nearestInFront.distanceOnCurrentRoadSegment;
+                info.distanceToNearestObstacle = distance - vehicle.distanceOnCurrentRoadSegment;
+                info.nearestObstacleVelocity = nearestInFront.velocity;
+                break;
+            }
+        }
+
+        if (info.distanceToNearestObstacle == float.MaxValue)
+        {
+            info.distanceToNearestObstacle = distance;
+            info.nearestObstacleVelocity = 0;
+        }
+
+        return info;
+    }
 
     //Update is called once per frame
     void Update()
@@ -19,27 +72,8 @@ public class Node : MonoBehaviour
 
         foreach (var vehicle in vehicles)
         {
-            if (!vehicle.isWaitingAtNode)
-            {
-                var nearestInFront = FindNearestVehicleInFront(vehicle);
-                var info = new RoadInfo();
-                info.isRoadClear = nearestInFront == null ? true : false;
-                if (!info.isRoadClear)
-                {
-                    info.distanceToNearestObstacle = nearestInFront.distanceOnCurrentRoadSegment - vehicle.distanceOnCurrentRoadSegment;
-                    info.nearestObstacleVelocity = nearestInFront.velocity;
-                }
-                else
-                {
-                    if (vehicle.currentIntermidiateTarget.occupied)
-                    {
-                        info.isRoadClear = false;
-                        info.distanceToNearestObstacle = consequent[vehicle.currentIntermidiateTarget].length - vehicle.distanceOnCurrentRoadSegment;
-                        info.nearestObstacleVelocity = 0;
-                    }
-                }
-                vehicle.UpdatePosition(info);
-            }
+            var info = CreateRoadInfoForVehicle(vehicle);
+            vehicle.UpdatePosition(info);
 
             if (vehicle.distanceOnCurrentRoadSegment > consequent[vehicle.currentIntermidiateTarget].length)
             {
@@ -48,24 +82,9 @@ public class Node : MonoBehaviour
                 else
                 {
                     var nextHop = vehicle.GetNextTargetNode(vehicle.currentIntermidiateTarget.consequent.Keys.ToList());
-                    var nearestInFront = vehicle.currentIntermidiateTarget.FindNearestVehicleInFront(0, nextHop);
-                    vehicle.isWaitingAtNode = true;
-                    lock (vehicle.currentIntermidiateTarget.occupiedGuard)
-                    {
-                        vehicle.currentIntermidiateTarget.occupied = true;
-                    }
-
-                    if (nearestInFront == null || nearestInFront.distanceOnCurrentRoadSegment > vehicle.safeDistance)
-                    {
-                        vehilcesToTransfer.Add(vehicle, vehicle.currentIntermidiateTarget);
-                        lock (vehicle.currentIntermidiateTarget.occupiedGuard)
-                        {
-                            vehicle.currentIntermidiateTarget.occupied = false;
-                        }
-                        vehicle.currentIntermidiateTarget = nextHop;
-                        vehicle.distanceOnCurrentRoadSegment = 0;
-                        vehicle.isWaitingAtNode = false;
-                    }
+                    vehilcesToTransfer.Add(vehicle, vehicle.currentIntermidiateTarget);
+                    vehicle.currentIntermidiateTarget = nextHop;
+                    vehicle.distanceOnCurrentRoadSegment = 0;
                 }
             }
             else
@@ -86,6 +105,32 @@ public class Node : MonoBehaviour
             DestroyImmediate(item.gameObject);
             vehicles.Remove(item);
         }
+    }
+
+    public void ChangeLightsToGreen()
+    {
+        isRedLightOn = false;
+        GetComponent<Renderer>().material.color = Color.green;
+        var newPos = transform.position;
+        newPos.z = -2;
+        transform.position = newPos;
+    }
+
+    public void ChangeLightsToRed()
+    {
+        isRedLightOn = true;
+        GetComponent<Renderer>().material.color = Color.red;
+        var newPos = transform.position;
+        newPos.z = -2;
+        transform.position = newPos;
+    }
+
+    public void OnMouseDown()
+    {
+        if (isRedLightOn)
+            ChangeLightsToGreen();
+        else
+            ChangeLightsToRed();
     }
 
     public Vehicle FindNearestVehicleInFront(Vehicle thisVehicle)
