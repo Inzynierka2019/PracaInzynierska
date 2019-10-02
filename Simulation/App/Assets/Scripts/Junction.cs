@@ -43,16 +43,10 @@ public class Junction : MonoBehaviour
         foreach (var r in entries.Concat(exits))
         {
             if (r != null)
-                DestroyImmediate(r.gameObject);
+                SimulationManager.RoadManager.Delete(r);
         }
         entries.Clear();
         exits.Clear();
-    }
-
-    private VertexPath CreateVertexPath(Vector3[] points)
-    {
-        BezierPath bezierPath = new BezierPath(points, isClosed: false, PathSpace.xy);
-        return new VertexPath(bezierPath);
     }
 
     public void AddConsequent(Junction successor)

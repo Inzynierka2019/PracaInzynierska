@@ -8,7 +8,7 @@ using PathCreation;
 [ExecuteInEditMode]
 public class RoadManager : MonoBehaviour
 {
-    List<Road> roads;
+    public List<Road> roads;
 
     GameObject prefab, nodePrefab;
 
@@ -52,8 +52,17 @@ public class RoadManager : MonoBehaviour
             newRoad.endNode.consequent.Add(exitNode, path);
         }
 
+        roads.Add(newRoad);
+
         return newRoad;
     }
+
+    public void Delete(Road road)
+    {
+        roads.Remove(road);
+        DestroyImmediate(road.gameObject);
+    }
+
 
     VertexPath CreateVertexPath(Vector3[] points)
     {
