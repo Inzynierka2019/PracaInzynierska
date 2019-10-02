@@ -29,13 +29,8 @@ public class Junction : MonoBehaviour
     // działa tylko w Application.isPlaying
     void OnMouseDown()
     {
-        Debug.Log($"Creating vehicle on {name}");
-        GameObject newVehicle = Instantiate(Resources.Load<GameObject>("VehiclePrefab"));
         Node sourceNode = exits[Random.Range(0, exits.Count)].startNode;
-
-        newVehicle.GetComponent<Vehicle>().currentIntermidiateTarget = sourceNode.consequent.Keys.ToList()[Random.Range(0, sourceNode.consequent.Count)];
-        newVehicle.transform.position = sourceNode.transform.position;
-        sourceNode.GetComponent<Node>().vehicles.Add(newVehicle.GetComponent<Vehicle>());
+        SimulationManager.VehicleManager.Create(sourceNode, sourceNode.consequent.Keys.ToList()[Random.Range(0, sourceNode.consequent.Count)]);
     }
 
     public void ClearConnectionsAndPaths()

@@ -2,53 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class VehicleManager : MonoBehaviour
 {
-    //List<Road> roads;
+    public List<Vehicle> vehicles;
 
-    //GameObject prefab, nodePrefab;
+    GameObject prefab;
 
-    //void Awake()
-    //{
-    //    roads = new List<Road>(GetComponentsInChildren<Road>());
+    void Start()
+    {
+        vehicles = new List<Vehicle>();
+        prefab = Resources.Load<GameObject>("VehiclePrefab");
+    }
 
-    //    prefab = Resources.Load<GameObject>("RoadPrefab");
-    //    nodePrefab = Resources.Load<GameObject>("SmallNodePrefab");
-    //}
+    public Vehicle Create(Node spawnPoint, Node target)
+    {
+        if (spawnPoint == null || target == null)
+        {
+            Debug.Log("Could not create vehicle, node is missing.");
+            return null;
+        }
 
-    //// póki co dostępny tylko jeden rodzaj drogi -o-o-o-o-
-    //public Road Create(Junction from, Junction to)
-    //{
-    //    if (from == null || to == null)
-    //    {
-    //        Debug.Log("Could not create road, junction is missing.");
-    //        return null;
-    //    }
+        Vehicle newVehicle = Instantiate(prefab, spawnPoint.transform.position, Quaternion.identity, transform).GetComponent<Vehicle>();
 
-    //    Road newRoad = Instantiate(prefab, (from.transform.position + to.transform.position) / 2, Quaternion.identity, transform).GetComponent<Road>();
+        newVehicle.currentIntermidiateTarget = target;
 
-    //    newRoad.nodes = new List<Node>();
+        spawnPoint.GetComponent<Node>().vehicles.Add(newVehicle);
 
-    //    VertexPath vertexPath = CreateVertexPath(new Vector3[] { from.transform.position, newRoad.transform.position, to.transform.position });
+        vehicles.Add(newVehicle);
 
-    //    BuildPlaceholderTypeRoad(newRoad, vertexPath);
+        return newVehicle;
+    }
 
-    //    from.exits.Add(newRoad);
-    //    to.entries.Add(newRoad);
-
-    //    foreach (var entryNode in from.entries.Select(e => e.endNode))
-    //    {
-    //        VertexPath path = CreateVertexPath(new Vector3[] { entryNode.transform.position, from.transform.position, newRoad.startNode.transform.position });
-    //        entryNode.consequent.Add(newRoad.startNode, path);
-    //    }
-
-    //    foreach (var exitNode in to.exits.Select(e => e.startNode))
-    //    {
-    //        VertexPath path = CreateVertexPath(new Vector3[] { newRoad.endNode.transform.position, to.transform.position, exitNode.transform.position });
-    //        newRoad.endNode.consequent.Add(exitNode, path);
-    //    }
-
-    //    return newRoad;
-    //}
+    public void Delete(Vehicle vehicle)
+    {
+        vehicles.Remove(vehicle);
+        DestroyImmediate(vehicle.gameObject);
+    }
 }
