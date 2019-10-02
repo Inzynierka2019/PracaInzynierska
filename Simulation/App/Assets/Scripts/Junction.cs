@@ -9,9 +9,12 @@ using Random = UnityEngine.Random;
 [ExecuteInEditMode]
 public class Junction : MonoBehaviour
 {
+    [HideInInspector]
     public List<Road> entries = new List<Road>();
+    [HideInInspector]
     public List<Road> exits = new List<Road>();
 
+    [HideInInspector]
     public List<Junction> consequent = new List<Junction>();
 
     void Update()
@@ -39,7 +42,7 @@ public class Junction : MonoBehaviour
     {
         foreach (var r in entries.Concat(exits))
         {
-            if(r != null)
+            if (r != null)
                 DestroyImmediate(r.gameObject);
         }
         entries.Clear();
@@ -52,9 +55,9 @@ public class Junction : MonoBehaviour
         return new VertexPath(bezierPath);
     }
 
-    public void AddConsequent(Junction consequent)
+    public void AddConsequent(Junction successor)
     {
-        if(consequent != null)
-            Instantiate(Resources.Load<GameObject>("RoadPrefab")).GetComponent<Road>().Create(this, consequent);
+        if (SimulationManager.RoadManager.Create(this, successor) != null)
+            consequent.Add(successor);
     }
 }
