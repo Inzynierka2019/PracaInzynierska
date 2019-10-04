@@ -1,0 +1,1 @@
+dotnet publish --project Visualization/Web.Api/Web.Api.csproj -c Release -o ./Output

@@ -3,24 +3,27 @@
     using System;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.SpaServices.AngularCli;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-
-    using log4net;
+    using Serilog;
     using Web.Logic.Hubs;
     using Services = Web.Logic.Services;
 
     public class Startup
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(Startup));
-
-        public Startup(IConfiguration configuration)
+        public Startup()
         {
-            Configuration = configuration;
+            Configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
 
-            var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json");
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(Configuration)
+                .WriteTo.Console()
+                .WriteTo.File(path: "Logs\\Visualization.log", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -43,13 +46,15 @@
 
             app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
+
             app.UseSignalR(routes =>
             {
                 routes.MapHub<UIHub>("/UIHub");
             });
+
             app.UseMvc();
 
-            Log.Warn("Visualization App is starting...");
+            Log.Information("Visualization App is starting...");
             serviceProvider.GetService<Services.UnityAppCommunicationManager>();
         }
     }

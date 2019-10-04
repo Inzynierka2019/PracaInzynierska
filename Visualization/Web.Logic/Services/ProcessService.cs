@@ -22,9 +22,9 @@
 
         public bool ExecuteBuildSimulation()
         {
-            var path = Path.Combine(directoryPath, "Scripts", "build-simulation.bat");
+            var buildScriptPath = Path.Combine(directoryPath, "Scripts", "build-simulation.bat");
             var unityAppDir = Path.Combine(this.directoryPath, this.unityConfig.ProjectPath);
-            var cmd = string.Join(" ", path, this.unityConfig.UnityExe, unityAppDir);
+            var cmd = string.Join(" ", buildScriptPath, this.unityConfig.UnityExe, unityAppDir);
 
             return ExecuteCommand(cmd, true);
         }

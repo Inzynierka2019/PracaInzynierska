@@ -8,6 +8,8 @@ import { retry, catchError } from 'rxjs/operators';
 export class UnityService {
   url = 'http://localhost:5000/api/unity';
 
+  //TODO Zamienić to na BASE_URL z providera!!
+
   constructor(private httpClient: HttpClient) { }
 
   build() {

@@ -7,7 +7,6 @@
     public class Log : ILog
     {
         private readonly IConsoleLogUpdater consoleLog;
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof(Log));
 
         public Log(IConsoleLogUpdater consoleLog)
         {
@@ -18,7 +17,7 @@
         {
             if (message as string != "" && message != null)
             {
-                log.Fatal(message);
+                Serilog.Log.Fatal(message as string);
                 this.consoleLog.SendConsoleLog(message.ToString(), LogType.Fatal);
             }
         }
@@ -27,7 +26,7 @@
         {
             if (message as string != "" && message != null)
             {
-                log.Error(message);
+                Serilog.Log.Error(message as string);
                 this.consoleLog.SendConsoleLog(message.ToString(), LogType.Error);
             }
         }
@@ -36,7 +35,7 @@
         {
             if (message as string != "" && message != null)
             {
-                log.Warn(message);
+                Serilog.Log.Warning(message as string);
                 this.consoleLog.SendConsoleLog(message.ToString(), LogType.Warning);
             }
         }
@@ -45,7 +44,7 @@
         {
             if (message as string != "" && message != null)
             {
-                log.Debug(message);
+                Serilog.Log.Debug(message as string);
                 this.consoleLog.SendConsoleLog(message.ToString(), LogType.Debug);
             }
         }
@@ -54,7 +53,7 @@
         {
             if (message as string != "" && message != null)
             {
-                log.Info(message);
+                Serilog.Log.Information(message as string);
                 this.consoleLog.SendConsoleLog(message.ToString(), LogType.Info);
             }
         }
@@ -63,7 +62,7 @@
         {
             if (message as string != "" && message != null)
             {
-                log.Info(message);
+                Serilog.Log.Information(message as string);
                 this.consoleLog.SendConsoleLog(message.ToString(), LogType.Success);
             }
         }
