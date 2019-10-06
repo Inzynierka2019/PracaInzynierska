@@ -110,7 +110,7 @@ public class ObjectBuilderEditor : Editor
                     selectedNode?.GetComponent<Junction>().AddConsequent(newObject.GetComponent<Junction>());
 
                     EditorUtility.SetDirty(newObject);
-                    Transform container = SimulationManager.GetNodesContainer(SimulationManager.Containers.BigNodesContainer).transform;
+                    Transform container = SimulationManager.GetObjectsContainer(SimulationManager.Containers.BigNodesContainer).transform;
                     newObject.transform.parent = container;
                     m_count++;
                 }
