@@ -1,13 +1,27 @@
-﻿using System;
+﻿using Common.Communication;
+using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 public class SimulationManager : MonoBehaviour
 {
-
+    private readonly AppConnector appConnector = new AppConnector(new UnityDebugLogger(), "https://localhost:5001/UIHub");
     private static ConcurrentQueue<Action> MainThreadTaskQueue = new ConcurrentQueue<Action>();
+
+    public SimulationManager()
+    {
+        // This line is necessary to actively ignore security concerns involving Mono certificate trust issues.
+        ServicePointManager.ServerCertificateValidationCallback += (p1, p2, p3, p4) => true;
+    }
+
+    void OnApplicationQuit()
+    {
+        // disconnects from web server and informs that app has closed.
+        this.appConnector.Dispose();
+    }
 
     public static void ScheduleTaskOnMainThread(Action action)
     {
@@ -17,13 +31,14 @@ public class SimulationManager : MonoBehaviour
     void Start()
     {
         RecreatePaths();
+        this.appConnector.KeepAlive();
     }
 
     public void Update()
     {
-        while(!MainThreadTaskQueue.IsEmpty)
+        while (!MainThreadTaskQueue.IsEmpty)
         {
-            if(MainThreadTaskQueue.TryDequeue(out Action action))
+            if (MainThreadTaskQueue.TryDequeue(out Action action))
                 action();
         }
     }

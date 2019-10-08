@@ -10,23 +10,15 @@ Dokumentacja pracy dyplomowej znajduje się w folderze [Documentation](https://g
 
 ## Lista projektów:
 + Simulation
-    + Libs
-      + Core
-      + Core.Tests
     + App
 + Visualization
     + Web.Api
+      + WebUI
     + Web.Logic
-    + Web.RestModels
-    + Web.Utils
-    + Tests
-      + Web.Api.Tests
-      + Web.Logic.Tests
 + Common
     + Common.Models
-    + Common.Utils
-    + HubClient (Broker)
-    + HubClient.Tests
+    + Common.Communication (Hub broker for communication)
+    + Common.ConsoleTester
 
 ## Warunki wstępne
 Do poprawnego działania aplikacji wymagane są:
@@ -35,19 +27,6 @@ Do poprawnego działania aplikacji wymagane są:
 - Node.js [v10.16.0](https://nodejs.org/en/download/)
 - Node Package Manager 6.9.0 (razem z Node.js)
 - @angular/cli (Patrz poniżej)
-- [MapBox Unity SDK](https://www.mapbox.com/install/unity/) v2.0.0 (?)
-
-### Instrukcja Simulation
-Zainstaluj Unity w wersji 2019.1.1f1
-Uruchom i zbuduj projekt Core w solution Simulation/Libs/Simulation.sln
-Uruchom edytor unity.
-Załaduj domyślną scenę Scenes/Scene.unity
-Wciśnij Play.
-Jeśli w konsoli wyświetli się napis "It works !!!", to wszystko jest skonfigurowane poprawnie.
-
-Instalacja Mapbox SDK for Unity:
-https://www.mapbox.com/install/unity/
-> Assets -> Import Package -> Custom Package -> wybierz plik z sdk
 
 ### Instrukcja Visualization
 
@@ -72,7 +51,7 @@ Uruchomienie WebUI (domyślnie http://localhost:4200/)
 $> ng serve -o
 ```
 
-#### Web.Api (.netcore)
+#### Web.Api (.Net Core)
 Budowanie projektu
 ```
 $> dotnet build
