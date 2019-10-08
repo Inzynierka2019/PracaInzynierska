@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1266830439395337562}
   - component: {fileID: -5093737838492431340}
   m_Layer: 0
-  m_Name: NodePrefab
+  m_Name: JunctionPrefab
   m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
