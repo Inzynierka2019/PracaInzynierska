@@ -1,5 +1,9 @@
-﻿using System.Collections;
+﻿using Common.Communication;
+using System;
+using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -10,6 +14,9 @@ public class SimulationManager : MonoBehaviour
     [SerializeField] JunctionManager junctionManager;
     [SerializeField] RoadManager roadManager;
     [SerializeField] VehicleManager vehicleManager;
+
+    private readonly AppConnector appConnector = new AppConnector(new UnityDebugLogger(), "https://localhost:5001/UIHub");
+    private static ConcurrentQueue<Action> MainThreadTaskQueue = new ConcurrentQueue<Action>();
 
     public static JunctionManager JunctionManager
     {
@@ -29,6 +36,10 @@ public class SimulationManager : MonoBehaviour
         set { if (instance != null) instance.vehicleManager = value; }
     }
 
+    public static void ScheduleTaskOnMainThread(Action action)
+    {
+        MainThreadTaskQueue.Enqueue(action);
+    }
 
     public static void Rebuild()
     {
@@ -63,5 +74,27 @@ public class SimulationManager : MonoBehaviour
         }
 
         Rebuild();
+        this.appConnector.KeepAlive();
+    }
+    
+    void Update()
+    {
+        while (Application.isPlaying && !MainThreadTaskQueue.IsEmpty)
+        {
+            if (MainThreadTaskQueue.TryDequeue(out Action action))
+                action();
+        }
+    }
+
+    public SimulationManager()
+    {
+        // This line is necessary to actively ignore security concerns involving Mono certificate trust issues.
+        ServicePointManager.ServerCertificateValidationCallback += (p1, p2, p3, p4) => true;
+    }
+
+    void OnApplicationQuit()
+    {
+        // disconnects from web server and informs that app has closed.
+        this.appConnector.Dispose();
     }
 }

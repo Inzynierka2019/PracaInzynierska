@@ -105,7 +105,6 @@ public class ObjectBuilderEditor : Editor
                     {
                         ChangeSelection(junction.gameObject);
                     }
-
                 }
                 else
                     selectedNode?.GetComponent<Junction>().AddConsequent(junction);
