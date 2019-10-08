@@ -14,7 +14,7 @@
         /// Initializes a new instance of the HubClient class with default methods.
         /// </summary>
         /// <param name="name">The name of HubClient instance.</param>
-        public HubClient(IDebugLogger logger, string name = "Client") : base(name, logger)
+        public HubClient(IDebugLogger logger, string address, string name = "Client") : base(name, address, logger)
         {
             base.Logger.Log($"{name} hub was created.");
             GetDefaultMethods();
@@ -26,7 +26,7 @@
         /// </summary>
         /// <param name="method">The method to be registered.</param>
         /// <param name="name">The name of HubClient instance.</param>
-        public HubClient(SignalMethod method, IDebugLogger logger, string name = "Client") : base(name, logger)
+        public HubClient(SignalMethod method, IDebugLogger logger, string address, string name = "Client") : base(name, address, logger)
         {
             base.Logger.Log($"{name} hub was created.");
             InitClient(new List<SignalMethod>() { method });
@@ -37,7 +37,7 @@
         /// </summary>
         /// <param name="method">The method to be registered.</param>
         /// <param name="name">The name of HubClient instance.</param>
-        public HubClient(List<SignalMethod> methods, IDebugLogger logger, string name = "Client") : base(name, logger)
+        public HubClient(List<SignalMethod> methods, IDebugLogger logger, string address, string name = "Client") : base(name, address, logger)
         {
             base.Logger.Log($"{name} hub was created.");
             InitClient(methods);
@@ -64,7 +64,10 @@
 
         private void RegisterConnection<T>(string method)
         {
-            base.Connection.On<T>(method, new Action<T>(LogMessage));
+            /* uncomment for debugging purposes to log all sent messages. */
+            //base.Connection.On<T>(method, new Action<T>(LogMessage));
+            /*                                                            */
+            base.Connection.On<T>(method, null);
         }
 
         private void GetDefaultMethods()

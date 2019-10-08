@@ -32,31 +32,32 @@
         /// </summary>
         protected IDebugLogger Logger { get; set; }
 
-        protected BaseClient(string name, IDebugLogger Logger)
+        protected BaseClient(string name, string address, IDebugLogger Logger)
         {
             this.Logger = Logger;
             this.Name = name;
-            this.Address = "http://localhost:5000/UIHub";
+            this.Address = address;
+
             this.Connection = new HubConnectionBuilder()
                 .WithUrl(this.Address)
                 .Build();
 
-            this.Connection.Closed += async (error) =>
+            this.Connection.Closed += (error) =>
             {
-                await Task.Delay(1000);
-                await this.Connection.StartAsync();
+                this.Connection.StartAsync();
+                return Task.Delay(1000);
             };
 
-            Task.Run(async () => await this.Connect());
+            this.Connect();
             WaitForConnection();
         }
 
         #region Private Methods
-        private async Task Connect()
+        private void Connect()
         {
             try
             {
-                await this.Connection.StartAsync();
+                this.Connection.StartAsync();
                 Logger.Log($"{this.Name} established a connection with {this.Address}");
             }
             catch (Exception ex)
@@ -69,33 +70,21 @@
         {
             while (this.Connection.State.Equals(HubConnectionState.Disconnected))
             {
-                Thread.Sleep(100);
+                Logger.LogWarning($"Waiting for {this.Name} to connect with SignalR!");
             }
         }
         #endregion
 
         #region Public Methods
-        public async Task Send<T>(string method, T message)
+        public void Send<T>(string method, T message)
         {
             try
             {
-                await this.Connection.InvokeAsync(method, message);
+                this.Connection.InvokeAsync(method, message);
             }
             catch (Exception ex)
             {
                 Logger.LogError($"Message could not be sent to {this.Address}: {ex}");
-            }
-        }
-
-        public async Task SendAsync<T>(string method, T message)
-        {
-            try
-            {
-                await this.Connection.SendAsync(method, message);
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError($"Message not sent to {this.Address}: {ex}");
             }
         }
 

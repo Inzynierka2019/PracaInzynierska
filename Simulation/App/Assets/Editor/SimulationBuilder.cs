@@ -20,7 +20,7 @@ class SimulationBuilder
 
     static void BuildWebGL()
     {
-        var pathToDeploy = Path.Combine(Directory.GetCurrentDirectory(), "out\\WebGL");
+        var pathToDeploy = Path.Combine(Directory.GetCurrentDirectory(), "out\\WebGL\\");
 
         BuildPipeline.BuildPlayer(GetScenes(), pathToDeploy, BuildTarget.WebGL, BuildOptions.ShowBuiltPlayer);
     }

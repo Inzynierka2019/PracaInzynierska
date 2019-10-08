@@ -24,24 +24,12 @@ export class UnityConnectorComponent implements OnInit {
   ngOnInit() {
   }
   
-  build() : void{
-    this.snackBar.open("Build has started!");
-
-    this.buildError = false;
-    this.isBuilding = true;
-    this.unityApi.build().subscribe(
-      (data: any) => {
-        this.isBuilding = false;
-        this.snackBar.open("Build has finished!");
-      },
-      error => {
-        this.buildError = true;
-        this.snackBar.open("Build failed.");
-      }
-    );
+  runWebGl() : void{
+    this.snackBar.open("Simulation opened in new window!");
+    window.open("assets/unity/Simulation.exe/index.html", "_blank");
   }
 
-  run() : void {
+  runWindows() : void {
     this.runError = false;
     this.isRunning = true;
     this.unityApi.run().subscribe(
@@ -50,7 +38,7 @@ export class UnityConnectorComponent implements OnInit {
       },
       error => {
         this.runError = true;
-        this.snackBar.open("Could not run Unity App.");      
+        this.snackBar.open("Could not run Unity App.");
       }
     );
   }

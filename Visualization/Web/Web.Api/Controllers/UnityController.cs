@@ -22,34 +22,6 @@
         }
 
         [HttpGet]
-        [Route("build")]
-        [EnableCors("CorsPolicy")]
-        public IActionResult BuildSimulation()
-        {
-            try
-            {
-                Log.Warn("Simulation build has started.");
-                if(this.processService.ExecuteBuildSimulation())
-                {
-                    Log.Success("Build has successfully finished!");
-                    return this.Ok();
-                }
-                else
-                {
-                    Log.Error("There were building errors...");
-                    return this.BadRequest();
-                }
-            }
-            catch (Exception e)
-            {
-                Log.Error($"An error occured in building simulation: {e.Message}");
-
-                return this.BadRequest();
-            }
-
-        }
-
-        [HttpGet]
         [Route("run")]
         [EnableCors("CorsPolicy")]
         public IActionResult RunSimulation()
@@ -57,7 +29,7 @@
             try
             {
                 Log.Warn("Simulation.exe has started.");
-                this.processService.ExecuteRunSimulation();
+                this.processService.ExecuteRunSimulationWindows();
             }
             catch (Exception e)
             {

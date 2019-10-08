@@ -3,20 +3,15 @@
     using System;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Configuration;
 
     using Web.Logic.Services;
     using Web.Logic.WebUI;
-    using Microsoft.Extensions.Configuration;
-    using Web.Logic.Configuration;
 
     public static class Registry
     {
         public static void Configure(this IServiceCollection services, IConfiguration Configuration)
         {
-            var unityConfig = new UnityConfiguration();
-            Configuration.Bind("UnityApp", unityConfig);
-
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "WebUI/dist/WebUI";
@@ -45,7 +40,6 @@
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddSingleton<IUnityConfiguration>(unityConfig);
             services.AddSingleton<IConsoleLogUpdater, ConsoleLogUpdater>();
             services.AddTransient<IProcessService, ProcessService>();
             services.AddTransient<ILog, Log>();

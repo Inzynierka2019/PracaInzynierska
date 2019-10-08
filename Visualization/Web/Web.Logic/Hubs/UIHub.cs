@@ -28,7 +28,7 @@
                 Log.Debug(population);
                 await Task.Run(() =>
                 {
-                    Clients.All.SendAsync(SignalMethods.SignalForVehiclePopulation.Method, population);
+                    Clients.Others.SendAsync(SignalMethods.SignalForVehiclePopulation.Method, population);
                 });
             }
             catch (Exception ex)
@@ -43,7 +43,7 @@
             try
             {
                 communicationManager.CheckStatus(isConnected);
-                return Clients.All.SendAsync(SignalMethods.SignalForUnityAppConnectionStatus.Method, isConnected);
+                return Clients.Others.SendAsync(SignalMethods.SignalForUnityAppConnectionStatus.Method, isConnected);
             }
             catch (Exception ex)
             {

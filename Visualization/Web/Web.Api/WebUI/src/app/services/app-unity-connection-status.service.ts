@@ -25,6 +25,9 @@ export class AppUnityConnectionStatusService {
       'SignalForUnityAppConnectionStatus',
       (isConnected: boolean) => {
         this.isConnected = isConnected;
+        if(isConnected && !this.isConnected) {
+          this.snackBar.open("Simulator app is now connected!");
+        }
         this._isConnected.next(isConnected);
       }
     );

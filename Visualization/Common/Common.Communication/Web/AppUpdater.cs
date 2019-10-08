@@ -13,10 +13,10 @@ namespace Libraries.Web
         private readonly IDebugLogger logger;
         public HubClient HubClient { get; set; }
 
-        public AppUpdater(IDebugLogger logger)
+        public AppUpdater(IDebugLogger logger, string address)
         {
             this.logger = logger;
-            HubClient = new HubClient(logger, "AppUpdater");
+            HubClient = new HubClient(logger, address, "AppUpdater");
         }
 
         #region Public Methods

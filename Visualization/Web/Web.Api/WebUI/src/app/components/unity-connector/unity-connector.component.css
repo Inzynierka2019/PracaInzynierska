@@ -1,5 +1,5 @@
 button {
-    width: 65px;
+    width: auto;
     height: 40px;
 }
 
@@ -60,3 +60,9 @@ svg:hover {
 .app-buttons button {
     margin: 5px;
 }
+
+@media screen and (max-width: 1110px) {
+    .simulator-title {
+        display: none;
+    }
+  }  

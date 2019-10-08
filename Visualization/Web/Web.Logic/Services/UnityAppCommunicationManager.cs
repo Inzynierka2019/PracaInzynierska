@@ -14,7 +14,7 @@
 
         public void Connected(bool keepAlive)
         {
-            if (!keepAlive)
+            if (!IsConnectedWithApp)
             {
                 IsConnectedWithApp = true;
                 Log.Success("Simulation App is now connected!");

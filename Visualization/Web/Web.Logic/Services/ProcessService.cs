@@ -4,34 +4,25 @@
     using System.Diagnostics;
     using System.IO;
     using Microsoft.AspNetCore.Hosting;
-
-    using Web.Logic.Configuration;
+    using Microsoft.Extensions.Configuration;
 
     public class ProcessService : IProcessService
     {
-        private readonly IUnityConfiguration unityConfig;
         private readonly ILog Log;
         private readonly string directoryPath;
+        private readonly IConfiguration config;
 
-        public ProcessService(IHostingEnvironment hostingEnvironment, IUnityConfiguration unityConfig, ILog log)
+        public ProcessService(IHostingEnvironment hostingEnvironment, ILog log, IConfiguration configuration)
         {
             this.directoryPath = hostingEnvironment.ContentRootPath;
-            this.unityConfig = unityConfig;
             this.Log = log;
+            this.config = configuration;
         }
 
-        public bool ExecuteBuildSimulation()
+        public void ExecuteRunSimulationWindows()
         {
-            var buildScriptPath = Path.Combine(directoryPath, "Scripts", "build-simulation.bat");
-            var unityAppDir = Path.Combine(this.directoryPath, this.unityConfig.ProjectPath);
-            var cmd = string.Join(" ", buildScriptPath, this.unityConfig.UnityExe, unityAppDir);
-
-            return ExecuteCommand(cmd, true);
-        }
-
-        public void ExecuteRunSimulation()
-        {
-            var cmd = Path.Combine(directoryPath, this.unityConfig.OutputDirectory, this.unityConfig.UnityAppExe);
+            var unityAppExe = this.config["UnityAppExe"];
+            var cmd = Path.Combine(directoryPath, AppDomain.CurrentDomain.BaseDirectory, unityAppExe);
             ExecuteCommand(cmd, false);
         }
 
