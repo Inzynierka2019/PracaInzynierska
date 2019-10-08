@@ -17,11 +17,6 @@
             WebHost.CreateDefaultBuilder(args)
                 .UseKestrel()
                 .UseStartup<Startup>()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .ConfigureLogging((hostingContext, logging) =>
-                {
-                    logging.AddLog4Net();
-                    logging.ClearProviders();
-                });
+                .UseContentRoot(Directory.GetCurrentDirectory());
     }
 }

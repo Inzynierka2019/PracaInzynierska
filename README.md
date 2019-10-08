@@ -36,7 +36,6 @@ Do poprawnego działania aplikacji wymagane są:
 - Node Package Manager 6.9.0 (razem z Node.js)
 - @angular/cli (Patrz poniżej)
 - [MapBox Unity SDK](https://www.mapbox.com/install/unity/) v2.0.0 (?)
-- Docker for Windows
 
 ### Instrukcja Simulation
 Zainstaluj Unity w wersji 2019.1.1f1
@@ -83,14 +82,6 @@ Uruchomienie projektu
 ```
 $> dotnet run
 ```
-
-### Docker-compose
-W głównym folderze komenda:
-```
-$> docker-compose up
-```
-stawia kontener linuxowy z aplikacją webową oraz kopiuje artefakty do folderu out.
-
 
 ### Autorzy:
   - Kamil Dakus
