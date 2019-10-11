@@ -21,16 +21,17 @@ public class Junction : MonoBehaviour
     public List<Junction> consequent = new List<Junction>();
     
     private Task trafficLightsControllerThread;
-    private bool isApplicationClosing = false;
+    private CancellationTokenSource JunctionCancellationTokenSource = new CancellationTokenSource(); 
 
     public void Start()
     {
         trafficLightsControllerThread = Task.Factory.StartNew(() =>
         {
+            CancellationToken cancellationToken = JunctionCancellationTokenSource.Token;
             try
             {
                 var rand = new System.Random();
-                while(!isApplicationClosing)
+                do
                 {
                     entries.ToList().ForEach(e =>
                     {
@@ -39,15 +40,18 @@ public class Junction : MonoBehaviour
 
                     SimulationManager.ScheduleTaskOnMainThread(() =>
                     {
-                        if(!entries.IsEmpty)
+                        if (!entries.IsEmpty)
                             entries.ToArray().ElementAt(rand.Next(0, entries.Count)).endNode.ChangeLightsToGreen();
                     });
-                    Thread.Sleep(3500);
-                }
+
+                    cancellationToken.WaitHandle.WaitOne(3500);
+                    cancellationToken.ThrowIfCancellationRequested();
+                } while (true);
 
             }catch(Exception e)
             {
-                Debug.Log($"TrafficLightsControllerThread exception: {e.ToString()}");
+                if (!(e is OperationCanceledException))
+                    Debug.Log($"TrafficLightsControllerThread exception: {e.ToString()}");
             }
         }, TaskCreationOptions.LongRunning);
     }
@@ -62,11 +66,17 @@ public class Junction : MonoBehaviour
     }
     public void OnApplicationQuit()
     {
-        isApplicationClosing = true;
-        trafficLightsControllerThread.Wait();
+        JunctionCancellationTokenSource.Cancel();
+        try
+        {
+            trafficLightsControllerThread.Wait();
+        }catch(OperationCanceledException)
+        {
+            //Do nothing.It's an expected behaviour
+        }
     }
 
-    // działa tylko w Application.isPlaying
+    // Works only if Application.isPlaying
     void OnMouseDown()
     {
         Node sourceNode = exits[Random.Range(0, exits.Count)].startNode;
