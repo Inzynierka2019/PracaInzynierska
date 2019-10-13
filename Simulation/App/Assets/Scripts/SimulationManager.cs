@@ -19,12 +19,9 @@ public class SimulationManager : MonoBehaviour
     [SerializeField] VehicleManager vehicleManager;
 
     private readonly AppConnector appConnector = new AppConnector(new UnityDebugLogger(), "https://localhost:5001/UIHub");
-    private readonly AppUpdater appUpdater = new AppUpdater(new UnityDebugLogger(), "https://localhost:5001/UIHub");
     private static ConcurrentQueue<Action> MainThreadTaskQueue = new ConcurrentQueue<Action>();
 
-    private static Task communicationThread;
-    private static BlockingCollection<IMessage> messageQueue = new BlockingCollection<IMessage>();
-    public static CancellationTokenSource AppCancellationTokenSource { private set; get; } = new CancellationTokenSource();
+    private static DataAggregationModule dataAggregationModule;
 
     public static JunctionManager JunctionManager
     {
@@ -62,7 +59,7 @@ public class SimulationManager : MonoBehaviour
             Debug.LogError("Too many simulation managers! Leave just one in hierarchy.");
         instance = this;
 
-        if(junctionManager == null)
+        if (junctionManager == null)
         {
             GameObject go = new GameObject("JunctionManager");
             go.transform.SetParent(transform);
@@ -83,19 +80,11 @@ public class SimulationManager : MonoBehaviour
 
         Rebuild();
         this.appConnector.KeepAlive();
-
-        communicationThread = Task.Factory.StartNew(() =>
-        {
-            foreach(var message in messageQueue.GetConsumingEnumerable(AppCancellationTokenSource.Token))
-            {
-                if (message is VehiclePopulation population)
-                    appUpdater.UpdateVehiclePopulationPositions(population);
-            }
-        }, TaskCreationOptions.LongRunning);
-
-        StartCoroutine(onCoroutine(AppCancellationTokenSource.Token));
+        dataAggregationModule =
+            gameObject.AddComponent<DataAggregationModule>();
+        dataAggregationModule.Init(vehicleManager);
     }
-    
+
     void Update()
     {
         while (Application.isPlaying && !MainThreadTaskQueue.IsEmpty)
@@ -117,34 +106,6 @@ public class SimulationManager : MonoBehaviour
     {
         // disconnects from web server and informs that app has closed.
         this.appConnector.Dispose();
-        AppCancellationTokenSource.Cancel();
-        try
-        {
-            communicationThread.Wait();
-        }
-        catch (OperationCanceledException)
-        {
-            //Do nothing.It's an expected behaviour
-        }
-    }
-
-    private IEnumerator onCoroutine(CancellationToken cancellationToken)
-    {
-        while (!cancellationToken.IsCancellationRequested)
-        {
-            var vehiclePopulation = new VehiclePopulation();
-            foreach (Transform vehicleTransform in VehicleManager.transform)
-            {
-                vehiclePopulation.vehiclePositions.Add(
-                    Tuple.Create(
-                        vehicleTransform.position.x,
-                        vehicleTransform.position.y,
-                        vehicleTransform.GetComponent<Vehicle>().id));
-
-
-                messageQueue.Add(vehiclePopulation);
-            }
-            yield return new WaitForSeconds(1f);
-        }
+        dataAggregationModule.StopAndWaitForShutdown();
     }
 }

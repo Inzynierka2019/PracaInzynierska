@@ -16,7 +16,7 @@ namespace Common.Models
 
         public override string ToString()
         {
-            return $"{Title} contains {vehiclePositions.Count} objects";
+            return $"{Title} with {vehiclePositions.Count} objects";
         }
     }
 }
