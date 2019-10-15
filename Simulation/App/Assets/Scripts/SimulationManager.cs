@@ -1,9 +1,12 @@
 ﻿using Common.Communication;
+using Common.Models;
+using Libraries.Web;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -17,6 +20,8 @@ public class SimulationManager : MonoBehaviour
 
     private readonly AppConnector appConnector = new AppConnector(new UnityDebugLogger(), "https://localhost:5001/UIHub");
     private static ConcurrentQueue<Action> MainThreadTaskQueue = new ConcurrentQueue<Action>();
+
+    private static DataAggregationModule dataAggregationModule;
 
     public static JunctionManager JunctionManager
     {
@@ -54,7 +59,7 @@ public class SimulationManager : MonoBehaviour
             Debug.LogError("Too many simulation managers! Leave just one in hierarchy.");
         instance = this;
 
-        if(junctionManager == null)
+        if (junctionManager == null)
         {
             GameObject go = new GameObject("JunctionManager");
             go.transform.SetParent(transform);
@@ -75,14 +80,19 @@ public class SimulationManager : MonoBehaviour
 
         Rebuild();
         this.appConnector.KeepAlive();
+        dataAggregationModule =
+            gameObject.AddComponent<DataAggregationModule>();
+        dataAggregationModule.Init(vehicleManager);
     }
-    
+
     void Update()
     {
         while (Application.isPlaying && !MainThreadTaskQueue.IsEmpty)
         {
             if (MainThreadTaskQueue.TryDequeue(out Action action))
+            {
                 action();
+            }
         }
     }
 
@@ -96,5 +106,6 @@ public class SimulationManager : MonoBehaviour
     {
         // disconnects from web server and informs that app has closed.
         this.appConnector.Dispose();
+        dataAggregationModule.StopAndWaitForShutdown();
     }
 }

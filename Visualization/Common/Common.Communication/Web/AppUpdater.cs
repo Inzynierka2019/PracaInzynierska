@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Common.Communication;
 using Common.HubClient.HubClient;
+using Common.Models;
 
 namespace Libraries.Web
 {
@@ -20,7 +21,10 @@ namespace Libraries.Web
         }
 
         #region Public Methods
-
+        public void UpdateVehiclePopulationPositions(VehiclePopulation population)
+        {
+            //To do
+        }
         #endregion
     }
 }

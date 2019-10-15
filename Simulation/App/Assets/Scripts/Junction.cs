@@ -1,7 +1,4 @@
-﻿using PathCreation;
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -13,43 +10,16 @@ using Random = UnityEngine.Random;
 public class Junction : MonoBehaviour
 {
     [HideInInspector]
-    public ConcurrentBag<Road> entries = new ConcurrentBag<Road>();
+    public List<Road> entries = new List<Road>();
     [HideInInspector]
     public List<Road> exits = new List<Road>();
 
     [HideInInspector]
     public List<Junction> consequent = new List<Junction>();
     
-    private Task trafficLightsControllerThread;
-    private bool isApplicationClosing = false;
-
     public void Start()
     {
-        trafficLightsControllerThread = Task.Factory.StartNew(() =>
-        {
-            try
-            {
-                var rand = new System.Random();
-                while(!isApplicationClosing)
-                {
-                    entries.ToList().ForEach(e =>
-                    {
-                        SimulationManager.ScheduleTaskOnMainThread(() => e.endNode.ChangeLightsToRed());
-                    });
-
-                    SimulationManager.ScheduleTaskOnMainThread(() =>
-                    {
-                        if(!entries.IsEmpty)
-                            entries.ToArray().ElementAt(rand.Next(0, entries.Count)).endNode.ChangeLightsToGreen();
-                    });
-                    Thread.Sleep(3500);
-                }
-
-            }catch(Exception e)
-            {
-                Debug.Log($"TrafficLightsControllerThread exception: {e.ToString()}");
-            }
-        }, TaskCreationOptions.LongRunning);
+        StartCoroutine(TrafficLightsControlerCoroutine());
     }
 
     void Update()
@@ -60,13 +30,8 @@ public class Junction : MonoBehaviour
             transform.hasChanged = false;
         }
     }
-    public void OnApplicationQuit()
-    {
-        isApplicationClosing = true;
-        trafficLightsControllerThread.Wait();
-    }
 
-    // działa tylko w Application.isPlaying
+    // Works only if Application.isPlaying
     void OnMouseDown()
     {
         Node sourceNode = exits[Random.Range(0, exits.Count)].startNode;
@@ -80,10 +45,7 @@ public class Junction : MonoBehaviour
             if (r != null)
                 SimulationManager.RoadManager.Delete(r);
         }
-        //clear entries
-        var newEntries = new ConcurrentBag<Road>();
-        Interlocked.Exchange<ConcurrentBag<Road>>(ref entries, newEntries);
-
+        entries.Clear();
         exits.Clear();
     }
 
@@ -91,5 +53,17 @@ public class Junction : MonoBehaviour
     {
         if (SimulationManager.RoadManager.Create(this, successor) != null)
             consequent.Add(successor);
+    }
+
+    private IEnumerator TrafficLightsControlerCoroutine()
+    {
+        var rand = new System.Random();
+        while (Application.isPlaying)
+        {
+            entries.ForEach(e => e.endNode.ChangeLightsToRed());
+            entries.ElementAt(rand.Next(0, entries.Count)).endNode.ChangeLightsToGreen();
+
+            yield return new WaitForSeconds(3.5f);
+        }
     }
 }
