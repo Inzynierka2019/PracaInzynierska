@@ -8,13 +8,13 @@ import { AppUnityConnectionStatusService } from 'src/app/services/app-unity-conn
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  loaderMsg = "waiting for simulation app...";
   errorMsg = "could not connect :(";
   connectionStatus: any;
+  showSummary: boolean = true;
+
   constructor(
     private appStatus: AppUnityConnectionStatusService,
     private spinner: NgxSpinnerService) { 
-     
   }
 
   get connected(): Boolean {
@@ -26,9 +26,13 @@ export class DashboardComponent implements OnInit {
     this.connectionStatus = this.appStatus.status$.subscribe(connection => {
       if(connection) {
         this.spinner.hide();
-        this.connectionStatus.unsubscribe();
+        /* TODO ??? */
+        // this.connectionStatus.unsubscribe();
+      } else {
+        this.showSummary = true;
       }
     });
+    console.log(this.connectionStatus);
   }
 
   ngOnDestroy() {

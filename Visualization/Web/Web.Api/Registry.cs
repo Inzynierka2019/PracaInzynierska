@@ -43,7 +43,7 @@
             services.AddSingleton<IConsoleLogUpdater, ConsoleLogUpdater>();
             services.AddTransient<IProcessService, ProcessService>();
             services.AddTransient<ILog, Log>();
-            services.AddSingleton<UnityAppCommunicationManager>();
+            services.AddSingleton<IUnityAppManager, UnityAppManager>();
             services.AddSingleton<WebUIStorage>();
         }
     }

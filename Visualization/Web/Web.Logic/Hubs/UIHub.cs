@@ -13,12 +13,12 @@
     public class UIHub : Hub
     {
         private readonly ILog Log;
-        private readonly UnityAppCommunicationManager communicationManager;
+        private readonly IUnityAppManager appManager;
 
-        public UIHub(ILog log, UnityAppCommunicationManager communicationManager) : base()
+        public UIHub(ILog log, IUnityAppManager appManager) : base()
         {
             this.Log = log;
-            this.communicationManager = communicationManager;
+            this.appManager = appManager;
         }
 
         public async Task SignalForVehiclePopulation(VehiclePopulation population)
@@ -28,7 +28,7 @@
                 Log.Debug(population);
                 await Task.Run(() =>
                 {
-                    Clients.Others.SendAsync(SignalMethods.SignalForVehiclePopulation.Method, population);
+                    Clients.All.SendAsync(SignalMethods.SignalForVehiclePopulation.Method, population);
                 });
             }
             catch (Exception ex)
@@ -42,8 +42,8 @@
         {
             try
             {
-                communicationManager.CheckStatus(isConnected);
-                return Clients.Others.SendAsync(SignalMethods.SignalForUnityAppConnectionStatus.Method, isConnected);
+                appManager.CheckStatus(isConnected);
+                return Clients.All.SendAsync(SignalMethods.SignalForUnityAppConnectionStatus.Method, isConnected);
             }
             catch (Exception ex)
             {

@@ -5,10 +5,10 @@ namespace Web.Api
     using Microsoft.AspNetCore.SpaServices.AngularCli;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+
     using Serilog;
-    using System;
+
     using Web.Logic.Hubs;
-    using Services = Web.Logic.Services;
 
     public class Startup
     {
@@ -29,7 +29,7 @@ namespace Web.Api
             services.Configure(Configuration);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -51,6 +51,8 @@ namespace Web.Api
                 routes.MapHub<UIHub>("/UIHub");
             });
 
+            app.UseWebSockets();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -68,7 +70,6 @@ namespace Web.Api
             });
 
             Log.Information("Visualization App is starting...");
-            serviceProvider.GetService<Services.UnityAppCommunicationManager>();
         }
     }
 }

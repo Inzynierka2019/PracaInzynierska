@@ -13,7 +13,6 @@
         {
             this.hub = hub;
             this.Log = Log;
-            var communicationManager = new UnityAppCommunicationManager(Log);
         }
     }
 }

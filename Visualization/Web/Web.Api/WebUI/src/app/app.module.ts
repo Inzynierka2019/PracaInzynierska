@@ -17,6 +17,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AboutComponent } from './components/about/about.component';
 import { LogsComponent } from './components/console/logs/logs.component';
 import { VehiclePopulationComponent } from './components/dashboard/charts/vehicle-population/vehicle-population.component';
+import { SummaryComponent } from './components/summary/summary.component';
+import { StatisticsComponent } from './components/dashboard/stats/statistics/statistics.component';
+import { HeatmapComponent } from './components/dashboard/heatmap/heatmap.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,9 @@ import { VehiclePopulationComponent } from './components/dashboard/charts/vehicl
     AboutComponent,
     LogsComponent,
     VehiclePopulationComponent,
+    SummaryComponent,
+    StatisticsComponent,
+    HeatmapComponent,
   ],
   imports: [
     BrowserModule,

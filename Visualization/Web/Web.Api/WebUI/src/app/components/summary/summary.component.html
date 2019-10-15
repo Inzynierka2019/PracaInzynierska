@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <button matInput type="button" class="btn btn-outline-dark summary-button" (click)="show()">Podsumowanie symulacji</button>
+    </div>
+    
+    <ng-container *ngIf="showSummary">
+        <div class="summary">
+            Symulacja trwała: 15 sekund
+        </div>
+    </ng-container>
+</div>

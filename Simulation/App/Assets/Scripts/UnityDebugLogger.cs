@@ -1,4 +1,4 @@
-﻿using Common.HubClient.HubClient;
+﻿using Common.Communication;
 using UnityEngine;
 
 public class UnityDebugLogger : IDebugLogger

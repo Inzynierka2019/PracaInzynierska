@@ -1,16 +1,15 @@
-﻿namespace Common.Communication
+﻿namespace Common.Communication.Web
 {
     using System;
-    using Common.HubClient.HubClient;
+    using Common.Communication.WebClient;
     using Common.Utils;
 
     /// <summary>
     /// AppConnector's purpose is to establish a connection with web browser.
     /// </summary>
-    public class AppConnector : IDisposable
+    public class AppConnector
     {
         private ActionTimer Timer { get; set; }
-        private HubClient HubClient { get; set; }
         private readonly IDebugLogger logger;
 
         /// <summary>
@@ -21,40 +20,30 @@
 
         private readonly TimeSpan interval = new TimeSpan(0, 0, 0, 0, 2000);
 
-        private readonly string keepAlive = SignalMethods.SignalForUnityAppConnectionStatus.Method;
-
-        public AppConnector(IDebugLogger logger, string address)
+        public AppConnector(IDebugLogger logger)
         {
             this.logger = logger;
-            HubClient = new HubClient(SignalMethods.SignalForUnityAppConnectionStatus, logger, address, "KeepAlive");
         }
 
         /// <summary>
-        /// Sends 'keep-alive' message to web browser with a specified interval.
+        /// Starts connection with web app.
         /// </summary>
-        public void KeepAlive()
+        public async void StartConnection()
         {
-            //this.HubClient.Send(keepAlive, true);
-
-            Timer = new ActionTimer(
-              () =>
-              {
-                  this.HubClient.Send(keepAlive, true);
-              },
-              interval,
-              dueTime);
+            using (var webClient = new WebClient(this.logger))
+            {
+                await webClient.Get(Endpoints.Connect);
+            }
         }
-
-        public void Disconnect()
+        /// <summary>
+        /// Closes connection with web app.
+        /// </summary>
+        public async void CloseConnection()
         {
-            this.HubClient.Send(keepAlive, false);
-        }
-
-        public void Dispose()
-        {
-            Disconnect();
-            ((IDisposable)Timer).Dispose();
-            ((IDisposable)HubClient).Dispose();
+            using (var webClient = new WebClient(this.logger))
+            {
+                await webClient.Get(Endpoints.Disconnect);
+            }
         }
     }
 }

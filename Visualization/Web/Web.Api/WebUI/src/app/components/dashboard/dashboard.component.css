@@ -5,9 +5,9 @@
 
 .loader {
     position: relative;
-    margin: 5px;
-    min-height: 150px;
-    width: 400px;
+    height: 140px;
+    margin-top: -10px;
+    margin-bottom: 20px;
 }
 
 .loader-msg {

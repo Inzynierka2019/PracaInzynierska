@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Communication;
-using Common.HubClient.HubClient;
-
-namespace Libraries.Web
+﻿namespace Libraries.Web
 {
+    using Common.Communication;
+    using Common.Communication.WebClient;
+
     public class AppUpdater : IAppUpdater
     {
         private readonly IDebugLogger logger;
-        public HubClient HubClient { get; set; }
+        public WebClient WebClient { get; set; }
 
         public AppUpdater(IDebugLogger logger, string address)
         {
             this.logger = logger;
-            HubClient = new HubClient(logger, address, "AppUpdater");
+            WebClient = new WebClient(logger);
         }
 
         #region Public Methods

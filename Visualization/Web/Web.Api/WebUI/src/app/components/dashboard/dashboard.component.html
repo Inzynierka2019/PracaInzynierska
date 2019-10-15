@@ -1,15 +1,13 @@
 <div class="container-flex margin-top-lg">
-    <mat-accordion>
+    <mat-accordion multi="true">
         <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     Podsumowanie
                 </mat-expansion-panel-header>
-                <ng-template matExpansionPanelContent>
-                        <div class="loader">
-                            <ngx-spinner [fullScreen]="false" type="ball-clip-rotate-multiple" size="medium" color="#3c1053" bdColor="rgba(0,0,0,0)">
-                                <p class="loader-msg">{{ loaderMsg }}</p>
-                            </ngx-spinner>
-                        </div>
+                <ng-template matExpansionPanelContent *ngIf="connected; else loading">
+
+                    Czas trwania symulacji:
+
                 </ng-template>
         </mat-expansion-panel>
 
@@ -17,7 +15,8 @@
                 <mat-expansion-panel-header>
                         Podgląd mapy
                 </mat-expansion-panel-header>
-                <ng-template matExpansionPanelContent>
+                <ng-template matExpansionPanelContent *ngIf="connected; else loading">
+                    <app-heatmap></app-heatmap>
                 </ng-template>
         </mat-expansion-panel>
 
@@ -25,7 +24,8 @@
             <mat-expansion-panel-header>
                     Statystyki
             </mat-expansion-panel-header>
-            <ng-template matExpansionPanelContent>
+            <ng-template matExpansionPanelContent *ngIf="connected; else loading">
+                <app-statistics></app-statistics>
                 <app-vehicle-population></app-vehicle-population>
             </ng-template>
 
@@ -33,10 +33,14 @@
     </mat-accordion>
 </div>
 
+<ng-container *ngIf="showSummary">
+    <app-summary></app-summary>
+</ng-container>
+
 <ng-template #loading>
-    <div class="loader">
-        <ngx-spinner [fullScreen]="false" type="pacman" size="large" color="#3c1053">
-            <p class="loader-msg">{{ loaderMsg }}</p>
+    <div class="loader d-flex justify-content-center">
+        <ngx-spinner [fullScreen]="false" type="ball-clip-rotate-multiple" size="medium" color="#3c1053" bdColor="rgba(0,0,0,0)">
+            <p class="loader-msg">waiting for simulation app...</p>
         </ngx-spinner>
     </div>
 </ng-template>
