@@ -1,7 +1,8 @@
-﻿namespace Libraries.Web
+namespace Libraries.Web
 {
     using Common.Communication;
     using Common.Communication.WebClient;
+    using Common.Models;
 
     public class AppUpdater : IAppUpdater
     {
@@ -15,7 +16,10 @@
         }
 
         #region Public Methods
-
+        public void UpdateVehiclePopulationPositions(VehiclePopulation population)
+        {
+            //To do
+        }
         #endregion
     }
 }
