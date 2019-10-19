@@ -19,7 +19,10 @@ export class DashboardComponent implements OnInit {
       this.spinner.hide();
       return true;
     } 
-    else return false;
+    else {
+      this.spinner.show();
+      return false;
+    } 
   }
 
   get appTime(): string {
@@ -31,6 +34,5 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.spinner.show();
   }
 }

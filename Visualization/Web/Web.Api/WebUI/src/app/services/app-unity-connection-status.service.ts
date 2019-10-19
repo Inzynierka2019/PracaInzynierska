@@ -17,7 +17,7 @@ export class AppUnityConnectionStatusService {
     private signalR: SignalRService,
     private snackBar: SnackBarService,
     private httpClient: HttpClient) {
-      this.isConnected = true;
+      this.isConnected = false;
       this.registerSignalHandlers();
       this.appState = UnityAppState.NOT_CONNECTED;
   }

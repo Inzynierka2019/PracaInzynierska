@@ -22,6 +22,7 @@ export class HeatmapComponent implements OnInit {
     this.geoService.getAddressPoints().subscribe((geoPoints) => {
         let newAddressPoints = geoPoints.map(function (p: GeoPosition) { return [p.latitude, p.longitude]; });
         console.log(newAddressPoints);
+        /* heatLayer can't be seen in Leaflet at compile time but it works at runtime? */
         const heat = Leaflet.heatLayer(newAddressPoints).addTo(this.map);
     });
   }
@@ -41,7 +42,7 @@ export class HeatmapComponent implements OnInit {
     }
   };
 
-  onMapReady(map) {
+  onMapReady(map: any) {
     this.map = map;
   }
 
