@@ -61,7 +61,7 @@ svg:hover {
     margin: 5px;
 }
 
-@media screen and (max-width: 1110px) {
+@media screen and (max-width: 1145px) {
     .simulator-title {
         display: none;
     }

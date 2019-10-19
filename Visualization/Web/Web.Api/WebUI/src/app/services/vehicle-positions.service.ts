@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SignalRService } from './signal-r.service';
 import { Observable, Subject } from 'rxjs';
+import { GeoPosition } from '../interfaces/chart-models';
 
 @Injectable({
   providedIn: 'root'
@@ -29,16 +30,3 @@ export class VehiclePositionsService {
     return this.pointsObserver$.asObservable();
   }
 }
-
-export interface VehiclePopulation {
-  timestamp: Date;
-  vehicleCount: number;
-  vehiclePositions: Array<GeoPosition>;
-}
-
-export interface GeoPosition {
-  id: number;
-  latitude: number;
-  longitude: number;
-}
-

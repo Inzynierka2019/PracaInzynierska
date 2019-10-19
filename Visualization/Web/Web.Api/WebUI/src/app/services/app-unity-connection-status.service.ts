@@ -23,18 +23,15 @@ export class AppUnityConnectionStatusService {
   }
 
   connected() {
-    console.log("connected");
     this.isConnected = true;
     this.snackBar.open("Simulator app is now connected!");
   }
 
   notConnected() {
-    console.log("Not connected");
     this.isConnected = false;
   }
 
   disconnected() {
-    console.log("Disconnected");
     this.snackBar.open("Simulator app has ended!");
     this.isConnected = false;
     this.httpClient.get(this.timeSpanUrl).subscribe(
@@ -54,7 +51,7 @@ export class AppUnityConnectionStatusService {
         if (this.appState != appState)
           this.appState = appState;
         else return;
-        
+
         switch (appState) {
           case UnityAppState.NOT_CONNECTED:
             this.notConnected();
