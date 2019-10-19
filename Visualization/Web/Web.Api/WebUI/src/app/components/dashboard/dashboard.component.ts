@@ -15,13 +15,15 @@ export class DashboardComponent implements OnInit {
   }
 
   get connected(): Boolean {
-    if (this.appStatus.isConnected) {
-      this.spinner.hide();
-      return true;
-    } 
-    else {
-      this.spinner.show();
-      return false;
+    switch(this.appStatus.appState) {
+      case UnityAppState.CONNECTED:
+      case UnityAppState.DISCONNECTED:
+      case UnityAppState.RUNNING:
+        this.spinner.hide();
+        return true;
+      case UnityAppState.NOT_CONNECTED:
+        this.spinner.show();
+        return false;
     } 
   }
 

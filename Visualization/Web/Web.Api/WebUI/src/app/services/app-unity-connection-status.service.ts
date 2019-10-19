@@ -51,8 +51,10 @@ export class AppUnityConnectionStatusService {
     this.signalR.registerHandler(
       'SignalForUnityAppConnectionStatus',
       (appState: UnityAppState) => {
-        this.appState = appState;
-
+        if (this.appState != appState)
+          this.appState = appState;
+        else return;
+        
         switch (appState) {
           case UnityAppState.NOT_CONNECTED:
             this.notConnected();

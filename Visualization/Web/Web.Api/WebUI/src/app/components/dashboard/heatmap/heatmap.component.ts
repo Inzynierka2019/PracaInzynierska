@@ -5,6 +5,7 @@ import { latLng } from 'leaflet';
 import { icon, Map, point, marker, polyline } from 'leaflet';
 import { VehiclePositionsService, GeoPosition } from 'src/app/services/vehicle-positions.service';
 import { TileLayers } from './tileLayers';
+declare var L;
 
 @Component({
   selector: 'app-heatmap',
@@ -21,9 +22,8 @@ export class HeatmapComponent implements OnInit {
   ngOnInit() {
     this.geoService.getAddressPoints().subscribe((geoPoints) => {
         let newAddressPoints = geoPoints.map(function (p: GeoPosition) { return [p.latitude, p.longitude]; });
-        console.log(newAddressPoints);
         /* heatLayer can't be seen in Leaflet at compile time but it works at runtime? */
-        const heat = Leaflet.heatLayer(newAddressPoints).addTo(this.map);
+        const heat = L.heatLayer(newAddressPoints).addTo(this.map);
     });
   }
 

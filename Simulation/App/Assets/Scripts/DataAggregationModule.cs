@@ -9,6 +9,7 @@ public class DataAggregationModule : MonoBehaviour
     private CommunicationModule communicationModule;
     private CancellationTokenSource communicationCancellationTokenSource = new CancellationTokenSource();
     private VehicleManager vehicleManager;
+    private readonly float updateIntervalInSeconds = 1f;
 
     public void Init(VehicleManager vehicleManager)
     {
@@ -51,7 +52,7 @@ public class DataAggregationModule : MonoBehaviour
                 communicationModule.AddMessageToQueue(vehiclePopulation);
             }
 
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(this.updateIntervalInSeconds);
         }
     }
 }
