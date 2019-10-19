@@ -9,6 +9,7 @@ namespace Web.Api
     using Serilog;
 
     using Web.Logic.Hubs;
+    using Web.Logic.Services;
 
     public class Startup
     {
@@ -16,7 +17,7 @@ namespace Web.Api
         {
             Configuration = configuration;
 
-            Log.Logger = new LoggerConfiguration()
+            Serilog.Log.Logger = new LoggerConfiguration()
             .ReadFrom.Configuration(Configuration)
             .WriteTo.Console()
             .CreateLogger();
@@ -29,7 +30,7 @@ namespace Web.Api
             services.Configure(Configuration);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IUnityAppManager unityAppManager)
         {
             if (env.IsDevelopment())
             {
@@ -42,7 +43,6 @@ namespace Web.Api
             }
 
             app.UseCors("CorsPolicy");
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
@@ -69,7 +69,7 @@ namespace Web.Api
                 }
             });
 
-            Log.Information("Visualization App is starting...");
+            Serilog.Log.Information("Visualization App is starting...");
         }
     }
 }

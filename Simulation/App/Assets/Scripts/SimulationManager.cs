@@ -1,13 +1,6 @@
-﻿using Common.Communication;
-using Common.Communication.Web;
-using Common.Models;
-using Libraries.Web;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 
 [ExecuteInEditMode]

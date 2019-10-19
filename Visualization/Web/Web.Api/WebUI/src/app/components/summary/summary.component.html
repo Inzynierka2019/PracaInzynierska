@@ -1,11 +1,19 @@
 <div class="container">
     <div class="d-flex justify-content-center">
-        <button matInput type="button" class="btn btn-outline-dark summary-button" (click)="show()">Podsumowanie symulacji</button>
+        <button matInput type="button" class="btn btn-outline-dark summary-button" (click)="show()">Podsumowanie
+            symulacji</button>
     </div>
-    
+
     <ng-container *ngIf="showSummary">
-        <div class="summary">
-            Symulacja trwała: 15 sekund
-        </div>
+        <mat-accordion multi="true">
+            <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header>
+                    <b>Podsumowanie</b>
+                </mat-expansion-panel-header>
+
+                Czas trwania symulacji: {{ appTime | date: 'mm:ss.SS' }}
+
+            </mat-expansion-panel>
+        </mat-accordion>
     </ng-container>
 </div>

@@ -11,12 +11,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Common.Communication">
-      <HintPath>..\..\Common\Common.Communication\bin\Release\Common.Communication.dll</HintPath>
-    </Reference>
     <Reference Include="Common.Models">
       <HintPath>..\..\Common\Common.Communication\bin\Release\Common.Models.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common.Models\Common.Models.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Web.Logic.Services
+﻿namespace Web.Logic.Services
 {
+    using Common.Models.Enums;
+    using System;
+
     public interface IUnityAppManager
     {
-        void CheckStatus(bool isConnected);
-        TimeSpan GetAppTimeSpan();
+        void UpdateState(UnityAppState state);
+        TimeSpan GetTimeSpan();
     }
 }

@@ -1,59 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Common.Communication;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using Web.Logic.Hubs;
-using Web.Logic.Services;
-
-namespace Web.Api.Controllers
+﻿namespace Web.Api.Controllers
 {
-    [Route("api")]
+    using System;
+    using System.Threading.Tasks;
+    using Common.Models;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.SignalR;
+    using Web.Logic.Hubs;
+    using Web.Logic.Services;
+
+    [Route("api/stats")]
     [ApiController]
     public class StatisticsController : ControllerBase
     {
         private readonly ILog Log;
-        private readonly IUnityAppManager appManager;
         private readonly IHubContext<UIHub> hubContext;
-        public StatisticsController(ILog log, IUnityAppManager appManager, IHubContext<UIHub> hubContext)
+        private readonly IStatisticsService statisticsService;
+
+        public StatisticsController(ILog log, IHubContext<UIHub> hubContext, IStatisticsService statisticsService)
         {
             this.Log = log;
-            this.appManager = appManager;
             this.hubContext = hubContext;
+            this.statisticsService = statisticsService;
         }
 
-        [HttpGet]
-        [Route("connect")]
-        public IActionResult ConnectWithWebClient()
+        [HttpPut]
+        [Route("vehiclePopulationPositions")]
+        public async Task<IActionResult> UpdateVehiclePopulationPositions([FromBody] VehiclePopulation population)
         {
             try
             {
-                this.hubContext.Clients.All.SendAsync(SignalMethods.SignalForUnityAppConnectionStatus.Method, true);
+                if (TryValidateModel(population))
+                {
+                    await this.statisticsService.UpdateVehiclePopulation(population);
 
-                return this.Ok();
-            }
-            catch(Exception ex)
-            {
-                return this.BadRequest(ex);
-            }
-        }
-
-        [HttpGet]
-        [Route("disconnect")]
-        public IActionResult DisconnectWithWebClient()
-        {
-            try
-            {
-                this.hubContext.Clients.All.SendAsync(SignalMethods.SignalForUnityAppConnectionStatus.Method, false);
-
-                return this.Ok();
+                    return Ok();
+                }
+                else
+                {
+                    return UnprocessableEntity();
+                }
             }
             catch (Exception ex)
             {
-                return this.BadRequest(ex);
+                return BadRequest(ex);
             }
         }
 
@@ -63,13 +52,11 @@ namespace Web.Api.Controllers
         {
             try
             {
-                this.hubContext.Clients.All.SendAsync(SignalMethods.SignalForUnityAppConnectionStatus.Method, false);
-
                 return this.Ok();
             }
             catch (Exception ex)
             {
-                return this.BadRequest();
+                return this.BadRequest(ex);
             }
         }
     }

@@ -29,13 +29,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common.Models\Common.Models.csproj" />
     <ProjectReference Include="..\Web.Logic\Web.Logic.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Common.Communication">
-      <HintPath>..\..\Common\Common.Communication\bin\Release\Common.Communication.dll</HintPath>
-    </Reference>
     <Reference Include="Common.Models">
       <HintPath>..\..\Common\Common.Communication\bin\Release\Common.Models.dll</HintPath>
     </Reference>

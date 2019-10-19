@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { AppUnityConnectionStatusService } from 'src/app/services/app-unity-connection-status.service';
 
 @Component({
   selector: 'app-summary',
@@ -6,9 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./summary.component.css']
 })
 export class SummaryComponent implements OnInit {
+  @Input()
+  showSummary: Boolean = false;
 
-  showSummary: boolean = true;
-  constructor() { }
+  constructor(private appService: AppUnityConnectionStatusService) { }
 
   ngOnInit() {
   }
@@ -16,4 +18,9 @@ export class SummaryComponent implements OnInit {
   show() {
     this.showSummary = true;
   }
+
+  get appTime(): string {
+    return this.appService.appTimeSpan;
+  };
+
 }

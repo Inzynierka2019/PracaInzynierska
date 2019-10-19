@@ -44,7 +44,7 @@
             services.AddTransient<IProcessService, ProcessService>();
             services.AddTransient<ILog, Log>();
             services.AddSingleton<IUnityAppManager, UnityAppManager>();
-            services.AddSingleton<WebUIStorage>();
+            services.AddSingleton<IStatisticsService, StatisticsService>();
         }
     }
 }

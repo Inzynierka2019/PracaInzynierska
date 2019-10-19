@@ -4,11 +4,11 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.SignalR;
 
-    using Common.Communication;
     using Common.Models;
     using Common.Models.Exceptions;
 
     using Web.Logic.Services;
+    using Common.Models.Enums;
 
     public class UIHub : Hub
     {
@@ -26,10 +26,7 @@
             try
             {
                 Log.Debug(population);
-                await Task.Run(() =>
-                {
-                    Clients.All.SendAsync(SignalMethods.SignalForVehiclePopulation.Method, population);
-                });
+                await Clients.All.SendAsync(SignalMethods.SignalForVehiclePopulation.Method, population);
             }
             catch (Exception ex)
             {
@@ -38,17 +35,16 @@
             }
         }
 
-        public Task SignalForUnityAppConnectionStatus(bool isConnected)
+        public async Task SignalForUnityAppConnectionStatus(UnityAppState state)
         {
             try
             {
-                appManager.CheckStatus(isConnected);
-                return Clients.All.SendAsync(SignalMethods.SignalForUnityAppConnectionStatus.Method, isConnected);
+                await Clients.All.SendAsync(SignalMethods.SignalForUnityAppConnectionStatus.Method, state);
             }
             catch (Exception ex)
             {
                 Log.Error($"Exception was thrown while sending Unity App connection status {ex.Message}");
-                throw new SignalHubException($"Error in SignalForVehiclePopulation method", ex);
+                throw new SignalHubException($"Error in SignalForUnityAppConnectionStatus method", ex);
             }
         }
     }

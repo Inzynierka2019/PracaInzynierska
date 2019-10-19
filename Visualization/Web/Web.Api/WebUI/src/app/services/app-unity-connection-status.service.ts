@@ -1,36 +1,76 @@
 import { Injectable } from '@angular/core';
 import { SignalRService } from './signal-r.service';
 import { SnackBarService } from './snack-bar.service';
-import { BehaviorSubject } from 'rxjs';
+import { UnityAppState } from '../interfaces/unity-app-state';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppUnityConnectionStatusService {
-
-  private _isConnected = new BehaviorSubject<boolean>(false);
-  public status$ = this._isConnected.asObservable();
   public isConnected: boolean;
+  public appTimeSpan: string;
+  public appState: UnityAppState;
+  private timeSpanUrl = "/api/unity/timespan"
 
   constructor(
     private signalR: SignalRService,
-    private snackBar: SnackBarService) {
+    private snackBar: SnackBarService,
+    private httpClient: HttpClient) {
+      this.isConnected = true;
+      this.registerSignalHandlers();
+      this.appState = UnityAppState.NOT_CONNECTED;
+  }
+
+  connected() {
+    console.log("connected");
+    this.isConnected = true;
+    this.snackBar.open("Simulator app is now connected!");
+  }
+
+  notConnected() {
+    console.log("Not connected");
     this.isConnected = false;
-    this.registerSignalHandlers();
-    this.snackBar.open("Simulator app is disconnected.");
-   }
+  }
+
+  disconnected() {
+    console.log("Disconnected");
+    this.snackBar.open("Simulator app has ended!");
+    this.isConnected = false;
+    this.httpClient.get(this.timeSpanUrl).subscribe(
+      (timespan: any) => {
+        this.appTimeSpan = timespan;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
 
   registerSignalHandlers(): void {
     this.signalR.registerHandler(
       'SignalForUnityAppConnectionStatus',
-      (isConnected: boolean) => {
-        this.isConnected = isConnected;
-        if(isConnected && !this.isConnected) {
-          this.snackBar.open("Simulator app is now connected!");
+      (appState: UnityAppState) => {
+        this.appState = appState;
+
+        switch (appState) {
+          case UnityAppState.NOT_CONNECTED:
+            this.notConnected();
+            break;
+
+          case UnityAppState.CONNECTED:
+            this.connected();
+            break;
+
+          case UnityAppState.DISCONNECTED:
+            this.disconnected();
+            break;
+
+          case UnityAppState.RUNNING:
+            break;
         }
-        this._isConnected.next(isConnected);
       }
     );
   }
-  
+
 }

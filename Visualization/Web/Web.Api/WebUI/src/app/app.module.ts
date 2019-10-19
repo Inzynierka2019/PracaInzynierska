@@ -8,6 +8,7 @@ import { MatSnackBarModule } from '@angular/material';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -44,7 +45,8 @@ import { HeatmapComponent } from './components/dashboard/heatmap/heatmap.compone
     MatSnackBarModule,
     MatExpansionModule,
     BrowserAnimationsModule,
-    MatCardModule
+    MatCardModule,
+    LeafletModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
