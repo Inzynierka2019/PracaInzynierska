@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -36,20 +38,30 @@ public class JunctionManager : MonoBehaviour
 
     public void RebuildRoads()
     {
-        var cache = new Dictionary<Junction, List<Junction>>();
+        //var cache = new Dictionary<Junction, List<Junction>>();
+
+        //foreach (Junction j in junctions)
+        //{
+        //    j.ClearConnectionsAndPaths();
+        //    cache.Add(j, j.consequent.Select(c => c.junction).ToList());
+        //    j.consequent = new List<Junction.InterjunctionConnection>();
+        //}
+
+        //foreach (Junction j in junctions)
+        //{
+        //    List<Junction> nodeNeighbours = cache[j];
+        //    foreach (var neighbour in nodeNeighbours)
+        //    {
+        //        j.AddConsequent(neighbour);
+        //    }
+        //}
 
         foreach (Junction j in junctions)
         {
-            j.ClearConnectionsAndPaths();
-            cache.Add(j, j.consequent);
-            j.consequent = new List<Junction>();
-        }
-
-        foreach (Junction j in junctions)
-        {
-            var nodeNeighbours = cache[j];
-            foreach (var neighbour in nodeNeighbours)
-                j.AddConsequent(neighbour);
+            foreach (Road r in j.exits)
+            {
+                SimulationManager.RoadManager.RebuildNodes(r, j, j.consequent.Find(c => c.road == r).junction, 4f, 0.1f);
+            }
         }
     }
 }

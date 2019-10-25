@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -14,8 +15,21 @@ public class Junction : MonoBehaviour
     [HideInInspector]
     public List<Road> exits = new List<Road>();
 
-    [HideInInspector]
-    public List<Junction> consequent = new List<Junction>();
+    // ani dictionary ani tuple nie są serializowalne - unity nie zapamiętuje stanu w scenie takich obiektów
+    public List<InterjunctionConnection> consequent = new List<InterjunctionConnection>();
+
+    [Serializable]
+    public struct InterjunctionConnection
+    {
+        public Junction junction;
+        public Road road;
+
+        public InterjunctionConnection(Junction j, Road r)
+        {
+            junction = j;
+            road = r;
+        }
+    }
     
     public void Start()
     {
@@ -36,7 +50,7 @@ public class Junction : MonoBehaviour
     {
         Road sourceRoad = exits[Random.Range(0, exits.Count)];
         Node sourceNode = sourceRoad.startNodes[Random.Range(0, sourceRoad.startNodes.Length)];
-        SimulationManager.VehicleManager.Create(sourceNode, sourceNode.consequent.Keys.ToList()[Random.Range(0, sourceNode.consequent.Count)]);
+        SimulationManager.VehicleManager.Create(sourceNode, sourceNode.consequent.Select(c => c.node).ToList()[Random.Range(0, sourceNode.consequent.Count)]);
     }
 
     public void ClearConnectionsAndPaths()
@@ -52,13 +66,14 @@ public class Junction : MonoBehaviour
 
     public void AddConsequent(Junction successor)
     {
-        if (SimulationManager.RoadManager.Create(this, successor, 3, 4f, 0.1f) != null)
-            consequent.Add(successor);
+        Road road = SimulationManager.RoadManager.Create(this, successor, 3, 4f, 0.1f);
+        if (road != null)
+            consequent.Add(new InterjunctionConnection(successor, road));
     }
 
     private IEnumerator TrafficLightsControlerCoroutine()
     {
-        if (Application.isPlaying)
+        if (entries.Count > 0)
         {
             List<Node> allEntryNodes = entries.Select(r => r.endNodes).Aggregate((a1, a2) => a1.Concat(a2).ToArray()).ToList();
 

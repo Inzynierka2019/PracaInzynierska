@@ -2,10 +2,25 @@
 using UnityEngine;
 using PathCreation;
 using System.Linq;
+using System;
 
 public class Node : MonoBehaviour
 {
-    public Dictionary<Node, VertexPath> consequent = new Dictionary<Node, VertexPath>();
+    // ani dictionary ani tuple nie są serializowalne - unity nie zapamiętuje stanu w scenie takich obiektów
+    public List<InternodeConnection> consequent = new List<InternodeConnection>();
+
+    [Serializable]
+    public struct InternodeConnection
+    {
+        public Node node;
+        public VertexPath path;
+
+        public InternodeConnection(Node n, VertexPath p)
+        {
+            node = n;
+            path = p;
+        }
+    }
 
     public List<Vehicle> vehicles = new List<Vehicle>();
     public bool isRedLightOn;
@@ -21,7 +36,7 @@ public class Node : MonoBehaviour
 
         for(int i = 2; i < searchDeep; i++)
         {
-            var nextHop = vehicle.GetNextTargetNode(nextHops[i - 1].consequent.Keys.ToList());
+            var nextHop = vehicle.GetNextTargetNode(nextHops[i - 1].consequent.Select(c => c.node).ToList());
             if (nextHop == null)
                 break;
             nextHops.Add(nextHop);
@@ -38,7 +53,7 @@ public class Node : MonoBehaviour
 
             if(nearestInFront == null)
             {
-                distance += nextHops[i - 1].consequent[nextHops[i]].length;
+                distance += nextHops[i - 1].consequent.Find(c => c.node == nextHops[i]).path.length;
                 if(nextHops[i].isRedLightOn)
                 {
                     info.distanceToNearestObstacle = distance - vehicle.distanceOnCurrentRoadSegment;
@@ -75,13 +90,13 @@ public class Node : MonoBehaviour
             var info = CreateRoadInfoForVehicle(vehicle);
             vehicle.UpdatePosition(info);
 
-            if (vehicle.distanceOnCurrentRoadSegment > consequent[vehicle.currentIntermidiateTarget].length)
+            if (vehicle.distanceOnCurrentRoadSegment > consequent.Find(c => c.node == vehicle.currentIntermidiateTarget).path.length)
             {
                 if (vehicle.currentIntermidiateTarget.consequent.Count == 0)
                     vehiclesToRemove.Add(vehicle);
                 else
                 {
-                    var nextHop = vehicle.GetNextTargetNode(vehicle.currentIntermidiateTarget.consequent.Keys.ToList());
+                    var nextHop = vehicle.GetNextTargetNode(vehicle.currentIntermidiateTarget.consequent.Select(c => c.node).ToList());
                     vehilcesToTransfer.Add(vehicle, vehicle.currentIntermidiateTarget);
                     vehicle.currentIntermidiateTarget = nextHop;
                     vehicle.distanceOnCurrentRoadSegment = 0;
@@ -89,8 +104,9 @@ public class Node : MonoBehaviour
             }
             else
             {
-                vehicle.transform.position = consequent[vehicle.currentIntermidiateTarget].GetPointAtDistance(vehicle.distanceOnCurrentRoadSegment, EndOfPathInstruction.Stop);
-                vehicle.transform.rotation = consequent[vehicle.currentIntermidiateTarget].GetRotationAtDistance(vehicle.distanceOnCurrentRoadSegment, EndOfPathInstruction.Stop);
+                VertexPath path = consequent.Find(c => c.node == vehicle.currentIntermidiateTarget).path;
+                vehicle.transform.position = path.GetPointAtDistance(vehicle.distanceOnCurrentRoadSegment, EndOfPathInstruction.Stop);
+                vehicle.transform.rotation = path.GetRotationAtDistance(vehicle.distanceOnCurrentRoadSegment, EndOfPathInstruction.Stop);
             }
         }
 
