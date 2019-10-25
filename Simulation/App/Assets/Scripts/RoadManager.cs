@@ -20,8 +20,7 @@ public class RoadManager : MonoBehaviour
         nodePrefab = Resources.Load<GameObject>("SmallNodePrefab");
     }
 
-    // póki co dostępny tylko jeden rodzaj drogi -o-o-o-o-
-    public Road Create(Junction from, Junction to)
+    public Road Create(Junction from, Junction to, int laneCount, float laneWidth, float nodeDensity)
     {
         if (from == null || to == null)
         {
@@ -31,25 +30,85 @@ public class RoadManager : MonoBehaviour
 
         Road newRoad = Instantiate(prefab, (from.transform.position + to.transform.position) / 2, Quaternion.identity, transform).GetComponent<Road>();
 
-        newRoad.nodes = new List<Node>();
+        newRoad.nodes = new List<Node[]>();
 
-        VertexPath vertexPath = CreateVertexPath(new Vector3[] { from.transform.position, newRoad.transform.position, to.transform.position });
+        List<VertexPath> vertexPaths = new List<VertexPath>();
+        Vector3 laneSeparation = laneWidth * Vector2.Perpendicular(to.transform.position - from.transform.position);
+        for(int i = 0; i < laneCount; i++)
+        {
+            Vector3 offset = (0.5f * (laneCount - 1) - i) * laneSeparation;
+            vertexPaths.Add(CreateVertexPath(new Vector3[] { from.transform.position + offset, newRoad.transform.position + offset, to.transform.position + offset}));
+        }
 
-        BuildPlaceholderTypeRoad(newRoad, vertexPath);
+        float stepLength = 1.0f / (nodeDensity * Vector3.Distance(from.transform.position, to.transform.position));
+
+        Node[] currentStepNodes = vertexPaths.Select(vp => Instantiate(nodePrefab, vp.GetPoint(stepLength, EndOfPathInstruction.Stop), Quaternion.identity, newRoad.transform).GetComponent<Node>()).ToArray();
+        newRoad.nodes.Add(currentStepNodes);
+
+        for (float i = stepLength; i <= 1 - stepLength; i += stepLength)
+        {
+            Node[] nextStepNodes = new Node[laneCount];
+
+            for (int l = 0; l < laneCount; l++)
+            {
+                Vector3[] pathSegment = new Vector3[3];
+                pathSegment[0] = vertexPaths[l].GetPoint(i, EndOfPathInstruction.Stop); //start
+                pathSegment[1] = vertexPaths[l].GetPoint(i + stepLength / 2, EndOfPathInstruction.Stop); //middle
+                pathSegment[2] = vertexPaths[l].GetPoint(i + stepLength, EndOfPathInstruction.Stop); //end
+
+                Node node = Instantiate(nodePrefab, pathSegment[2], Quaternion.identity, newRoad.transform).GetComponent<Node>();
+
+                currentStepNodes[l].consequent.Add(node, CreateVertexPath(pathSegment));
+
+                if(l > 0)
+                {
+                    pathSegment[0] = vertexPaths[l - 1].GetPoint(i, EndOfPathInstruction.Stop);
+                    pathSegment[1] = (pathSegment[0] + pathSegment[2]) / 2;
+                    currentStepNodes[l - 1].consequent.Add(node, CreateVertexPath(pathSegment));
+                }
+
+                if (l < laneCount - 1)
+                {
+                    pathSegment[0] = vertexPaths[l + 1].GetPoint(i, EndOfPathInstruction.Stop);
+                    pathSegment[1] = (pathSegment[0] + pathSegment[2]) / 2;
+                    currentStepNodes[l + 1].consequent.Add(node, CreateVertexPath(pathSegment));
+                }
+
+                nextStepNodes[l] = node;
+            }
+
+            currentStepNodes = nextStepNodes;
+            newRoad.nodes.Add(currentStepNodes);
+        }
+
+        newRoad.startNodes = newRoad.nodes.FirstOrDefault();
+        newRoad.endNodes = newRoad.nodes.LastOrDefault();
 
         from.exits.Add(newRoad);
         to.entries.Add(newRoad);
 
-        foreach (var entryNode in from.entries.Select(e => e.endNode))
+        if(from.entries.Count > 0)
         {
-            VertexPath path = CreateVertexPath(new Vector3[] { entryNode.transform.position, from.transform.position, newRoad.startNode.transform.position });
-            entryNode.consequent.Add(newRoad.startNode, path);
+            foreach (Node entryNode in from.entries.Select(e => e.endNodes).Aggregate((a1, a2) => a1.Concat(a2).ToArray()))
+            {
+                foreach (Node n in newRoad.startNodes)
+                {
+                    VertexPath path = CreateVertexPath(new Vector3[] { entryNode.transform.position, from.transform.position, n.transform.position });
+                    entryNode.consequent.Add(n, path);
+                }
+            }
         }
 
-        foreach (var exitNode in to.exits.Select(e => e.startNode))
+        if(to.exits.Count > 0)
         {
-            VertexPath path = CreateVertexPath(new Vector3[] { newRoad.endNode.transform.position, to.transform.position, exitNode.transform.position });
-            newRoad.endNode.consequent.Add(exitNode, path);
+            foreach (Node exitNode in to.exits.Select(e => e.startNodes).Aggregate((a1, a2) => a1.Concat(a2).ToArray()))
+            {
+                foreach (Node n in newRoad.endNodes)
+                {
+                    VertexPath path = CreateVertexPath(new Vector3[] { n.transform.position, to.transform.position, exitNode.transform.position });
+                    n.consequent.Add(exitNode, path);
+                }
+            }
         }
 
         roads.Add(newRoad);
@@ -68,33 +127,5 @@ public class RoadManager : MonoBehaviour
     {
         BezierPath bezierPath = new BezierPath(points, isClosed: false, PathSpace.xy);
         return new VertexPath(bezierPath);
-    }
-
-    void BuildPlaceholderTypeRoad(Road road, VertexPath vertexPath)
-    {
-        var startDistance = 0.2f;
-        var step = 0.2f;
-
-        var currentNode = Instantiate(nodePrefab, vertexPath.GetPoint(startDistance, EndOfPathInstruction.Stop), Quaternion.identity, road.transform);
-        road.nodes.Add(currentNode.GetComponent<Node>());
-
-        for (var i = startDistance; i <= 1 - startDistance; i += step)
-        {
-            Vector3[] pathSegment = new Vector3[3];
-            pathSegment[0] = vertexPath.GetPoint(i, EndOfPathInstruction.Stop); //start
-            pathSegment[1] = vertexPath.GetPoint(i + step / 2, EndOfPathInstruction.Stop); //middle
-            pathSegment[2] = vertexPath.GetPoint(i + step, EndOfPathInstruction.Stop); //end
-
-            var node = Instantiate(nodePrefab, pathSegment[2], Quaternion.identity, road.transform);
-
-            var segmentVertexPath = CreateVertexPath(pathSegment);
-            currentNode.GetComponent<Node>().consequent.Add(node.GetComponent<Node>(), segmentVertexPath);
-            currentNode = node;
-
-            road.nodes.Add(currentNode.GetComponent<Node>());
-        }
-
-        road.startNode = road.nodes.FirstOrDefault();
-        road.endNode = road.nodes.LastOrDefault();
     }
 }

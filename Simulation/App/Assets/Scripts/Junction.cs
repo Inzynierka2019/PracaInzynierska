@@ -34,7 +34,8 @@ public class Junction : MonoBehaviour
     // Works only if Application.isPlaying
     void OnMouseDown()
     {
-        Node sourceNode = exits[Random.Range(0, exits.Count)].startNode;
+        Road sourceRoad = exits[Random.Range(0, exits.Count)];
+        Node sourceNode = sourceRoad.startNodes[Random.Range(0, sourceRoad.startNodes.Length)];
         SimulationManager.VehicleManager.Create(sourceNode, sourceNode.consequent.Keys.ToList()[Random.Range(0, sourceNode.consequent.Count)]);
     }
 
@@ -51,19 +52,23 @@ public class Junction : MonoBehaviour
 
     public void AddConsequent(Junction successor)
     {
-        if (SimulationManager.RoadManager.Create(this, successor) != null)
+        if (SimulationManager.RoadManager.Create(this, successor, 3, 0.02f, 0.1f) != null)
             consequent.Add(successor);
     }
 
     private IEnumerator TrafficLightsControlerCoroutine()
     {
-        var rand = new System.Random();
-        while (Application.isPlaying)
+        if (Application.isPlaying)
         {
-            entries.ForEach(e => e.endNode.ChangeLightsToRed());
-            entries.ElementAt(rand.Next(0, entries.Count)).endNode.ChangeLightsToGreen();
+            List<Node> allEntryNodes = entries.Select(r => r.endNodes).Aggregate((a1, a2) => a1.Concat(a2).ToArray()).ToList();
 
-            yield return new WaitForSeconds(3.5f);
+            while (Application.isPlaying)
+            {
+                allEntryNodes.ForEach(n => n.ChangeLightsToRed());
+                allEntryNodes.ElementAt(Random.Range(0, allEntryNodes.Count)).ChangeLightsToGreen();
+
+                yield return new WaitForSeconds(3.5f);
+            }
         }
     }
 }
