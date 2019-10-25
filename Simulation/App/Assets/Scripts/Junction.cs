@@ -52,7 +52,7 @@ public class Junction : MonoBehaviour
 
     public void AddConsequent(Junction successor)
     {
-        if (SimulationManager.RoadManager.Create(this, successor, 3, 0.02f, 0.1f) != null)
+        if (SimulationManager.RoadManager.Create(this, successor, 3, 4f, 0.1f) != null)
             consequent.Add(successor);
     }
 

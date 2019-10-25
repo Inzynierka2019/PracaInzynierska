@@ -33,19 +33,28 @@ public class RoadManager : MonoBehaviour
         newRoad.nodes = new List<Node[]>();
 
         List<VertexPath> vertexPaths = new List<VertexPath>();
-        Vector3 laneSeparation = laneWidth * Vector2.Perpendicular(to.transform.position - from.transform.position);
-        for(int i = 0; i < laneCount; i++)
+        Vector3 laneSeparation = laneWidth * Vector2.Perpendicular(to.transform.position - from.transform.position).normalized;
+        for(int g = 0; g < laneCount; g++)
         {
-            Vector3 offset = (0.5f * (laneCount - 1) - i) * laneSeparation;
+            Vector3 offset = (0.5f * (laneCount - 1) - g) * laneSeparation;
             vertexPaths.Add(CreateVertexPath(new Vector3[] { from.transform.position + offset, newRoad.transform.position + offset, to.transform.position + offset}));
         }
 
-        float stepLength = 1.0f / (nodeDensity * Vector3.Distance(from.transform.position, to.transform.position));
+        float nodeCount = nodeDensity * Vector3.Distance(from.transform.position, to.transform.position);
+        float firstNodesOffset = 1f / nodeCount;
+        float stepLength = (1f - 2 * firstNodesOffset) / (int)(nodeCount - 1);
 
-        Node[] currentStepNodes = vertexPaths.Select(vp => Instantiate(nodePrefab, vp.GetPoint(stepLength, EndOfPathInstruction.Stop), Quaternion.identity, newRoad.transform).GetComponent<Node>()).ToArray();
+        if(nodeCount < 2f)
+        {
+            firstNodesOffset = 0.5f;
+            stepLength = 1f;
+        }
+
+        Node[] currentStepNodes = vertexPaths.Select(vp => Instantiate(nodePrefab, vp.GetPoint(firstNodesOffset, EndOfPathInstruction.Stop), Quaternion.identity, newRoad.transform).GetComponent<Node>()).ToArray();
         newRoad.nodes.Add(currentStepNodes);
 
-        for (float i = stepLength; i <= 1 - stepLength; i += stepLength)
+        float i = 0;
+        for (i = firstNodesOffset; i <= 1f - firstNodesOffset - 0.5f * stepLength; i += stepLength)
         {
             Node[] nextStepNodes = new Node[laneCount];
 
@@ -80,6 +89,8 @@ public class RoadManager : MonoBehaviour
             currentStepNodes = nextStepNodes;
             newRoad.nodes.Add(currentStepNodes);
         }
+
+        Debug.Log($"{firstNodesOffset}, {stepLength}, {1f - firstNodesOffset}, {i}, {i <= 1f - firstNodesOffset}");
 
         newRoad.startNodes = newRoad.nodes.FirstOrDefault();
         newRoad.endNodes = newRoad.nodes.LastOrDefault();
