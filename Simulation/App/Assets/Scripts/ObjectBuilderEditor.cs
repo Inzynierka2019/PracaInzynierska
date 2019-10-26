@@ -147,10 +147,13 @@ public class ObjectBuilderEditor : Editor
     {
         DrawDefaultInspector();
 
+        GUIStyle richtextStyle = new GUIStyle() { richText = true };
+
         GUILayout.Space(20);
 
-        SimulationManager.RoadManager.LaneWidth = EditorGUILayout.Slider("Road lane width:", SimulationManager.RoadManager.LaneWidth, 1f, 10f);
-        SimulationManager.RoadManager.NodeDensity = EditorGUILayout.Slider("Road node density:", SimulationManager.RoadManager.NodeDensity, 0.001f, 0.5f);
+        GUILayout.Label("<b>Global road options:</b>", richtextStyle);
+        SimulationManager.RoadManager.LaneWidth = EditorGUILayout.Slider("Lane width:", SimulationManager.RoadManager.LaneWidth, 1f, 10f);
+        SimulationManager.RoadManager.NodeDensity = EditorGUILayout.Slider("Node density:", SimulationManager.RoadManager.NodeDensity, 0.001f, 0.5f);
 
         GUILayout.Space(20);
 
@@ -174,6 +177,15 @@ public class ObjectBuilderEditor : Editor
         {
             SimulationManager.Rebuild();
         }
+
+        GUILayout.Space(20);
+
+        GUILayout.Label("<b>Next road options:</b>", richtextStyle);
+        SimulationManager.RoadManager.laneCountSetting = EditorGUILayout.IntSlider("Number of lanes:", SimulationManager.RoadManager.laneCountSetting, 1, 6);
+        SimulationManager.RoadManager.backwardLaneCountSetting = EditorGUILayout.IntSlider("Number of opposite lanes:", SimulationManager.RoadManager.backwardLaneCountSetting, 0, 6);
+        SimulationManager.RoadManager.distanceBetweenLanesSetting = EditorGUILayout.Slider("Distance between lanes:", SimulationManager.RoadManager.distanceBetweenLanesSetting, 0f, 20f);
+
+        GUILayout.Space(20);
     }
 }
 

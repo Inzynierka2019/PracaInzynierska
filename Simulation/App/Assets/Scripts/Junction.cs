@@ -37,6 +37,7 @@ public class Junction : MonoBehaviour, ISelectable
     public void Start()
     {
         StartCoroutine(TrafficLightsControlerCoroutine());
+        transform.hasChanged = false;
     }
 
     void Update()
@@ -72,7 +73,7 @@ public class Junction : MonoBehaviour, ISelectable
         Junction nextJunction = successor as Junction;
         if (nextJunction != null)
         {
-            Road road = SimulationManager.RoadManager.Create(this, nextJunction, 3);
+            Road road = SimulationManager.RoadManager.Create(this, nextJunction);
             if (road != null)
                 consequent.Add(new InterjunctionConnection(nextJunction, road));
         }

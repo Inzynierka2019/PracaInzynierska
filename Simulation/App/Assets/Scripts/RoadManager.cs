@@ -11,9 +11,6 @@ public class RoadManager : MonoBehaviour
     [HideInInspector]
     public List<Road> roads;
 
-
-    GameObject prefab, nodePrefab;
-
     // serializeField is for unity to remember the value on a way from editor to runtime
     [HideInInspector] [SerializeField]
     float laneWidth = 4f;
@@ -47,6 +44,12 @@ public class RoadManager : MonoBehaviour
         }
     }
 
+    [HideInInspector] public int laneCountSetting = 2;
+    [HideInInspector] public int backwardLaneCountSetting = 2;
+    [HideInInspector] public float distanceBetweenLanesSetting = 0f;
+
+    GameObject prefab, nodePrefab;
+
     void Awake()
     {
         roads = new List<Road>(GetComponentsInChildren<Road>());
@@ -55,7 +58,7 @@ public class RoadManager : MonoBehaviour
         nodePrefab = Resources.Load<GameObject>("SmallNodePrefab");
     }
 
-    public Road Create(Junction from, Junction to, int laneCount)
+    public Road Create(Junction from, Junction to)
     {
         if (from == null || to == null)
         {
@@ -65,7 +68,7 @@ public class RoadManager : MonoBehaviour
 
         Road newRoad = Instantiate(prefab, (from.transform.position + to.transform.position) / 2, Quaternion.identity, transform).GetComponent<Road>();
 
-        BuildNodes(newRoad, from, to, laneCount);
+        BuildNodes(newRoad, from, to, laneCountSetting);
 
         from.exits.Add(newRoad);
         to.entries.Add(newRoad);
