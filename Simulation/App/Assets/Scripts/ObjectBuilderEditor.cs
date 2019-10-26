@@ -20,17 +20,30 @@ public class ObjectBuilderEditor : Editor
         switch (e.GetTypeForControl(controlID))
         {
             case EventType.MouseDown:
-                GUIUtility.hotControl = controlID;
-                e.Use();
+                if (e.button == 2)
+                {
+                    HandleUtility.AddDefaultControl(controlID);
+                }
+                else
+                {
+                    GUIUtility.hotControl = controlID;
+                    e.Use();
+                }
                 break;
             case EventType.MouseUp:
                 GUIUtility.hotControl = 0;
-                HandleClick();
+                switch (e.button)
+                {
+                    case 0:
+                        HandleClick();
+                        break;
+                }
                 e.Use();
                 break;
             case EventType.MouseDrag:
-                GUIUtility.hotControl = controlID;
-                e.Use();
+                HandleUtility.AddDefaultControl(controlID);
+                //GUIUtility.hotControl = controlID;
+                //e.Use();
                 break;
             case EventType.KeyDown:
                 if (e.keyCode == KeyCode.LeftControl)
