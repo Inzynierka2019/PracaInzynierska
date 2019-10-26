@@ -8,11 +8,14 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [ExecuteInEditMode]
-public class Junction : MonoBehaviour
+public class Junction : MonoBehaviour, ISelectable
 {
-    [HideInInspector]
+    [SerializeField] Material idleMat;
+    [SerializeField] Material selectedMat;
+
+    //[HideInInspector]
     public List<Road> entries = new List<Road>();
-    [HideInInspector]
+    //[HideInInspector]
     public List<Road> exits = new List<Road>();
 
     // ani dictionary ani tuple nie są serializowalne - unity nie zapamiętuje stanu w scenie takich obiektów
@@ -30,7 +33,7 @@ public class Junction : MonoBehaviour
             road = r;
         }
     }
-    
+
     public void Start()
     {
         StartCoroutine(TrafficLightsControlerCoroutine());
@@ -64,11 +67,23 @@ public class Junction : MonoBehaviour
         exits.Clear();
     }
 
-    public void AddConsequent(Junction successor)
+    public void AddConsequent(ISelectable successor)
     {
-        Road road = SimulationManager.RoadManager.Create(this, successor, 3, 4f, 0.1f);
-        if (road != null)
-            consequent.Add(new InterjunctionConnection(successor, road));
+        Junction nextJunction = successor as Junction;
+        if (nextJunction != null)
+        {
+            Road road = SimulationManager.RoadManager.Create(this, nextJunction, 3, 4f, 0.1f);
+            if (road != null)
+                consequent.Add(new InterjunctionConnection(nextJunction, road));
+        }
+    }
+
+    public void Mark(bool selected)
+    {
+        if (selected)
+            GetComponent<Renderer>().material = selectedMat;
+        else
+            GetComponent<Renderer>().material = idleMat;
     }
 
     private IEnumerator TrafficLightsControlerCoroutine()

@@ -68,18 +68,12 @@ public class ObjectBuilderEditor : Editor
     {
         if (node != null)
         {
+            node.GetComponent<ISelectable>().Mark(select);
+
             if (select)
-            {
-                Color newColor = new Color(1, 0, 0, 89 / 255f);
-                node.transform.GetComponent<Renderer>().material.color = newColor;
                 selectedNode = node.gameObject;
-            }
             else
-            {
-                Color newColor = new Color(0, 0, 1, 89 / 255f);
-                node.transform.GetComponent<Renderer>().material.color = newColor;
                 selectedNode = null;
-            }
 
             EditorUtility.SetDirty(node);
         }
@@ -107,12 +101,20 @@ public class ObjectBuilderEditor : Editor
             if (Physics.Raycast(worldRay, out RaycastHit hitInfo))
             {
                 var junction = hitInfo.transform.GetComponent<Junction>();
+                var node = hitInfo.transform.GetComponent<Node>();
 
                 if (!isLeftCtrPressed)
                 {
                     if (junction == null)
                     {
-                        EditorUtility.SetDirty(SimulationManager.JunctionManager.Create(new Vector3(hitInfo.point.x, hitInfo.point.y), selectedNode?.GetComponent<Junction>()));
+                        if (node == null)
+                        {
+                            EditorUtility.SetDirty(SimulationManager.JunctionManager.Create(new Vector3(hitInfo.point.x, hitInfo.point.y), (selectedNode != null) ? selectedNode.GetComponent<Junction>() : null));
+                        }
+                        else
+                        {
+                            ChangeSelection(node.gameObject);
+                        }
                     }
                     else
                     {
@@ -120,7 +122,9 @@ public class ObjectBuilderEditor : Editor
                     }
                 }
                 else
-                    selectedNode?.GetComponent<Junction>().AddConsequent(junction);
+                {
+                    selectedNode?.GetComponent<ISelectable>().AddConsequent(hitInfo.transform.GetComponent<ISelectable>());
+                }
             }
             else
                 Debug.Log("Coś poszło nie tak :/");

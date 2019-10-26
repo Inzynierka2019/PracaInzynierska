@@ -4,8 +4,11 @@ using PathCreation;
 using System.Linq;
 using System;
 
-public class Node : MonoBehaviour
+public class Node : MonoBehaviour, ISelectable
 {
+    [SerializeField] Material idleMat;
+    [SerializeField] Material selectedMat;
+
     // ani dictionary ani tuple nie są serializowalne - unity nie zapamiętuje stanu w scenie takich obiektów
     public List<InternodeConnection> consequent = new List<InternodeConnection>();
 
@@ -191,6 +194,26 @@ public class Node : MonoBehaviour
             }
         }
         return result;
+    }
+
+    public void Mark(bool selected)
+    {
+        if (selected)
+            GetComponent<Renderer>().material = selectedMat;
+        else
+            GetComponent<Renderer>().material = idleMat;
+    }
+
+    public void AddConsequent(ISelectable successor)
+    {
+        Node nextNode = successor as Node;
+        if (nextNode != null)
+        {
+            if(consequent.Any(c => c.node == nextNode))
+                consequent.RemoveAll(c => c.node == nextNode);
+            else
+                consequent.Add(new InternodeConnection(nextNode, SimulationManager.RoadManager.CreateVertexPath(new Vector3[] { transform.position, (transform.position + nextNode.transform.position) / 2, nextNode.transform.position })));
+        }
     }
 }
 

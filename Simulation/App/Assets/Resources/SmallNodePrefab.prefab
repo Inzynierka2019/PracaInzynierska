@@ -104,5 +104,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5312636355762e64fadb3d6b9407dbfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idleMat: {fileID: 2100000, guid: ff61d4caa28d40644b9e5031a4e82073, type: 2}
+  selectedMat: {fileID: 2100000, guid: 8dc3e9fd617ad1449ae94e9eef127cf3, type: 2}
+  consequent: []
   vehicles: []
   isRedLightOn: 0

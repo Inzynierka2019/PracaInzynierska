@@ -36,29 +36,29 @@ public class RoadManager : MonoBehaviour
         to.entries.Add(newRoad);
 
         // połącz każdy pas z każdym innym pasem na skrzyżowaniach
-        if (from.entries.Count > 0)
-        {
-            foreach (Node entryNode in from.entries.Select(e => e.endNodes).Aggregate((a1, a2) => a1.Concat(a2).ToArray()))
-            {
-                foreach (Node n in newRoad.startNodes)
-                {
-                    VertexPath path = CreateVertexPath(new Vector3[] { entryNode.transform.position, from.transform.position, n.transform.position });
-                    entryNode.consequent.Add(new Node.InternodeConnection(n, path));
-                }
-            }
-        }
+        //if (from.entries.Count > 0)
+        //{
+        //    foreach (Node entryNode in from.entries.Select(e => e.endNodes).Aggregate((a1, a2) => a1.Concat(a2).ToArray()))
+        //    {
+        //        foreach (Node n in newRoad.startNodes)
+        //        {
+        //            VertexPath path = CreateVertexPath(new Vector3[] { entryNode.transform.position, from.transform.position, n.transform.position });
+        //            entryNode.consequent.Add(new Node.InternodeConnection(n, path));
+        //        }
+        //    }
+        //}
 
-        if (to.exits.Count > 0)
-        {
-            foreach (Node exitNode in to.exits.Select(e => e.startNodes).Aggregate((a1, a2) => a1.Concat(a2).ToArray()))
-            {
-                foreach (Node n in newRoad.endNodes)
-                {
-                    VertexPath path = CreateVertexPath(new Vector3[] { n.transform.position, to.transform.position, exitNode.transform.position });
-                    n.consequent.Add(new Node.InternodeConnection(exitNode, path));
-                }
-            }
-        }
+        //if (to.exits.Count > 0)
+        //{
+        //    foreach (Node exitNode in to.exits.Select(e => e.startNodes).Aggregate((a1, a2) => a1.Concat(a2).ToArray()))
+        //    {
+        //        foreach (Node n in newRoad.endNodes)
+        //        {
+        //            VertexPath path = CreateVertexPath(new Vector3[] { n.transform.position, to.transform.position, exitNode.transform.position });
+        //            n.consequent.Add(new Node.InternodeConnection(exitNode, path));
+        //        }
+        //    }
+        //}
 
         roads.Add(newRoad);
 
@@ -78,7 +78,7 @@ public class RoadManager : MonoBehaviour
 
         road.transform.position = (from.transform.position + to.transform.position) / 2;
 
-        List<Node>[] targetNodesCache = road.endNodes.Select(n => n.consequent.Select(c => c.node).ToList()).ToArray();
+        List<Node>[] targetNodesCache = road.endNodes.Select(n => n.consequent.Select(c => c.node).Where(node => node != null).ToList()).ToArray();
 
         foreach (GameObject node in road.nodes.Skip(1).Aggregate((a1, a2) => a1.array.Concat(a2.array).ToArray()).array.Select(n => n.gameObject).ToList())
         {
@@ -176,7 +176,7 @@ public class RoadManager : MonoBehaviour
     }
 
 
-    VertexPath CreateVertexPath(Vector3[] points)
+    public VertexPath CreateVertexPath(Vector3[] points)
     {
         BezierPath bezierPath = new BezierPath(points, isClosed: false, PathSpace.xy);
         return new VertexPath(bezierPath);

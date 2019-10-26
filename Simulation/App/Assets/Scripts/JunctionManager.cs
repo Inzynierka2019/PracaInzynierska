@@ -56,12 +56,36 @@ public class JunctionManager : MonoBehaviour
         //    }
         //}
 
+        List<Road> existingRoads = new List<Road>();
+
         foreach (Junction j in junctions)
         {
-            foreach (Road r in j.exits)
+            foreach (Road r in j.exits.ToList())
             {
-                SimulationManager.RoadManager.RebuildNodes(r, j, j.consequent.Find(c => c.road == r).junction, 4f, 0.1f);
+                Junction target = j.consequent.FirstOrDefault(c => c.road == r).junction;
+                if (target != null)
+                {
+                    existingRoads.Add(r);
+                    SimulationManager.RoadManager.RebuildNodes(r, j, target, 4f, 0.1f);
+                }
+                else
+                {
+                    j.exits.Remove(r);
+                }
             }
+        }
+
+        foreach (Road r in SimulationManager.RoadManager.roads.ToList())
+        {
+            if (!existingRoads.Contains(r))
+            {
+                SimulationManager.RoadManager.Delete(r);
+            }
+        }
+
+        foreach (Junction j in junctions)
+        {
+            j.entries.RemoveAll(r => r == null);
         }
     }
 }
