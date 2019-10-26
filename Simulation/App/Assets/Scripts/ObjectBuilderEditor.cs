@@ -146,6 +146,14 @@ public class ObjectBuilderEditor : Editor
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
+
+        GUILayout.Space(20);
+
+        SimulationManager.RoadManager.LaneWidth = EditorGUILayout.Slider("Road lane width:", SimulationManager.RoadManager.LaneWidth, 1f, 10f);
+        SimulationManager.RoadManager.NodeDensity = EditorGUILayout.Slider("Road node density:", SimulationManager.RoadManager.NodeDensity, 0.05f, 0.5f);
+
+        GUILayout.Space(20);
+
         if (editMode)
         {
             if (GUILayout.Button("Disable Editing"))

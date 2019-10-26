@@ -72,7 +72,7 @@ public class Junction : MonoBehaviour, ISelectable
         Junction nextJunction = successor as Junction;
         if (nextJunction != null)
         {
-            Road road = SimulationManager.RoadManager.Create(this, nextJunction, 3, 4f, 0.1f);
+            Road road = SimulationManager.RoadManager.Create(this, nextJunction, 3);
             if (road != null)
                 consequent.Add(new InterjunctionConnection(nextJunction, road));
         }

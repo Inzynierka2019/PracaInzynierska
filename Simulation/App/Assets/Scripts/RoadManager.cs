@@ -8,9 +8,41 @@ using PathCreation;
 [ExecuteInEditMode]
 public class RoadManager : MonoBehaviour
 {
+    [HideInInspector]
     public List<Road> roads;
 
+
     GameObject prefab, nodePrefab;
+
+    private float laneWidth = 4f;
+    [HideInInspector]
+    public float LaneWidth
+    {
+        get => laneWidth;
+        set
+        {
+            if (laneWidth != value)
+            {
+                laneWidth = value;
+                SimulationManager.Rebuild();
+            }
+        }
+    }
+
+    private float nodeDensity = 0.1f;
+    [HideInInspector]
+    public float NodeDensity
+    {
+        get => nodeDensity;
+        set
+        {
+            if (nodeDensity != value)
+            {
+                nodeDensity = value;
+                SimulationManager.Rebuild();
+            }
+        }
+    }
 
     void Awake()
     {
@@ -20,7 +52,7 @@ public class RoadManager : MonoBehaviour
         nodePrefab = Resources.Load<GameObject>("SmallNodePrefab");
     }
 
-    public Road Create(Junction from, Junction to, int laneCount, float laneWidth, float nodeDensity)
+    public Road Create(Junction from, Junction to, int laneCount)
     {
         if (from == null || to == null)
         {
@@ -30,7 +62,7 @@ public class RoadManager : MonoBehaviour
 
         Road newRoad = Instantiate(prefab, (from.transform.position + to.transform.position) / 2, Quaternion.identity, transform).GetComponent<Road>();
 
-        BuildNodes(newRoad, from, to, laneCount, laneWidth, nodeDensity);
+        BuildNodes(newRoad, from, to, laneCount);
 
         from.exits.Add(newRoad);
         to.entries.Add(newRoad);
@@ -65,7 +97,7 @@ public class RoadManager : MonoBehaviour
         return newRoad;
     }
 
-    public void RebuildNodes(Road road, Junction from, Junction to, float laneWidth, float nodeDensity)
+    public void RebuildNodes(Road road, Junction from, Junction to)
     {
         if (from == null || to == null)
         {
@@ -89,7 +121,7 @@ public class RoadManager : MonoBehaviour
             node.consequent.Clear();
         }
 
-        BuildNodes(road, from, to, laneCount, laneWidth, nodeDensity);
+        BuildNodes(road, from, to, laneCount);
 
         for (int i = 0; i < laneCount; i++)
         {
@@ -107,7 +139,7 @@ public class RoadManager : MonoBehaviour
         DestroyImmediate(road.gameObject);
     }
 
-    void BuildNodes(Road road, Junction from, Junction to, int laneCount, float laneWidth, float nodeDensity)
+    void BuildNodes(Road road, Junction from, Junction to, int laneCount)
     {
         road.nodes = new List<Road.NodeArray>();
 

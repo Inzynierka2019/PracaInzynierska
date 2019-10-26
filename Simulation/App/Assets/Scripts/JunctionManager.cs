@@ -66,7 +66,7 @@ public class JunctionManager : MonoBehaviour
                 if (target != null)
                 {
                     existingRoads.Add(r);
-                    SimulationManager.RoadManager.RebuildNodes(r, j, target, 4f, 0.1f);
+                    SimulationManager.RoadManager.RebuildNodes(r, j, target);
                 }
                 else
                 {
