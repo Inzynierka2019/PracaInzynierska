@@ -38,6 +38,8 @@ public class JunctionManager : MonoBehaviour
 
     public void RebuildRoads()
     {
+        // hard rebuild - forgets lane connections
+
         //var cache = new Dictionary<Junction, List<Junction>>();
 
         //foreach (Junction j in junctions)
@@ -55,6 +57,8 @@ public class JunctionManager : MonoBehaviour
         //        j.AddConsequent(neighbour);
         //    }
         //}
+
+        // soft rebuild - just nodes
 
         List<Road> existingRoads = new List<Road>();
 

@@ -14,7 +14,9 @@ public class RoadManager : MonoBehaviour
 
     GameObject prefab, nodePrefab;
 
-    private float laneWidth = 4f;
+    // serializeField is for unity to remember the value on a way from editor to runtime
+    [HideInInspector] [SerializeField]
+    float laneWidth = 4f;
     [HideInInspector]
     public float LaneWidth
     {
@@ -29,7 +31,8 @@ public class RoadManager : MonoBehaviour
         }
     }
 
-    private float nodeDensity = 0.1f;
+    [HideInInspector] [SerializeField]
+    float nodeDensity = 0.1f;
     [HideInInspector]
     public float NodeDensity
     {
@@ -112,9 +115,12 @@ public class RoadManager : MonoBehaviour
 
         List<Node>[] targetNodesCache = road.endNodes.Select(n => n.consequent.Select(c => c.node).Where(node => node != null).ToList()).ToArray();
 
-        foreach (GameObject node in road.nodes.Skip(1).Aggregate((a1, a2) => a1.array.Concat(a2.array).ToArray()).array.Select(n => n.gameObject).ToList())
+        if(road.nodes.Count > 1)
         {
-            DestroyImmediate(node);
+            foreach (GameObject node in road.nodes.Skip(1).Aggregate((a1, a2) => a1.array.Concat(a2.array).ToArray()).array.Select(n => n.gameObject).ToList())
+            {
+                DestroyImmediate(node);
+            }
         }
         foreach (Node node in road.startNodes)
         {
