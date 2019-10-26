@@ -108,22 +108,29 @@ public class ObjectBuilderEditor : Editor
                     if (junction == null)
                     {
                         if (node == null)
-                        {
                             EditorUtility.SetDirty(SimulationManager.JunctionManager.Create(new Vector3(hitInfo.point.x, hitInfo.point.y), (selectedNode != null) ? selectedNode.GetComponent<Junction>() : null));
-                        }
                         else
-                        {
                             ChangeSelection(node.gameObject);
-                        }
                     }
                     else
                     {
                         ChangeSelection(junction.gameObject);
                     }
                 }
-                else
+                else if (selectedNode != null)
                 {
-                    selectedNode?.GetComponent<ISelectable>().AddConsequent(hitInfo.transform.GetComponent<ISelectable>());
+                    if (junction != null)
+                    {
+                        if (SimulationManager.RoadManager.backwardLaneCountSetting > 0)
+                            selectedNode.GetComponent<Junction>()?.AddConsequentBothWays(junction);
+                        else
+                            selectedNode.GetComponent<Junction>()?.AddConsequent(junction);
+
+                    }
+                    else if (node != null)
+                    {
+                        selectedNode.GetComponent<Node>()?.AddConsequent(node);
+                    }
                 }
             }
             else
@@ -183,7 +190,7 @@ public class ObjectBuilderEditor : Editor
         GUILayout.Label("<b>Next road options:</b>", richtextStyle);
         SimulationManager.RoadManager.laneCountSetting = EditorGUILayout.IntSlider("Number of lanes:", SimulationManager.RoadManager.laneCountSetting, 1, 6);
         SimulationManager.RoadManager.backwardLaneCountSetting = EditorGUILayout.IntSlider("Number of opposite lanes:", SimulationManager.RoadManager.backwardLaneCountSetting, 0, 6);
-        SimulationManager.RoadManager.distanceBetweenLanesSetting = EditorGUILayout.Slider("Distance between lanes:", SimulationManager.RoadManager.distanceBetweenLanesSetting, 0f, 20f);
+        SimulationManager.RoadManager.distanceBetweenLanesSetting = EditorGUILayout.Slider("Distance between lanes:", SimulationManager.RoadManager.distanceBetweenLanesSetting, 0f, 3f);
 
         GUILayout.Space(20);
     }

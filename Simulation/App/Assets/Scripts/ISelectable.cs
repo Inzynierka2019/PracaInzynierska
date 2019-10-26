@@ -7,5 +7,4 @@ using System.Threading.Tasks;
 public interface ISelectable
 {
     void Mark(bool selected);
-    void AddConsequent(ISelectable successor);
 }

@@ -204,15 +204,14 @@ public class Node : MonoBehaviour, ISelectable
             GetComponent<Renderer>().material = idleMat;
     }
 
-    public void AddConsequent(ISelectable successor)
+    public void AddConsequent(Node successor)
     {
-        Node nextNode = successor as Node;
-        if (nextNode != null)
+        if (successor != null)
         {
-            if(consequent.Any(c => c.node == nextNode))
-                consequent.RemoveAll(c => c.node == nextNode);
+            if(consequent.Any(c => c.node == successor))
+                consequent.RemoveAll(c => c.node == successor);
             else
-                consequent.Add(new InternodeConnection(nextNode, SimulationManager.RoadManager.CreateVertexPath(new Vector3[] { transform.position, (transform.position + nextNode.transform.position) / 2, nextNode.transform.position })));
+                consequent.Add(new InternodeConnection(successor, SimulationManager.RoadManager.CreateVertexPath(new Vector3[] { transform.position, (transform.position + successor.transform.position) / 2, successor.transform.position })));
         }
     }
 }

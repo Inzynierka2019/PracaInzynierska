@@ -44,8 +44,8 @@ public class RoadManager : MonoBehaviour
         }
     }
 
-    [HideInInspector] public int laneCountSetting = 2;
-    [HideInInspector] public int backwardLaneCountSetting = 2;
+    [HideInInspector] public int laneCountSetting = 1;
+    [HideInInspector] public int backwardLaneCountSetting = 1;
     [HideInInspector] public float distanceBetweenLanesSetting = 0f;
 
     GameObject prefab, nodePrefab;
@@ -58,7 +58,7 @@ public class RoadManager : MonoBehaviour
         nodePrefab = Resources.Load<GameObject>("SmallNodePrefab");
     }
 
-    public Road Create(Junction from, Junction to)
+    public Road Create(Junction from, Junction to, bool backwardLaneCount = false, bool offseted = false)
     {
         if (from == null || to == null)
         {
@@ -66,9 +66,12 @@ public class RoadManager : MonoBehaviour
             return null;
         }
 
-        Road newRoad = Instantiate(prefab, (from.transform.position + to.transform.position) / 2, Quaternion.identity, transform).GetComponent<Road>();
+        int laneCount = backwardLaneCount ? backwardLaneCountSetting : laneCountSetting;
 
-        BuildNodes(newRoad, from, to, laneCountSetting);
+        Road newRoad = Instantiate(prefab, (from.transform.position + to.transform.position) / 2, Quaternion.identity, transform).GetComponent<Road>();
+        newRoad.offsetToRight = offseted ? 0.5f * (distanceBetweenLanesSetting + laneCount + (backwardLaneCount ? -1 : 1) * (backwardLaneCountSetting - laneCountSetting)) : 0f;
+
+        BuildNodes(newRoad, from, to, laneCount);
 
         from.exits.Add(newRoad);
         to.entries.Add(newRoad);
@@ -156,7 +159,7 @@ public class RoadManager : MonoBehaviour
         Vector3 laneSeparation = laneWidth * Vector2.Perpendicular(to.transform.position - from.transform.position).normalized;
         for (int i = 0; i < laneCount; i++)
         {
-            Vector3 offset = (0.5f * (laneCount - 1) - i) * laneSeparation;
+            Vector3 offset = (0.5f * (laneCount - 1) - i - road.offsetToRight) * laneSeparation;
             vertexPaths.Add(CreateVertexPath(new Vector3[] { from.transform.position + offset, road.transform.position + offset, to.transform.position + offset }));
         }
 

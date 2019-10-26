@@ -38,6 +38,9 @@ public class Road : MonoBehaviour
     [HideInInspector]
     public Node[] endNodes;
 
+    [HideInInspector]
+    public float offsetToRight;
+
     void OnDrawGizmos()
     {
         if(nodes != null)

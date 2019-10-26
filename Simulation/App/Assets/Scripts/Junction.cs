@@ -68,14 +68,27 @@ public class Junction : MonoBehaviour, ISelectable
         exits.Clear();
     }
 
-    public void AddConsequent(ISelectable successor)
+    public void AddConsequent(Junction successor)
     {
-        Junction nextJunction = successor as Junction;
-        if (nextJunction != null)
+        if (successor != null)
         {
-            Road road = SimulationManager.RoadManager.Create(this, nextJunction);
+            Road road = SimulationManager.RoadManager.Create(this, successor);
             if (road != null)
-                consequent.Add(new InterjunctionConnection(nextJunction, road));
+                consequent.Add(new InterjunctionConnection(successor, road));
+        }
+    }
+
+    public void AddConsequentBothWays(Junction neighbour)
+    {
+        if (neighbour != null)
+        {
+            Road road = SimulationManager.RoadManager.Create(this, neighbour, backwardLaneCount: false, offseted: true);
+            if (road != null)
+                consequent.Add(new InterjunctionConnection(neighbour, road));
+
+            road = SimulationManager.RoadManager.Create(neighbour, this, backwardLaneCount: true, offseted: true);
+            if (road != null)
+                neighbour.consequent.Add(new InterjunctionConnection(this, road));
         }
     }
 

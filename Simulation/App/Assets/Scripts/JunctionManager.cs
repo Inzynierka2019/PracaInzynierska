@@ -22,7 +22,14 @@ public class JunctionManager : MonoBehaviour
     {
         Junction newJunction = Instantiate(prefab, position, Quaternion.identity, transform).GetComponent<Junction>();
 
-        predecessor?.AddConsequent(newJunction);
+        
+        if(predecessor != null)
+        {
+            if (SimulationManager.RoadManager.backwardLaneCountSetting > 0)
+                predecessor.AddConsequentBothWays(newJunction);
+            else
+                predecessor.AddConsequent(newJunction);
+        }
 
         junctions.Add(newJunction);
 
