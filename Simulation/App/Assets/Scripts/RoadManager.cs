@@ -95,7 +95,8 @@ public class RoadManager : MonoBehaviour
         {
             foreach (Node targetNode in targetNodesCache[i])
             {
-                road.endNodes[i].consequent.Add(new Node.InternodeConnection(targetNode, CreateVertexPath(new Vector3[] { road.endNodes[i].transform.position, to.transform.position, targetNode.transform.position })));
+                Vector3 midPoint = (road.endNodes[i].transform.position + targetNode.transform.position + to.transform.position) / 3;
+                road.endNodes[i].consequent.Add(new Node.InternodeConnection(targetNode, CreateVertexPath(new Vector3[] { road.endNodes[i].transform.position, midPoint, targetNode.transform.position })));
             }
         }
     }
@@ -112,9 +113,9 @@ public class RoadManager : MonoBehaviour
 
         List<VertexPath> vertexPaths = new List<VertexPath>();
         Vector3 laneSeparation = laneWidth * Vector2.Perpendicular(to.transform.position - from.transform.position).normalized;
-        for (int g = 0; g < laneCount; g++)
+        for (int i = 0; i < laneCount; i++)
         {
-            Vector3 offset = (0.5f * (laneCount - 1) - g) * laneSeparation;
+            Vector3 offset = (0.5f * (laneCount - 1) - i) * laneSeparation;
             vertexPaths.Add(CreateVertexPath(new Vector3[] { from.transform.position + offset, road.transform.position + offset, to.transform.position + offset }));
         }
 
@@ -130,12 +131,18 @@ public class RoadManager : MonoBehaviour
 
         Node[] currentStepNodes = road.startNodes;
         if (currentStepNodes == null || currentStepNodes.Length <= 0)
+        {
             currentStepNodes = vertexPaths.Select(vp => Instantiate(nodePrefab, vp.GetPoint(firstNodesOffset, EndOfPathInstruction.Stop), Quaternion.identity, road.transform).GetComponent<Node>()).ToArray();
+        }
+        else
+        {
+            for (int i = 0; i < laneCount; i++)
+                currentStepNodes[i].transform.position = vertexPaths[i].GetPoint(firstNodesOffset, EndOfPathInstruction.Stop);
+        }
 
         road.nodes.Add(currentStepNodes);
 
-        float i = 0;
-        for (i = firstNodesOffset; i <= 1f - firstNodesOffset - 0.5f * stepLength; i += stepLength)
+        for (float i = firstNodesOffset; i <= 1f - firstNodesOffset - 0.5f * stepLength; i += stepLength)
         {
             Node[] nextStepNodes = new Node[laneCount];
 
