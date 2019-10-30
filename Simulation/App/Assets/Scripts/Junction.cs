@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -7,19 +8,36 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [ExecuteInEditMode]
-public class Junction : MonoBehaviour
+public class Junction : MonoBehaviour, ISelectable
 {
-    [HideInInspector]
+    [SerializeField] Material idleMat;
+    [SerializeField] Material selectedMat;
+
+    //[HideInInspector]
     public List<Road> entries = new List<Road>();
-    [HideInInspector]
+    //[HideInInspector]
     public List<Road> exits = new List<Road>();
 
-    [HideInInspector]
-    public List<Junction> consequent = new List<Junction>();
-    
+    // ani dictionary ani tuple nie są serializowalne - unity nie zapamiętuje stanu w scenie takich obiektów
+    public List<InterjunctionConnection> consequent = new List<InterjunctionConnection>();
+
+    [Serializable]
+    public struct InterjunctionConnection
+    {
+        public Junction junction;
+        public Road road;
+
+        public InterjunctionConnection(Junction j, Road r)
+        {
+            junction = j;
+            road = r;
+        }
+    }
+
     public void Start()
     {
         StartCoroutine(TrafficLightsControlerCoroutine());
+        transform.hasChanged = false;
     }
 
     void Update()
@@ -34,8 +52,9 @@ public class Junction : MonoBehaviour
     // Works only if Application.isPlaying
     void OnMouseDown()
     {
-        Node sourceNode = exits[Random.Range(0, exits.Count)].startNode;
-        SimulationManager.VehicleManager.Create(sourceNode, sourceNode.consequent.Keys.ToList()[Random.Range(0, sourceNode.consequent.Count)]);
+        Road sourceRoad = exits[Random.Range(0, exits.Count)];
+        Node sourceNode = sourceRoad.startNodes[Random.Range(0, sourceRoad.startNodes.Length)];
+        SimulationManager.VehicleManager.Create(sourceNode, sourceNode.consequent.Select(c => c.node).ToList()[Random.Range(0, sourceNode.consequent.Count)]);
     }
 
     public void ClearConnectionsAndPaths()
@@ -51,19 +70,49 @@ public class Junction : MonoBehaviour
 
     public void AddConsequent(Junction successor)
     {
-        if (SimulationManager.RoadManager.Create(this, successor) != null)
-            consequent.Add(successor);
+        if (successor != null)
+        {
+            Road road = SimulationManager.RoadManager.Create(this, successor);
+            if (road != null)
+                consequent.Add(new InterjunctionConnection(successor, road));
+        }
+    }
+
+    public void AddConsequentBothWays(Junction neighbour)
+    {
+        if (neighbour != null)
+        {
+            Road road = SimulationManager.RoadManager.Create(this, neighbour, backwardLaneCount: false, offseted: true);
+            if (road != null)
+                consequent.Add(new InterjunctionConnection(neighbour, road));
+
+            road = SimulationManager.RoadManager.Create(neighbour, this, backwardLaneCount: true, offseted: true);
+            if (road != null)
+                neighbour.consequent.Add(new InterjunctionConnection(this, road));
+        }
+    }
+
+    public void Mark(bool selected)
+    {
+        if (selected)
+            GetComponent<Renderer>().material = selectedMat;
+        else
+            GetComponent<Renderer>().material = idleMat;
     }
 
     private IEnumerator TrafficLightsControlerCoroutine()
     {
-        var rand = new System.Random();
-        while (Application.isPlaying)
+        if (entries.Count > 0)
         {
-            entries.ForEach(e => e.endNode.ChangeLightsToRed());
-            entries.ElementAt(rand.Next(0, entries.Count)).endNode.ChangeLightsToGreen();
+            List<Node> allEntryNodes = entries.Select(r => r.endNodes).Aggregate((a1, a2) => a1.Concat(a2).ToArray()).ToList();
 
-            yield return new WaitForSeconds(3.5f);
+            while (Application.isPlaying)
+            {
+                allEntryNodes.ForEach(n => n.ChangeLightsToRed());
+                allEntryNodes.ElementAt(Random.Range(0, allEntryNodes.Count)).ChangeLightsToGreen();
+
+                yield return new WaitForSeconds(3.5f);
+            }
         }
     }
 }
