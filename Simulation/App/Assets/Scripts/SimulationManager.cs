@@ -17,6 +17,7 @@ public class SimulationManager : MonoBehaviour
     [SerializeField] JunctionManager junctionManager;
     [SerializeField] RoadManager roadManager;
     [SerializeField] VehicleManager vehicleManager;
+    [SerializeField] SpawnManager spawnManager;
 
     private readonly AppConnector appConnector = new AppConnector(new UnityDebugLogger(), "https://localhost:5001/UIHub");
     private static ConcurrentQueue<Action> MainThreadTaskQueue = new ConcurrentQueue<Action>();
@@ -39,6 +40,12 @@ public class SimulationManager : MonoBehaviour
     {
         get => instance?.vehicleManager;
         set { if (instance != null) instance.vehicleManager = value; }
+    }
+
+    public static SpawnManager SpawnManager
+    {
+        get => instance?.spawnManager;
+        set { if (instance != null) instance.spawnManager = value; }
     }
 
     public static void ScheduleTaskOnMainThread(Action action)
@@ -76,6 +83,12 @@ public class SimulationManager : MonoBehaviour
             GameObject go = new GameObject("VehicleManager");
             go.transform.SetParent(transform);
             vehicleManager = go.AddComponent<VehicleManager>();
+        }
+        if (spawnManager == null)
+        {
+            GameObject go = new GameObject("SpawnManager");
+            go.transform.SetParent(transform);
+            spawnManager = go.AddComponent<SpawnManager>();
         }
 
         Rebuild();
