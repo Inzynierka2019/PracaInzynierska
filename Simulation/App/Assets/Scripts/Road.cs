@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using UnityEditor;
+using Random = UnityEngine.Random;
 
 public class Road : MonoBehaviour
 {
@@ -41,6 +43,11 @@ public class Road : MonoBehaviour
     [HideInInspector]
     public float offsetToRight;
 
+    [Space(20)]
+
+    public float pathWeight;
+    public float[] spawnWeights;
+
     void OnDrawGizmos()
     {
         if(nodes != null)
@@ -57,6 +64,16 @@ public class Road : MonoBehaviour
                     Gizmos.DrawSphere(path.GetPointAtDistance(path.length - 2f, PathCreation.EndOfPathInstruction.Stop), 1f);
                 }
             }
+
+#if(UNITY_EDITOR)
+            Handles.Label(transform.position, spawnWeights.Select(w => w.ToString()).Aggregate((w1, w2) => $"{w1}\n{w2}"));
+#endif
         }
+    }
+
+    public Node GetRandomNode()
+    {
+        Node[] step = nodes[Random.Range(0, nodes.Count)];
+        return step[Random.Range(0, step.Length)];
     }
 }

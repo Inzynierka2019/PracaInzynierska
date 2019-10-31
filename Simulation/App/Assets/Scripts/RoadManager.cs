@@ -44,9 +44,15 @@ public class RoadManager : MonoBehaviour
         }
     }
 
+    const float junctionPathWeight = 1.0f;
+    const float laneChangePathWeightMultiplier = 0.5f;
+
     [HideInInspector] public int laneCountSetting = 1;
     [HideInInspector] public int backwardLaneCountSetting = 1;
     [HideInInspector] public float distanceBetweenLanesSetting = 0f;
+
+    [HideInInspector] public float pathWeightSetting = 1.0f;
+    [HideInInspector] public float[] spawnWeightsSetting;
 
     GameObject prefab, nodePrefab;
 
@@ -56,6 +62,8 @@ public class RoadManager : MonoBehaviour
 
         prefab = Resources.Load<GameObject>("RoadPrefab");
         nodePrefab = Resources.Load<GameObject>("SmallNodePrefab");
+
+        spawnWeightsSetting = Enumerable.Repeat(1.0f / SpawnManager.spawnTypeCount, SpawnManager.spawnTypeCount).ToArray();
     }
 
     public Road Create(Junction from, Junction to, bool backwardLaneCount = false, bool offseted = false)
@@ -67,9 +75,10 @@ public class RoadManager : MonoBehaviour
         }
 
         int laneCount = backwardLaneCount ? backwardLaneCountSetting : laneCountSetting;
-
         Road newRoad = Instantiate(prefab, (from.transform.position + to.transform.position) / 2, Quaternion.identity, transform).GetComponent<Road>();
         newRoad.offsetToRight = offseted ? 0.5f * (distanceBetweenLanesSetting + laneCount + (backwardLaneCount ? -1 : 1) * (backwardLaneCountSetting - laneCountSetting)) : 0f;
+        newRoad.pathWeight = pathWeightSetting;
+        Array.Copy(spawnWeightsSetting, newRoad.spawnWeights, SpawnManager.spawnTypeCount);
 
         BuildNodes(newRoad, from, to, laneCount);
 
@@ -140,7 +149,7 @@ public class RoadManager : MonoBehaviour
             foreach (Node targetNode in targetNodesCache[i])
             {
                 Vector3 midPoint = (road.endNodes[i].transform.position + targetNode.transform.position + to.transform.position) / 3;
-                road.endNodes[i].consequent.Add(new Node.InternodeConnection(targetNode, CreateVertexPath(new Vector3[] { road.endNodes[i].transform.position, midPoint, targetNode.transform.position })));
+                road.endNodes[i].consequent.Add(new Node.InternodeConnection(targetNode, CreateVertexPath(new Vector3[] { road.endNodes[i].transform.position, midPoint, targetNode.transform.position }), junctionPathWeight));
             }
         }
     }
@@ -199,20 +208,20 @@ public class RoadManager : MonoBehaviour
 
                 Node node = Instantiate(nodePrefab, pathSegment[2], Quaternion.identity, road.transform).GetComponent<Node>();
 
-                currentStepNodes[l].consequent.Add(new Node.InternodeConnection(node, CreateVertexPath(pathSegment)));
+                currentStepNodes[l].consequent.Add(new Node.InternodeConnection(node, CreateVertexPath(pathSegment), road.pathWeight));
 
                 if (l > 0)
                 {
                     pathSegment[0] = vertexPaths[l - 1].GetPoint(i, EndOfPathInstruction.Stop);
                     pathSegment[1] = (pathSegment[0] + pathSegment[2]) / 2;
-                    currentStepNodes[l - 1].consequent.Add(new Node.InternodeConnection(node, CreateVertexPath(pathSegment)));
+                    currentStepNodes[l - 1].consequent.Add(new Node.InternodeConnection(node, CreateVertexPath(pathSegment), road.pathWeight * laneChangePathWeightMultiplier));
                 }
 
                 if (l < laneCount - 1)
                 {
                     pathSegment[0] = vertexPaths[l + 1].GetPoint(i, EndOfPathInstruction.Stop);
                     pathSegment[1] = (pathSegment[0] + pathSegment[2]) / 2;
-                    currentStepNodes[l + 1].consequent.Add(new Node.InternodeConnection(node, CreateVertexPath(pathSegment)));
+                    currentStepNodes[l + 1].consequent.Add(new Node.InternodeConnection(node, CreateVertexPath(pathSegment), road.pathWeight * laneChangePathWeightMultiplier));
                 }
 
                 nextStepNodes[l] = node;

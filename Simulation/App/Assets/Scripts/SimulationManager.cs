@@ -17,6 +17,7 @@ public class SimulationManager : MonoBehaviour
     [SerializeField] JunctionManager junctionManager;
     [SerializeField] RoadManager roadManager;
     [SerializeField] VehicleManager vehicleManager;
+    [SerializeField] SpawnManager spawnManager;
 
     private readonly AppConnector appConnector = new AppConnector(new UnityDebugLogger(), "https://localhost:5001/UIHub");
     private static ConcurrentQueue<Action> MainThreadTaskQueue = new ConcurrentQueue<Action>();
@@ -41,6 +42,12 @@ public class SimulationManager : MonoBehaviour
         set { if (instance != null) instance.vehicleManager = value; }
     }
 
+    public static SpawnManager SpawnManager
+    {
+        get => instance?.spawnManager;
+        set { if (instance != null) instance.spawnManager = value; }
+    }
+
     public static void ScheduleTaskOnMainThread(Action action)
     {
         MainThreadTaskQueue.Enqueue(action);
@@ -50,6 +57,7 @@ public class SimulationManager : MonoBehaviour
     {
         Debug.Log("Rebuilding. Please hold");
         JunctionManager.RebuildRoads();
+        SpawnManager.CalculateDistribution();
         Debug.Log("Rebuilding. Done.");
     }
 
@@ -77,12 +85,21 @@ public class SimulationManager : MonoBehaviour
             go.transform.SetParent(transform);
             vehicleManager = go.AddComponent<VehicleManager>();
         }
+        if (spawnManager == null)
+        {
+            GameObject go = new GameObject("SpawnManager");
+            go.transform.SetParent(transform);
+            spawnManager = go.AddComponent<SpawnManager>();
+        }
 
         Rebuild();
         this.appConnector.KeepAlive();
         dataAggregationModule =
             gameObject.AddComponent<DataAggregationModule>();
         dataAggregationModule.Init(vehicleManager);
+
+        // mock
+        spawnManager.SetParameters(new float[] { 1.0f, 0.2f, 0.1f }, 10f);
     }
 
     void Update()
