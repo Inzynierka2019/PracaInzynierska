@@ -65,7 +65,9 @@ public class Road : MonoBehaviour
                 }
             }
 
+#if(UNITY_EDITOR)
             Handles.Label(transform.position, spawnWeights.Select(w => w.ToString()).Aggregate((w1, w2) => $"{w1}\n{w2}"));
+#endif
         }
     }
 
