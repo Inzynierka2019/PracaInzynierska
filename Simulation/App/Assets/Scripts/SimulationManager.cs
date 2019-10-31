@@ -97,6 +97,9 @@ public class SimulationManager : MonoBehaviour
         dataAggregationModule =
             gameObject.AddComponent<DataAggregationModule>();
         dataAggregationModule.Init(vehicleManager);
+
+        // mock
+        spawnManager.SetParameters(new float[] { 1.0f, 0.2f, 0.1f }, 10f);
     }
 
     void Update()
