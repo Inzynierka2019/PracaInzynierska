@@ -57,6 +57,7 @@ public class SimulationManager : MonoBehaviour
     {
         Debug.Log("Rebuilding. Please hold");
         JunctionManager.RebuildRoads();
+        SpawnManager.CalculateDistribution();
         Debug.Log("Rebuilding. Done.");
     }
 
