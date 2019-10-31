@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 using UnityEditor;
+using Random = UnityEngine.Random;
 
 public class Road : MonoBehaviour
 {
@@ -66,5 +67,11 @@ public class Road : MonoBehaviour
 
             Handles.Label(transform.position, spawnWeights.Select(w => w.ToString()).Aggregate((w1, w2) => $"{w1}\n{w2}"));
         }
+    }
+
+    public Node GetRandomNode()
+    {
+        Node[] step = nodes[Random.Range(0, nodes.Count)];
+        return step[Random.Range(0, step.Length)];
     }
 }
