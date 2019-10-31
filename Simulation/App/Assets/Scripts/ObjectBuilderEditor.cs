@@ -192,6 +192,10 @@ public class ObjectBuilderEditor : Editor
         SimulationManager.RoadManager.backwardLaneCountSetting = EditorGUILayout.IntSlider("Number of opposite lanes:", SimulationManager.RoadManager.backwardLaneCountSetting, 0, 6);
         SimulationManager.RoadManager.distanceBetweenLanesSetting = EditorGUILayout.Slider("Distance between lanes:", SimulationManager.RoadManager.distanceBetweenLanesSetting, 0f, 3f);
 
+        GUILayout.Space(10);
+
+        SimulationManager.RoadManager.pathWeightSetting = EditorGUILayout.Slider("Road attractiveness:", SimulationManager.RoadManager.pathWeightSetting, 0.001f, 2.0f);
+
         GUILayout.Space(20);
     }
 }

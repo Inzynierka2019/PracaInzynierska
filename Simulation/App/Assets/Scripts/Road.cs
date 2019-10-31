@@ -40,6 +40,8 @@ public class Road : MonoBehaviour
 
     [HideInInspector]
     public float offsetToRight;
+    [HideInInspector]
+    public float pathWeight;
 
     void OnDrawGizmos()
     {

@@ -17,11 +17,13 @@ public class Node : MonoBehaviour, ISelectable
     {
         public Node node;
         public VertexPath path;
+        public float weight;
 
-        public InternodeConnection(Node n, VertexPath p)
+        public InternodeConnection(Node n, VertexPath p, float w)
         {
             node = n;
             path = p;
+            weight = w;
         }
     }
 
@@ -204,6 +206,7 @@ public class Node : MonoBehaviour, ISelectable
             GetComponent<Renderer>().material = idleMat;
     }
 
+    // used temporarily on junctions
     public void AddConsequent(Node successor)
     {
         if (successor != null)
@@ -211,7 +214,7 @@ public class Node : MonoBehaviour, ISelectable
             if(consequent.Any(c => c.node == successor))
                 consequent.RemoveAll(c => c.node == successor);
             else
-                consequent.Add(new InternodeConnection(successor, SimulationManager.RoadManager.CreateVertexPath(new Vector3[] { transform.position, (transform.position + successor.transform.position) / 2, successor.transform.position })));
+                consequent.Add(new InternodeConnection(successor, SimulationManager.RoadManager.CreateVertexPath(new Vector3[] { transform.position, (transform.position + successor.transform.position) / 2, successor.transform.position }), 1.0f));
         }
     }
 }
