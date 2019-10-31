@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using UnityEditor;
 
 public class Road : MonoBehaviour
 {
@@ -40,8 +41,11 @@ public class Road : MonoBehaviour
 
     [HideInInspector]
     public float offsetToRight;
-    [HideInInspector]
+
+    [Space(20)]
+
     public float pathWeight;
+    public float[] spawnWeights;
 
     void OnDrawGizmos()
     {
@@ -59,6 +63,8 @@ public class Road : MonoBehaviour
                     Gizmos.DrawSphere(path.GetPointAtDistance(path.length - 2f, PathCreation.EndOfPathInstruction.Stop), 1f);
                 }
             }
+
+            Handles.Label(transform.position, spawnWeights.Select(w => w.ToString()).Aggregate((w1, w2) => $"{w1}\n{w2}"));
         }
     }
 }

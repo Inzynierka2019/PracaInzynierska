@@ -52,6 +52,7 @@ public class RoadManager : MonoBehaviour
     [HideInInspector] public float distanceBetweenLanesSetting = 0f;
 
     [HideInInspector] public float pathWeightSetting = 1.0f;
+    [HideInInspector] public float[] spawnWeightsSetting;
 
     GameObject prefab, nodePrefab;
 
@@ -61,6 +62,8 @@ public class RoadManager : MonoBehaviour
 
         prefab = Resources.Load<GameObject>("RoadPrefab");
         nodePrefab = Resources.Load<GameObject>("SmallNodePrefab");
+
+        spawnWeightsSetting = Enumerable.Repeat(1.0f / SpawnManager.spawnTypeCount, SpawnManager.spawnTypeCount).ToArray();
     }
 
     public Road Create(Junction from, Junction to, bool backwardLaneCount = false, bool offseted = false)
@@ -72,10 +75,10 @@ public class RoadManager : MonoBehaviour
         }
 
         int laneCount = backwardLaneCount ? backwardLaneCountSetting : laneCountSetting;
-
         Road newRoad = Instantiate(prefab, (from.transform.position + to.transform.position) / 2, Quaternion.identity, transform).GetComponent<Road>();
         newRoad.offsetToRight = offseted ? 0.5f * (distanceBetweenLanesSetting + laneCount + (backwardLaneCount ? -1 : 1) * (backwardLaneCountSetting - laneCountSetting)) : 0f;
         newRoad.pathWeight = pathWeightSetting;
+        Array.Copy(spawnWeightsSetting, newRoad.spawnWeights, SpawnManager.spawnTypeCount);
 
         BuildNodes(newRoad, from, to, laneCount);
 

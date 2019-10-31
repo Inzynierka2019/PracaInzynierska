@@ -196,6 +196,14 @@ public class ObjectBuilderEditor : Editor
 
         SimulationManager.RoadManager.pathWeightSetting = EditorGUILayout.Slider("Road attractiveness:", SimulationManager.RoadManager.pathWeightSetting, 0.001f, 2.0f);
 
+        GUILayout.Space(10);
+
+        GUILayout.Label("Road spawn weights:");
+        for (int i = 0; i < SpawnManager.spawnTypeCount; i++)
+        {
+            SimulationManager.RoadManager.spawnWeightsSetting[i] = EditorGUILayout.Slider($"{SpawnManager.spawnTypes[i]}:", SimulationManager.RoadManager.spawnWeightsSetting[i], 0f, 1f);
+        }
+
         GUILayout.Space(20);
     }
 }
