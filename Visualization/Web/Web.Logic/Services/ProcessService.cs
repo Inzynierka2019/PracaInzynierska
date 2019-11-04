@@ -1,10 +1,13 @@
 ﻿namespace Web.Logic.Services
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
+    using Common.Models;
 
     public class ProcessService : IProcessService
     {
@@ -57,6 +60,31 @@
             }
 
             return true;
+        }
+
+        public void SaveJsonSimulationPreferences(SimulationPreferences preferences)
+        {
+            var workingDir = Directory.GetCurrentDirectory();
+            var configName = this.config["SimulationPreferences"];
+
+            File.WriteAllText(
+                Path.Combine(workingDir, configName), 
+                JsonConvert.SerializeObject(preferences, Formatting.Indented));
+        }
+
+
+        public SimulationPreferences GetJsonSimulationPreferences()
+        {
+            var workingDir = Directory.GetCurrentDirectory();
+            var configName = this.config["SimulationPreferences"];
+
+            using (var reader = new StreamReader(Path.Combine(workingDir, configName)))
+            {
+                var json = reader.ReadToEnd();
+                var simulationPreferences = JsonConvert.DeserializeObject<SimulationPreferences>(json);
+
+                return simulationPreferences;
+            }
         }
     }
 }

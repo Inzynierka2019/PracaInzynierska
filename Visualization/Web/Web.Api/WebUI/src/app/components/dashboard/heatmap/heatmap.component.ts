@@ -3,8 +3,9 @@ import 'leaflet.heat/dist/leaflet-heat.js'
 import * as Leaflet from 'leaflet';
 import { latLng } from 'leaflet';
 import { icon, Map, point, marker, polyline } from 'leaflet';
-import { VehiclePositionsService, GeoPosition } from 'src/app/services/vehicle-positions.service';
+import { VehiclePositionsService } from 'src/app/services/vehicle-positions.service';
 import { TileLayers } from './tileLayers';
+import { GeoPosition } from 'src/app/interfaces/chart-models';
 declare var L;
 
 @Component({

@@ -1,0 +1,9 @@
+{
+  "scenePreferences": [
+    {
+      "sceneName": "dzejson to  chuj",
+      "initialVehiclePopulation": 200,
+      "sceneImageLocation": "image.png"
+    }
+  ]
+}
