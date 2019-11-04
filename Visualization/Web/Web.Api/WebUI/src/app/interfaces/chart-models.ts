@@ -1,4 +1,11 @@
 export interface VehiclePopulation {
-    data: [],
-    label: string
+    timestamp: Date;
+    vehicleCount: number;
+    vehiclePositions: Array<GeoPosition>;
+  }
+  
+export interface GeoPosition {
+    id: number;
+    latitude: number;
+    longitude: number;
 }
