@@ -39,8 +39,8 @@ public class DataAggregationModule : MonoBehaviour
                     new GeoPosition
                     {
                         Id = vehicleTransform.GetComponent<Vehicle>().id,
-                        Latitude = vehicleTransform.position.x,
-                        Longitude = vehicleTransform.position.y,
+                        Latitude = vehicleTransform.position.y,
+                        Longitude = vehicleTransform.position.x,
                     });
 
                 if (cancellationToken.IsCancellationRequested)
