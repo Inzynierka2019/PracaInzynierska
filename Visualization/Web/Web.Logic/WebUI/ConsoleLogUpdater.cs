@@ -4,7 +4,6 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.SignalR;
 
-    using Common.Communication;
     using Common.Models;
     using Common.Models.Enums;
     using Web.Logic.Hubs;
@@ -23,12 +22,9 @@
         {
             try
             {
-                await Task.Run(() =>
-                {
-                    this.hub.Clients.All.SendAsync(
-                        SignalMethods.SignalForConsoleLogs.Method,
-                        new ConsoleLog(message, type));
-                });
+                await this.hub.Clients.All.SendAsync(
+                    SignalMethods.SignalForConsoleLogs.Method,
+                    new ConsoleLog(message, type));
             }
             catch (Exception e)
             {
