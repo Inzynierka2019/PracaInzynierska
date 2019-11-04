@@ -104,5 +104,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dbc0bf094b1a364eab5741bbc7aa126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idleMat: {fileID: 2100000, guid: 9a06046ad5008444794dff9495f4bb6f, type: 2}
+  selectedMat: {fileID: 2100000, guid: 8dc3e9fd617ad1449ae94e9eef127cf3, type: 2}
+  entries: []
   exits: []
   consequent: []
