@@ -13,7 +13,7 @@ class SimulationBuilder
 
     static void BuildWindows()
     {
-        var pathToDeploy = Path.Combine(Directory.GetCurrentDirectory(), "out\\Windows\\App.exe");
+        var pathToDeploy = Path.Combine(Directory.GetCurrentDirectory(), "out\\Windows\\Simulation.exe");
 
         BuildPipeline.BuildPlayer(GetScenes(), pathToDeploy, BuildTarget.StandaloneWindows64, BuildOptions.ShowBuiltPlayer);
     }

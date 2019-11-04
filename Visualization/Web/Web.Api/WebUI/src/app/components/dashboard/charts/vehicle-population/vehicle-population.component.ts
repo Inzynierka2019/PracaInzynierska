@@ -35,13 +35,10 @@ export class VehiclePopulationComponent implements OnInit {
   VehiclePopulation(): void {
     this.hub.registerHandler(
       StatisticsMethods.get(HubMethod.VehiclePopulation),
-      (vehiclePopulation: VehiclePopulation) => {
-        const label = new Date().toLocaleTimeString();
-        const count = vehiclePopulation.vehicleCount;
-
-        this.vehicleChart.chartLabels.push(label);
-        this.vehicleChart.data[0].data.push(count);
-        this.currentPopulation = count;
+      (vehiclePopulation) => {
+        this.vehicleChart.chartLabels.push(vehiclePopulation.label);
+        this.vehicleChart.data[0].data.push(vehiclePopulation.data[0]);
+        this.currentPopulation = vehiclePopulation.data[0];
 
         if(this.vehicleChart.chartLabels.length > this.maxLabelCount) {
           this.vehicleChart.chartLabels.splice(0,1);

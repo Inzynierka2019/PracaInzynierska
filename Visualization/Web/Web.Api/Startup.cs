@@ -5,11 +5,10 @@ namespace Web.Api
     using Microsoft.AspNetCore.SpaServices.AngularCli;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-
     using Serilog;
-
+    using System;
     using Web.Logic.Hubs;
-    using Web.Logic.Services;
+    using Services = Web.Logic.Services;
 
     public class Startup
     {
@@ -17,7 +16,7 @@ namespace Web.Api
         {
             Configuration = configuration;
 
-            Serilog.Log.Logger = new LoggerConfiguration()
+            Log.Logger = new LoggerConfiguration()
             .ReadFrom.Configuration(Configuration)
             .WriteTo.Console()
             .CreateLogger();
@@ -30,7 +29,7 @@ namespace Web.Api
             services.Configure(Configuration);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IUnityAppManager unityAppManager)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -43,6 +42,7 @@ namespace Web.Api
             }
 
             app.UseCors("CorsPolicy");
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
@@ -50,8 +50,6 @@ namespace Web.Api
             {
                 routes.MapHub<UIHub>("/UIHub");
             });
-
-            app.UseWebSockets();
 
             app.UseMvc(routes =>
             {
@@ -69,7 +67,8 @@ namespace Web.Api
                 }
             });
 
-            Serilog.Log.Information("Visualization App is starting...");
+            Log.Information("Visualization App is starting...");
+            serviceProvider.GetService<Services.UnityAppCommunicationManager>();
         }
     }
 }

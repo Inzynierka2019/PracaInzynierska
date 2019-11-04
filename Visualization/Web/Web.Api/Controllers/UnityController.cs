@@ -1,13 +1,10 @@
 ﻿namespace Web.Api.Controllers
 {
     using System;
-    using System.Threading.Tasks;
-    using Common.Models;
     using Common.Models.Enums;
     using Microsoft.AspNetCore.Cors;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.SignalR;
-    using Web.Logic.Hubs;
+
     using Web.Logic.Services;
 
     [Route("api/[controller]")]
@@ -15,16 +12,13 @@
     public class UnityController : ControllerBase
     {
         private readonly IProcessService processService;
-        private readonly ILog Log;
-        private readonly IUnityAppManager appManager;
-        private readonly IHubContext<UIHub> hubContext;
 
-        public UnityController(IProcessService processService, ILog log, IUnityAppManager appManager, IHubContext<UIHub> hubContext)
+        private readonly ILog Log;
+
+        public UnityController(IProcessService processService, ILog log)
         {
             this.processService = processService;
             this.Log = log;
-            this.appManager = appManager;
-            this.hubContext = hubContext;
         }
 
         [HttpGet]
@@ -45,56 +39,6 @@
             }
 
             return this.Ok();
-        }
-
-        [HttpGet]
-        [Route("timespan")]
-        [EnableCors("CorsPolicy")]
-        public IActionResult GetUnityConnectionTimeSpan()
-        {
-            try
-            {
-                var timespan = appManager.GetTimeSpan();
-
-                return this.Ok(new DateTime(timespan.Ticks));
-            }
-            catch (Exception ex)
-            {
-                return this.BadRequest(ex);
-            }
-        }
-
-
-        [HttpGet]
-        [Route("connect")]
-        public IActionResult ConnectWithWebClient()
-        {
-            try
-            {
-                appManager.UpdateState(UnityAppState.CONNECTED);
-
-                return this.Ok();
-            }
-            catch (Exception ex)
-            {
-                return this.BadRequest(ex);
-            }
-        }
-
-        [HttpGet]
-        [Route("disconnect")]
-        public IActionResult DisconnectWithWebClient()
-        {
-            try
-            {
-                appManager.UpdateState(UnityAppState.DISCONNECTED);
-
-                return this.Ok();
-            }
-            catch (Exception ex)
-            {
-                return this.BadRequest(ex);
-            }
         }
     }
 }

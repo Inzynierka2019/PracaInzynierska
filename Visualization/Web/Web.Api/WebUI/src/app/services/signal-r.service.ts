@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SnackBarService } from './snack-bar.service';
 import * as signalR from "@aspnet/signalr";
-import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +12,7 @@ export class SignalRService {
 
   constructor(private snackBar: SnackBarService) {
     this.hubConnection = new signalR.HubConnectionBuilder()
-                              .withUrl('/UIHub')
+                              .withUrl('https://localhost:5001/UIHub')
                               .build();
 
     this.startConnection();
