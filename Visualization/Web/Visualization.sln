@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.852
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.Api", "Web.Api\Web.Api.csproj", "{9B0959F9-CA88-44A1-8DF3-1281FE37814E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Api", "Web.Api\Web.Api.csproj", "{9B0959F9-CA88-44A1-8DF3-1281FE37814E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.Logic", "Web.Logic\Web.Logic.csproj", "{5506ACB6-8759-47D5-945E-31A2DC2E153E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Models", "..\Common.Models\Common.Models.csproj", "{558F9C1A-647B-4159-9DAD-D74C5540DE8B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Logic", "Web.Logic\Web.Logic.csproj", "{5506ACB6-8759-47D5-945E-31A2DC2E153E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{5506ACB6-8759-47D5-945E-31A2DC2E153E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5506ACB6-8759-47D5-945E-31A2DC2E153E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5506ACB6-8759-47D5-945E-31A2DC2E153E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{558F9C1A-647B-4159-9DAD-D74C5540DE8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{558F9C1A-647B-4159-9DAD-D74C5540DE8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{558F9C1A-647B-4159-9DAD-D74C5540DE8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{558F9C1A-647B-4159-9DAD-D74C5540DE8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

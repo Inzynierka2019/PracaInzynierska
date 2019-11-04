@@ -28,7 +28,7 @@ svg:hover {
     position: relative;
     top: 8px;
     margin: 20px;
-    font-size: 35px;
+    font-size: 40px;
     font-family: 'ITC Avant Garde';
     transition: 1s ease-in;
 }
@@ -61,7 +61,7 @@ svg:hover {
     margin: 5px;
 }
 
-@media screen and (max-width: 1145px) {
+@media screen and (max-width: 1110px) {
     .simulator-title {
         display: none;
     }
