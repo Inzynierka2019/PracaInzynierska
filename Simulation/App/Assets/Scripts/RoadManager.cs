@@ -78,6 +78,7 @@ public class RoadManager : MonoBehaviour
         Road newRoad = Instantiate(prefab, (from.transform.position + to.transform.position) / 2, Quaternion.identity, transform).GetComponent<Road>();
         newRoad.offsetToRight = offseted ? 0.5f * (distanceBetweenLanesSetting + laneCount + (backwardLaneCount ? -1 : 1) * (backwardLaneCountSetting - laneCountSetting)) : 0f;
         newRoad.pathWeight = pathWeightSetting;
+        newRoad.spawnWeights = new float[SpawnManager.spawnTypeCount];
         Array.Copy(spawnWeightsSetting, newRoad.spawnWeights, SpawnManager.spawnTypeCount);
 
         BuildNodes(newRoad, from, to, laneCount);
