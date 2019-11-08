@@ -29,42 +29,44 @@ public class Node : MonoBehaviour, ISelectable
 
     public List<Vehicle> vehicles = new List<Vehicle>();
     public bool isRedLightOn;
+    public static int idCounter = 0;
+    public int id;
+
+    public void Start()
+    {
+        id = idCounter++;
+    }
 
     RoadInfo CreateRoadInfoForVehicle(Vehicle vehicle)
     {
         var info = new RoadInfo();
-        int searchDeep = 4;
-
-        List<Node> nextHops = new List<Node>();
-        nextHops.Add(this);
-        nextHops.Add(vehicle.currentIntermidiateTarget);
-
-        for(int i = 2; i < searchDeep; i++)
-        {
-            var nextHop = vehicle.GetNextTargetNode(nextHops[i - 1].consequent.Select(c => c.node).ToList());
-            if (nextHop == null)
-                break;
-            nextHops.Add(nextHop);
-        }
-
         float distance = 0f;
-        for(int i = 1; i < nextHops.Count; i++)
-        {
-            Vehicle nearestInFront = null;
-            if (i == 1)
-                nearestInFront = nextHops[i - 1].FindNearestVehicleInFront(vehicle);
-            else
-                nearestInFront = nextHops[i - 1].FindNearestVehicleInFront(0, nextHops[i]);
+        var vehiclePathEnumerator = vehicle.path.GetEnumerator();
 
-            if(nearestInFront == null)
+        while (vehiclePathEnumerator.Current != vehicle.intermediateTarget.Current)
+            vehiclePathEnumerator.MoveNext();
+
+        float d = vehicle.distanceOnCurrentRoadSegment;
+
+        var currentNode = this;
+        do
+        {
+            var nearestInFront =
+                currentNode.FindNearestVehicleInFront(d, vehiclePathEnumerator.Current);
+
+            d = 0;
+
+            if (nearestInFront == null)
             {
-                distance += nextHops[i - 1].consequent.Find(c => c.node == nextHops[i]).path.length;
-                if(nextHops[i].isRedLightOn)
+                distance += currentNode.consequent.Find(c => c.node == vehiclePathEnumerator.Current).path.length;
+                if (vehiclePathEnumerator.Current.isRedLightOn)
                 {
                     info.distanceToNearestObstacle = distance - vehicle.distanceOnCurrentRoadSegment;
                     info.nearestObstacleVelocity = 0;
                     break;
                 }
+
+                currentNode = vehiclePathEnumerator.Current;
             }
             else
             {
@@ -73,7 +75,7 @@ public class Node : MonoBehaviour, ISelectable
                 info.nearestObstacleVelocity = nearestInFront.velocity;
                 break;
             }
-        }
+        } while (vehiclePathEnumerator.MoveNext());
 
         if (info.distanceToNearestObstacle == float.MaxValue)
         {
@@ -95,21 +97,21 @@ public class Node : MonoBehaviour, ISelectable
             var info = CreateRoadInfoForVehicle(vehicle);
             vehicle.UpdatePosition(info);
 
-            if (vehicle.distanceOnCurrentRoadSegment > consequent.Find(c => c.node == vehicle.currentIntermidiateTarget).path.length)
+            if (vehicle.distanceOnCurrentRoadSegment > consequent.Find(c => c.node == vehicle.intermediateTarget.Current).path.length)
             {
-                if (vehicle.currentIntermidiateTarget.consequent.Count == 0)
+                if (vehicle.intermediateTarget.Current.consequent.Count == 0 || vehicle.IsRouteFinished())
                     vehiclesToRemove.Add(vehicle);
                 else
                 {
-                    var nextHop = vehicle.GetNextTargetNode(vehicle.currentIntermidiateTarget.consequent.Select(c => c.node).ToList());
-                    vehilcesToTransfer.Add(vehicle, vehicle.currentIntermidiateTarget);
-                    vehicle.currentIntermidiateTarget = nextHop;
+                    var nextHop = vehicle.GetNextTargetNode();
+                    vehilcesToTransfer.Add(vehicle, vehicle.intermediateTarget.Current);
+                    vehicle.MoveOnPath();
                     vehicle.distanceOnCurrentRoadSegment = 0;
                 }
             }
             else
             {
-                VertexPath path = consequent.Find(c => c.node == vehicle.currentIntermidiateTarget).path;
+                VertexPath path = consequent.Find(c => c.node == vehicle.intermediateTarget.Current).path;
                 vehicle.transform.position = path.GetPointAtDistance(vehicle.distanceOnCurrentRoadSegment, EndOfPathInstruction.Stop);
                 vehicle.transform.rotation = path.GetRotationAtDistance(vehicle.distanceOnCurrentRoadSegment, EndOfPathInstruction.Stop);
             }
@@ -154,33 +156,33 @@ public class Node : MonoBehaviour, ISelectable
             ChangeLightsToRed();
     }
 
-    public Vehicle FindNearestVehicleInFront(Vehicle thisVehicle)
-    {
-        var vehiclesOnRoad = vehicles.FindAll((Vehicle vehicle) =>
-        {
-            return vehicle.currentIntermidiateTarget == thisVehicle.currentIntermidiateTarget && vehicle != thisVehicle;
-        });
+    //public Vehicle FindNearestVehicleInFront(Vehicle thisVehicle)
+    //{
+    //    var vehiclesOnRoad = vehicles.FindAll((Vehicle vehicle) =>
+    //    {
+    //        return vehicle.intermediateTarget.Current == thisVehicle.intermediateTarget.Current && vehicle != thisVehicle;
+    //    });
 
-        Vehicle result = null;
-        foreach (var v in vehiclesOnRoad)
-        {
-            if (result == null && v.distanceOnCurrentRoadSegment > thisVehicle.distanceOnCurrentRoadSegment)
-                result = v;
-            else if (
-                v.distanceOnCurrentRoadSegment > thisVehicle.distanceOnCurrentRoadSegment &&
-                v.distanceOnCurrentRoadSegment < result.distanceOnCurrentRoadSegment)
-            {
-                result = v;
-            }
-        }
-        return result;
-    }
+    //    Vehicle result = null;
+    //    foreach (var v in vehiclesOnRoad)
+    //    {
+    //        if (result == null && v.distanceOnCurrentRoadSegment > thisVehicle.distanceOnCurrentRoadSegment)
+    //            result = v;
+    //        else if (
+    //            v.distanceOnCurrentRoadSegment > thisVehicle.distanceOnCurrentRoadSegment &&
+    //            v.distanceOnCurrentRoadSegment < result.distanceOnCurrentRoadSegment)
+    //        {
+    //            result = v;
+    //        }
+    //    }
+    //    return result;
+    //}
 
     public Vehicle FindNearestVehicleInFront(float position, Node target)
     {
         var vehiclesOnRoad = vehicles.FindAll((Vehicle vehicle) =>
         {
-            return vehicle.currentIntermidiateTarget == target;
+            return vehicle.intermediateTarget.Current == target;
         });
 
         Vehicle result = null;

@@ -45,7 +45,7 @@ public class RoadManager : MonoBehaviour
     }
 
     const float junctionPathWeight = 1.0f;
-    const float laneChangePathWeightMultiplier = 0.5f;
+    const float laneChangePathWeightMultiplier = 0.01f;
 
     [HideInInspector] public int laneCountSetting = 1;
     [HideInInspector] public int backwardLaneCountSetting = 1;

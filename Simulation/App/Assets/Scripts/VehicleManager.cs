@@ -25,7 +25,9 @@ public class VehicleManager : MonoBehaviour
         Vehicle newVehicle = Instantiate(prefab, spawnPoint.transform.position, Quaternion.identity, transform).GetComponent<Vehicle>();
         
         // mock
-        newVehicle.currentIntermidiateTarget = spawnPoint.consequent[0].node;
+        //newVehicle.currentIntermidiateTarget = spawnPoint.consequent[0].node;
+        newVehicle.CalculateBestPath(spawnPoint.consequent[0].node, target);
+        //newVehicle.OnMouseUp();
 
         spawnPoint.vehicles.Add(newVehicle);
 

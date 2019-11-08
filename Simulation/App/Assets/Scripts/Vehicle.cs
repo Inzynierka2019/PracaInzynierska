@@ -1,5 +1,5 @@
-﻿using PathCreation;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class RoadInfo
@@ -16,9 +16,18 @@ public class Vehicle : MonoBehaviour
     public float deceleration;
     public float safeDistance;
     public float distanceOnCurrentRoadSegment;
-    public Node currentIntermidiateTarget;
     public int id;
     public float vehicleLength;
+    public List<Node> path;
+    public IEnumerator<Node> intermediateTarget;
+    public Node start;
+    public Node target;
+
+    public bool IsSelected
+    {
+        get;
+        private set;
+    } = false;
 
     [HideInInspector]
     public static int idsCounter = 0;
@@ -78,12 +87,93 @@ public class Vehicle : MonoBehaviour
         }
     }
 
-    public Node GetNextTargetNode(List<Node> nodes)
+    public Node GetNextTargetNode()
     {
-        if (nodes.Count != 0)
-            return nodes[Random.Range(0, nodes.Count)];
-        else
+        if(path == null || path.Count == 0)
+        {
+            Debug.Log("Couldn't get next node on path. Path is empty or non existing");
             return null;
+        }
+
+        return path[0];
     }
+
+    public bool IsRouteFinished()
+    {
+        return intermediateTarget.Current == path.Last();
+    }
+
+    public void MoveOnPath()
+    {
+        intermediateTarget.MoveNext();
+    }
+
+    public void CalculateBestPath(Node start, Node target)
+    {
+        this.start = start;
+        this.target = target;
+
+        //item1 = waga krawedzi, item2 = dodatkowa heurystyka (tj. dystans w lini prostej do celu)
+        Dictionary<Node, System.Tuple<float, float>> open = new Dictionary<Node, System.Tuple<float, float>>();
+        HashSet<Node> closed = new HashSet<Node>();
+        Dictionary<Node, Node> path = new Dictionary<Node, Node>();
+
+        open.Add(start, new System.Tuple<float, float>(0, Vector3.Distance(start.transform.position, target.transform.position)));
+        open = open.OrderBy(x => x.Value.Item1 + x.Value.Item2).ToDictionary(x => x.Key, x => x.Value);
+
+        while (true)
+        {
+            var current = open.OrderBy(x => x.Value.Item1 + x.Value.Item2).First();
+            open.Remove(current.Key);
+            closed.Add(current.Key);
+
+            if (current.Key == target)
+                break;
+
+            foreach (var interconnection in current.Key.consequent)
+            {
+                if (closed.Contains(interconnection.node))
+                    continue;
+
+                var newPath = 
+                    current.Value.Item1 +
+                    (1f / interconnection.weight) +
+                    Vector3.Distance(current.Key.transform.position, interconnection.node.transform.position);
+
+                if (!open.ContainsKey(interconnection.node) || open[interconnection.node].Item1 + open[interconnection.node].Item2 > newPath)
+                {
+                    var t = new System.Tuple<float, float>(
+                                current.Value.Item1 + interconnection.weight,
+                                newPath);
+
+                    path[interconnection.node] = current.Key; // setting "current" as parent of its neighbour node
+                    open[interconnection.node] = t;
+                }
+            }
+        }
+
+        this.path.Clear();
+        this.path.Add(target);
+        var r = path[target];
+        while (path[r] != start)
+        {
+            this.path.Add(r);
+            r = path[r];
+        }
+        this.path.Add(r);
+        this.path.Add(start);
+        this.path.Reverse();
+
+        intermediateTarget = this.path.GetEnumerator();
+        intermediateTarget.MoveNext();
+    }
+
+    public void OnMouseUp()
+    {
+        IsSelected = !IsSelected;
+        path.ForEach(n => n.Mark(IsSelected));
+    }
+
+
 }
 

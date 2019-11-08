@@ -104,14 +104,15 @@ public class Junction : MonoBehaviour, ISelectable
     {
         if (entries.Count > 0)
         {
-            List<Node> allEntryNodes = entries.Select(r => r.endNodes).Aggregate((a1, a2) => a1.Concat(a2).ToArray()).ToList();
-
+            int entryRoadIndex = 0;
             while (Application.isPlaying)
             {
-                allEntryNodes.ForEach(n => n.ChangeLightsToRed());
-                allEntryNodes.ElementAt(Random.Range(0, allEntryNodes.Count)).ChangeLightsToGreen();
+                entries.Select(r => r.endNodes).ToList().ForEach(n => n.ToList().ForEach(k => k.ChangeLightsToRed()));
+                entries[entryRoadIndex].endNodes.ToList().ForEach(n => n.ChangeLightsToGreen());
 
-                yield return new WaitForSeconds(3.5f);
+                entryRoadIndex = (entryRoadIndex + 1) % entries.Count();
+
+                yield return new WaitForSeconds(5f);
             }
         }
     }
