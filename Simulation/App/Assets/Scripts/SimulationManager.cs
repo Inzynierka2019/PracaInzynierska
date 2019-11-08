@@ -1,12 +1,6 @@
-﻿using Common.Communication;
-using Common.Models;
-using Libraries.Web;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -19,7 +13,6 @@ public class SimulationManager : MonoBehaviour
     [SerializeField] VehicleManager vehicleManager;
     [SerializeField] SpawnManager spawnManager;
 
-    private readonly AppConnector appConnector = new AppConnector(new UnityDebugLogger(), "https://localhost:5001/UIHub");
     private static ConcurrentQueue<Action> MainThreadTaskQueue = new ConcurrentQueue<Action>();
 
     private static DataAggregationModule dataAggregationModule;
@@ -93,13 +86,12 @@ public class SimulationManager : MonoBehaviour
         }
         if(!(dataAggregationModule = gameObject.GetComponent<DataAggregationModule>()))
         {
-            dataAggregationModule = 
+            dataAggregationModule =
                 gameObject.AddComponent<DataAggregationModule>();
 
         }
 
-        Rebuild();
-        this.appConnector.KeepAlive();
+        Rebuild();       
         dataAggregationModule.Init(vehicleManager);
 
         // mock
@@ -126,7 +118,6 @@ public class SimulationManager : MonoBehaviour
     void OnApplicationQuit()
     {
         // disconnects from web server and informs that app has closed.
-        this.appConnector.Dispose();
         dataAggregationModule.StopAndWaitForShutdown();
     }
 }
