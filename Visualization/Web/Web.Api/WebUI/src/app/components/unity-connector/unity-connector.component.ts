@@ -28,7 +28,7 @@ export class UnityConnectorComponent implements OnInit {
   
   runWebGl() : void{
     this.snackBar.open("Simulation opened in new window!");
-    window.open("assets/unity/Simulation.exe/index.html", "_blank");
+    window.open("//unity/Simulation.exe/index.html", "_blank");
   }
 
   runWindows() : void {

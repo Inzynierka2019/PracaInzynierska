@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,9 +64,9 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    public void SetParameters(float[] routeTypeWeights, float vehicleFrequency)
+    public void SetParameters(ScenePreference scenePreference, float[] routeTypeWeights, float vehicleFrequency)
     {
-        if (routeTypeWeights.Length != routeTypeCount)
+        if (scenePreference.vehicleSpawnChances.Count != routeTypeCount)
             Debug.LogError("There is different number of declared route types and incoming parameters.");
 
         routeTypeWeightsSum = 0f;

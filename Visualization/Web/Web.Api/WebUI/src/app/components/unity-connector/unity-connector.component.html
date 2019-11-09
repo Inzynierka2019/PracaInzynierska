@@ -5,11 +5,6 @@
                 <ng-container *ngIf="!isRunning; else loading">Run on Windows</ng-container>
             </ng-container>
         </button>
-        <button type="button" class="btn btn-outline-light" (click)="runWebGl()">
-            <ng-container *ngIf="!buildError; else errorTemplate">
-                <ng-container *ngIf="!isBuilding; else loading">Run with WebGL</ng-container>
-            </ng-container>
-        </button>
     </div>
 
     <div class="navbar-text">

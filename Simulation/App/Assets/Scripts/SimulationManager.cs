@@ -99,7 +99,7 @@ public class SimulationManager : MonoBehaviour
 
         // TODO: VehicleSpawnChance,
         // VehicleCountMaximum
-        spawnManager.SetParameters(new float[] { 1.0f, 0.2f, 0.1f }, this.ScenePreference.vehicleSpawnFrequency);
+        spawnManager.SetParameters(this.ScenePreference, new float[] { 1.0f, 0.2f, 0.1f }, this.ScenePreference.vehicleSpawnFrequency);
     }
 
     void Update()
@@ -127,16 +127,18 @@ public class SimulationManager : MonoBehaviour
 
     void LoadSimulationPreferences()
     {
-        var configPath = Path.Combine(Directory.GetCurrentDirectory(), "simulation-preferences.json");
+        var configName = "simulation-preferences.json";
+        var configPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, configName);
+
+        Debug.Log($"Config path: {configPath}");
 
         using (var reader = new StreamReader(configPath))
         {
             try
             {
-
-            var json = reader.ReadToEnd();
-            var simulationPreferences = JsonConvert.DeserializeObject<SimulationPreferences>(json);
-            this.ScenePreference = simulationPreferences.scenePreferences;
+                var json = reader.ReadToEnd();
+                var simulationPreferences = JsonConvert.DeserializeObject<SimulationPreferences>(json);
+                this.ScenePreference = simulationPreferences.scenePreferences;
             }
             catch (Exception ex)
             {

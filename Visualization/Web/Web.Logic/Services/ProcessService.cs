@@ -29,19 +29,14 @@
             ExecuteCommand(cmd, false);
         }
 
-        [System.Runtime.InteropServices.DllImport("User32.dll")]
-        private static extern bool SetForegroundWindow(IntPtr handle);
-
         private bool ExecuteCommand(string command, bool waitForExit)
         {
             var processInfo = new ProcessStartInfo("cmd.exe", "/c " + command);
             processInfo.CreateNoWindow = false;
-            processInfo.UseShellExecute = false;
+            processInfo.UseShellExecute = true;
             processInfo.RedirectStandardError = true;
             processInfo.RedirectStandardOutput = true;
-
             var process = Process.Start(processInfo);
-            //SetForegroundWindow(process.Handle);
 
             process.OutputDataReceived +=
                 (object sender, DataReceivedEventArgs e) => Log.Info(e.Data);
