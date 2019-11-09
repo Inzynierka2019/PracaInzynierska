@@ -105,7 +105,7 @@
             {
                 var simulationPreferences = this.processService.GetJsonSimulationPreferences();
 
-                return this.Ok(simulationPreferences.ScenePreferences);
+                return this.Ok(simulationPreferences);
             }
             catch (Exception ex)
             {

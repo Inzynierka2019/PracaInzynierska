@@ -2,9 +2,12 @@
   "currentScene": "Politechnika Gdańska",
   "availableScenes": [
     "Politechnika Gdańska"
+  
+    // punkt odniesienia dla sceny
+  
   ],
   "scenePreferences": {
-    "vehicleSpawnFrequency": "10f",
+    "vehicleSpawnFrequency": "100",
     "vehicleCountMaximum": "200",
     "vehicleSpawnChances": [
       {
