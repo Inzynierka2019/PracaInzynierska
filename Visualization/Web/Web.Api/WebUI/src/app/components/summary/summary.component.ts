@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AppUnityConnectionStatusService } from 'src/app/services/app-unity-connection-status.service';
+import { DataService } from 'src/app/services/data.service';
+import { VehiclePopulationData } from 'src/app/interfaces/chart-models';
 
 @Component({
   selector: 'app-summary',
@@ -9,14 +11,22 @@ import { AppUnityConnectionStatusService } from 'src/app/services/app-unity-conn
 export class SummaryComponent implements OnInit {
   @Input()
   showSummary: Boolean = false;
+  vehiclePopulationData: VehiclePopulationData;
 
-  constructor(private appService: AppUnityConnectionStatusService) { }
+  constructor(
+    private appService: AppUnityConnectionStatusService,
+    private dataService: DataService) { }
 
   ngOnInit() {
+    this.vehiclePopulationData = this.dataService.getAllVehiclePopulationData();
   }
 
-  show() {
+  show(): void {
     this.showSummary = true;
+  }
+
+  refresh(): void {
+    window.location.reload();
   }
 
   get appTime(): string {

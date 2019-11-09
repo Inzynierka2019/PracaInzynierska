@@ -19,13 +19,10 @@ export class HeatmapComponent implements OnInit {
     private geoService: VehiclePositionsService) { }
 
   map: any;
+  vehicleMaxCount = 1000;
 
   ngOnInit() {
-    this.geoService.getAddressPoints().subscribe((geoPoints) => {
-        let newAddressPoints = geoPoints.map(function (p: GeoPosition) { return [p.latitude, p.longitude]; });
-        /* heatLayer can't be seen in Leaflet at compile time but it works at runtime? */
-        const heat = L.heatLayer(newAddressPoints).addTo(this.map);
-    });
+
   }
 
   layersControl = {
@@ -45,6 +42,15 @@ export class HeatmapComponent implements OnInit {
 
   onMapReady(map: any) {
     this.map = map;
+
+    const heat = L.heatLayer([]).addTo(this.map);
+
+    this.geoService.getAddressPoints().subscribe((geoPoints) => {
+
+        let newAddressPoints = geoPoints.map(function (p: GeoPosition) { return L.latLng(p.latitude, p.longitude); });
+        var a = L.latLng(50.5, 30.5);
+        heat.setLatLngs(newAddressPoints);
+    });
   }
 
   options = {

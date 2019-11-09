@@ -96,5 +96,41 @@
                 return this.BadRequest(ex);
             }
         }
+
+        [HttpGet]
+        [Route("preferences")]
+        public IActionResult LoadSimulationPreferences()
+        {
+            try
+            {
+                var simulationPreferences = this.processService.GetJsonSimulationPreferences();
+
+                return this.Ok(simulationPreferences);
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(ex);
+            }
+        }
+
+        [HttpPut]
+        [Route("preferences")]
+        public IActionResult SaveSimulationPreferences([FromBody] SimulationPreferences preferences)
+        {
+            try
+            {
+                if (TryValidateModel(preferences))
+                {
+                    this.processService.SaveJsonSimulationPreferences(preferences);
+                    return this.Ok();
+                }
+
+                return this.ValidationProblem();
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(ex);
+            }
+        }
     }
 }

@@ -12,13 +12,13 @@ Dokumentacja pracy dyplomowej znajduje się w folderze [Documentation](https://g
 + Simulation
     + App
 + Visualization
-    + Web.Api
+    + Web
+      + Web.Api
+      + Web.Logic
       + WebUI
     + Web.Logic
 + Common
     + Common.Models
-    + Common.Communication (Hub broker for communication)
-    + Common.ConsoleTester
 
 ## Warunki wstępne
 Do poprawnego działania aplikacji wymagane są:

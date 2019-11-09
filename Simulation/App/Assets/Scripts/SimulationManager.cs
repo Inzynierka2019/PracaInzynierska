@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Common.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Concurrent;
+using System.IO;
 using System.Net;
 using UnityEngine;
 
@@ -12,6 +15,9 @@ public class SimulationManager : MonoBehaviour
     [SerializeField] RoadManager roadManager;
     [SerializeField] VehicleManager vehicleManager;
     [SerializeField] SpawnManager spawnManager;
+
+    [HideInInspector]
+    public ScenePreference ScenePreference { get; set; }
 
     private static ConcurrentQueue<Action> MainThreadTaskQueue = new ConcurrentQueue<Action>();
 
@@ -60,6 +66,8 @@ public class SimulationManager : MonoBehaviour
             Debug.LogError("Too many simulation managers! Leave just one in hierarchy.");
         instance = this;
 
+        this.LoadSimulationPreferences();
+
         if (junctionManager == null)
         {
             GameObject go = new GameObject("JunctionManager");
@@ -89,8 +97,7 @@ public class SimulationManager : MonoBehaviour
         dataAggregationModule = gameObject.AddComponent<DataAggregationModule>();
         dataAggregationModule.Init(vehicleManager);
 
-        // mock
-        spawnManager.SetParameters(new float[] { 1.0f, 0.2f, 0.1f }, 10f);
+        spawnManager.SetParameters(this.ScenePreference);
     }
 
     void Update()
@@ -114,5 +121,27 @@ public class SimulationManager : MonoBehaviour
     {
         // disconnects from web server and informs that app has closed.
         dataAggregationModule.StopAndWaitForShutdown();
+    }
+
+    void LoadSimulationPreferences()
+    {
+        var configName = "simulation-preferences.json";
+        var configPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, configName);
+
+        Debug.Log($"Config path: {configPath}");
+
+        using (var reader = new StreamReader(configPath))
+        {
+            try
+            {
+                var json = reader.ReadToEnd();
+                var simulationPreferences = JsonConvert.DeserializeObject<SimulationPreferences>(json);
+                this.ScenePreference = simulationPreferences.scenePreferences;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError(ex);
+            }
+        }
     }
 }

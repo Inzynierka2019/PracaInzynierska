@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UnityService } from '../../services/unity.service';
 import { AppUnityConnectionStatusService } from '../../services/app-unity-connection-status.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-unity-connector',
@@ -17,7 +19,7 @@ export class UnityConnectorComponent implements OnInit {
   connectionStatus: any;
 
   constructor(
-    private unityApi: UnityService, 
+    private unityApi: UnityService,
     private appStatus: AppUnityConnectionStatusService,
     private snackBar: SnackBarService) { }
 
@@ -26,7 +28,7 @@ export class UnityConnectorComponent implements OnInit {
   
   runWebGl() : void{
     this.snackBar.open("Simulation opened in new window!");
-    window.open("assets/unity/Simulation.exe/index.html", "_blank");
+    window.open("//unity/Simulation.exe/index.html", "_blank");
   }
 
   runWindows() : void {

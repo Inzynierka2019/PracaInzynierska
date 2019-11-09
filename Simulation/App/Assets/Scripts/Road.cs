@@ -52,22 +52,26 @@ public class Road : MonoBehaviour
     {
         if(nodes != null)
         {
-            foreach (Node node in nodes.Aggregate((a1, a2) => a1.array.Concat(a2.array).ToArray()))
+            try
             {
-                foreach (var path in node.consequent.Select(c => c.path))
+                foreach (Node node in nodes.Aggregate((a1, a2) => a1.array.Concat(a2.array).ToArray()))
                 {
-                    for (int i = 1; i < path.vertices.Length; i++)
+                    foreach (var path in node.consequent.Select(c => c.path))
                     {
-                        Gizmos.DrawLine(path.vertices[i - 1], path.vertices[i]);
+                        for (int i = 1; i < path.vertices.Length; i++)
+                        {
+                            Gizmos.DrawLine(path.vertices[i - 1], path.vertices[i]);
+                        }
+
+                        Gizmos.DrawSphere(path.GetPointAtDistance(path.length - 2f, PathCreation.EndOfPathInstruction.Stop), 1f);
                     }
-
-                    Gizmos.DrawSphere(path.GetPointAtDistance(path.length - 2f, PathCreation.EndOfPathInstruction.Stop), 1f);
                 }
-            }
 
-#if(UNITY_EDITOR)
-            Handles.Label(transform.position, spawnWeights.Select(w => w.ToString()).Aggregate((w1, w2) => $"{w1}\n{w2}"));
+#if (UNITY_EDITOR)
+                Handles.Label(transform.position, spawnWeights.Select(w => w.ToString()).Aggregate((w1, w2) => $"{w1}\n{w2}"));
 #endif
+            }
+            catch {}
         }
     }
 

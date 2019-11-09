@@ -9,6 +9,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,8 @@ import { VehiclePopulationComponent } from './components/dashboard/charts/vehicl
 import { SummaryComponent } from './components/summary/summary.component';
 import { StatisticsComponent } from './components/dashboard/stats/statistics/statistics.component';
 import { HeatmapComponent } from './components/dashboard/heatmap/heatmap.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { PieChartComponent } from './components/dashboard/charts/pie-chart/pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,8 @@ import { HeatmapComponent } from './components/dashboard/heatmap/heatmap.compone
     SummaryComponent,
     StatisticsComponent,
     HeatmapComponent,
+    SettingsComponent,
+    PieChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +51,7 @@ import { HeatmapComponent } from './components/dashboard/heatmap/heatmap.compone
     MatExpansionModule,
     BrowserAnimationsModule,
     MatCardModule,
+    FormsModule,
     LeafletModule.forRoot()
   ],
   providers: [],
