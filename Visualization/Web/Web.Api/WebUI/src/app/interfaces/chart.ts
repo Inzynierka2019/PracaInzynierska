@@ -1,11 +1,13 @@
 export enum ChartType {
     Line,
     Bar,
+    Pie,
 }
 
 export const ChartTypes: Map<ChartType, string> = new Map<ChartType, string>([
     [ChartType.Line, "line"],
     [ChartType.Bar, "bar"],
+    [ChartType.Pie, "pie"],
 ]);
 
 export class Chart {

@@ -1,10 +1,8 @@
 <div class="container-flex margin-top-lg">
     <mat-accordion multi="true">
         <mat-expansion-panel>
-            <!-- [expanded]="true" -->
-
             <mat-expansion-panel-header class="header">
-                Podgląd mapy
+                Heatmap preview
             </mat-expansion-panel-header>
             <div matExpansionPanelContent *ngIf="connected; else loading">
                 <app-heatmap></app-heatmap>
@@ -13,11 +11,11 @@
 
         <mat-expansion-panel [expanded]="true">
             <mat-expansion-panel-header class="header">
-                Statystyki
+                Statistics
             </mat-expansion-panel-header>
             <div matExpansionPanelContent *ngIf="connected; else loading">
                 <div class="stats-container">
-                    <app-statistics></app-statistics>
+                    <app-pie-chart [title]="'Current distribution of driver types'"></app-pie-chart>
                     <app-vehicle-population></app-vehicle-population>
                 </div>
             </div>

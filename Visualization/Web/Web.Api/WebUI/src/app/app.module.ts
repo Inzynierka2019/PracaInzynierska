@@ -23,6 +23,7 @@ import { SummaryComponent } from './components/summary/summary.component';
 import { StatisticsComponent } from './components/dashboard/stats/statistics/statistics.component';
 import { HeatmapComponent } from './components/dashboard/heatmap/heatmap.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { PieChartComponent } from './components/dashboard/charts/pie-chart/pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { SettingsComponent } from './components/settings/settings.component';
     StatisticsComponent,
     HeatmapComponent,
     SettingsComponent,
+    PieChartComponent,
   ],
   imports: [
     BrowserModule,
