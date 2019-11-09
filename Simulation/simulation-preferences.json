@@ -5,20 +5,20 @@
     "New York City"
   ],
   "scenePreferences": {
-    "vehicleSpawnFrequency": 5.0,
+    "vehicleSpawnFrequency": 0.2,
     "vehicleCountMaximum": 10,
     "vehicleSpawnChances": [
       {
         "routeType": "Do pracy",
-        "spawnChance": 100
+        "spawnChance": 50
       },
       {
         "routeType": "Na zakupy",
-        "spawnChance": 5
+        "spawnChance": 25
       },
       {
         "routeType": "Turystycznie",
-        "spawnChance": 2
+        "spawnChance": 25
       }
     ]
   }

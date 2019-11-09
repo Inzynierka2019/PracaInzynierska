@@ -97,9 +97,7 @@ public class SimulationManager : MonoBehaviour
         dataAggregationModule = gameObject.AddComponent<DataAggregationModule>();
         dataAggregationModule.Init(vehicleManager);
 
-        // TODO: VehicleSpawnChance,
-        // VehicleCountMaximum
-        spawnManager.SetParameters(this.ScenePreference, new float[] { 1.0f, 0.2f, 0.1f }, this.ScenePreference.vehicleSpawnFrequency);
+        spawnManager.SetParameters(this.ScenePreference);
     }
 
     void Update()
