@@ -38,7 +38,6 @@
     <Compile Include="Exceptions\SignalHubException.cs" />
     <Compile Include="IMessage.cs" />
     <Compile Include="Models\GeoPosition.cs" />
-    <Compile Include="Models\ScenePreferences.cs" />
     <Compile Include="Models\SimulationPreferences.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\VehiclePopulation.cs" />

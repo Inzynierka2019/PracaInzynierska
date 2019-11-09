@@ -119,9 +119,13 @@
         {
             try
             {
-                this.processService.SaveJsonSimulationPreferences(preferences);
+                if (TryValidateModel(preferences))
+                {
+                    this.processService.SaveJsonSimulationPreferences(preferences);
+                    return this.Ok();
+                }
 
-                return this.Ok();
+                return this.ValidationProblem();
             }
             catch (Exception ex)
             {

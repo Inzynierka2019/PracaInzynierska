@@ -3,7 +3,6 @@ import { UnityService } from '../../services/unity.service';
 import { AppUnityConnectionStatusService } from '../../services/app-unity-connection-status.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { Observable } from 'rxjs';
-import { SimulationPreferences } from 'src/app/interfaces/simulation-preferences';
 import { HttpClient } from '@angular/common/http';
 
 @Component({

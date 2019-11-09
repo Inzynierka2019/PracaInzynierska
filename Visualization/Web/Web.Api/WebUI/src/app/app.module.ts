@@ -9,6 +9,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -48,6 +49,7 @@ import { SettingsComponent } from './components/settings/settings.component';
     MatExpansionModule,
     BrowserAnimationsModule,
     MatCardModule,
+    FormsModule,
     LeafletModule.forRoot()
   ],
   providers: [],

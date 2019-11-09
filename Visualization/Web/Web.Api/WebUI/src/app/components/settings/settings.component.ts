@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { SimulationPreferences } from 'src/app/interfaces/simulation-preferences';
 import { UnityService } from 'src/app/services/unity.service';
-import { Observable } from 'rxjs';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
-import { ScenePreferences } from 'src/app/interfaces/scene-preferences';
+import { SimulationPreferences } from 'src/app/interfaces/scene-preferences';
 
 @Component({
   selector: 'app-settings',
@@ -17,16 +14,18 @@ export class SettingsComponent implements OnInit {
     private unityService: UnityService,
     private snackBar: SnackBarService) { }
 
-  preferences: ScenePreferences[];
+  settings: SimulationPreferences = new SimulationPreferences();
 
   ngOnInit() {
-    this.unityService.getPreferences().subscribe((p) => {
-      this.preferences = p;
+
+    this.unityService.getPreferences().subscribe((settings) => {
+      this.settings = settings;
+      console.log(this.settings);
     });
   }
 
   savePreferences() {
-    this.unityService.savePreferences(this.preferences).subscribe(
+    this.unityService.savePreferences(this.settings).subscribe(
       response => { this.snackBar.open("Preferences saved!", 500) },
       error => { this.snackBar.open("Preferences can't be saved!", 1000) }); 
   }
