@@ -127,15 +127,15 @@ public class SpawnManager : MonoBehaviour
             if(vehicleCount < vehicleCountMaximum)
             {
                 RouteType rt = ChooseRouteType();
-                SimulationManager.VehicleManager.Create(ChooseNode(rt.spawnType), ChooseNode(rt.targetType));
+                SimulationManager.VehicleManager.Create(ChooseNode(rt.spawnType), ChooseNode(rt.targetType), rt.name);
                 vehicleCount++;
             }
         }
     }
 
-    void NotifyVehicleRouteFinished(Vehicle vehicle)
+    public void NotifyVehicleRouteFinished(Vehicle vehicle)
     {
         vehicleCount--;
-        //TODO
+        SimulationManager.dataAggregationModule.CreateDriverReport(vehicle);
     }
 }

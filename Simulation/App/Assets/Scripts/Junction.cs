@@ -54,7 +54,7 @@ public class Junction : MonoBehaviour, ISelectable
     {
         Road sourceRoad = exits[Random.Range(0, exits.Count)];
         Node sourceNode = sourceRoad.startNodes[Random.Range(0, sourceRoad.startNodes.Length)];
-        SimulationManager.VehicleManager.Create(sourceNode, sourceNode.consequent.Select(c => c.node).ToList()[Random.Range(0, sourceNode.consequent.Count)]);
+        SimulationManager.VehicleManager.Create(sourceNode, sourceNode.consequent.Select(c => c.node).ToList()[Random.Range(0, sourceNode.consequent.Count)], "");
     }
 
     public void ClearConnectionsAndPaths()

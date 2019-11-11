@@ -22,6 +22,7 @@ public class Vehicle : MonoBehaviour
     public IEnumerator<Node> intermediateTarget;
     public Node start;
     public Node target;
+    public string roadTypeName;
 
     public bool IsSelected
     {

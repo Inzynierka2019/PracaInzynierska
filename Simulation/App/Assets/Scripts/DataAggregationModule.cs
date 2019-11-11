@@ -35,7 +35,7 @@ public class DataAggregationModule : MonoBehaviour
         {
             TravelTime = TimeSpan.FromSeconds(new System.Random().Next(10, 543)),
             AvgSpeed = new System.Random().Next(10, 543),
-            RouteTarget = "Kaczka",
+            RouteTarget = vehicle.roadTypeName,
             Driver = new SlowDriver()
         });
     }

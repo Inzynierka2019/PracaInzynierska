@@ -103,7 +103,7 @@ public class Node : MonoBehaviour, ISelectable
             {
                 if (vehicle.intermediateTarget.Current.consequent.Count == 0 || vehicle.IsRouteFinished())
                 {
-                    SpawnManager.NotifyVehicleRouteFinished(vehicle);
+                    SimulationManager.SpawnManager.NotifyVehicleRouteFinished(vehicle);
                     vehiclesToRemove.Add(vehicle);
                 }
                 else

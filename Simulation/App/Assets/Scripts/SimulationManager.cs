@@ -21,7 +21,7 @@ public class SimulationManager : MonoBehaviour
 
     private static ConcurrentQueue<Action> MainThreadTaskQueue = new ConcurrentQueue<Action>();
 
-    private static DataAggregationModule dataAggregationModule;
+    public static DataAggregationModule dataAggregationModule;
 
     public static JunctionManager JunctionManager
     {

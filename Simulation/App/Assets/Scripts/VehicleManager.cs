@@ -14,7 +14,7 @@ public class VehicleManager : MonoBehaviour
         prefab = Resources.Load<GameObject>("VehiclePrefab");
     }
 
-    public Vehicle Create(Node spawnPoint, Node target)
+    public Vehicle Create(Node spawnPoint, Node target, string roadTypeName)
     {
         if (spawnPoint == null || target == null)
         {
@@ -23,12 +23,9 @@ public class VehicleManager : MonoBehaviour
         }
 
         Vehicle newVehicle = Instantiate(prefab, spawnPoint.transform.position, Quaternion.identity, transform).GetComponent<Vehicle>();
+        newVehicle.roadTypeName = roadTypeName;
         
-        // mock
-        //newVehicle.currentIntermidiateTarget = spawnPoint.consequent[0].node;
         newVehicle.CalculateBestPath(spawnPoint.consequent[0].node, target);
-        //newVehicle.OnMouseUp();
-
         spawnPoint.vehicles.Add(newVehicle);
 
         vehicles.Add(newVehicle);
