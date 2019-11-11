@@ -1,36 +1,35 @@
 <div class="container-flex margin-top-lg">
     <mat-accordion multi="true">
         <mat-expansion-panel>
-        <!-- [expanded]="true" -->
-        
-                <mat-expansion-panel-header class="header">
-                    Podgląd mapy
-                </mat-expansion-panel-header>
-                <div matExpansionPanelContent *ngIf="connected; else loading">
-                    <app-heatmap></app-heatmap>
+            <mat-expansion-panel-header class="header">
+                Heatmap preview
+            </mat-expansion-panel-header>
+            <div matExpansionPanelContent *ngIf="connected; else loading">
+                <app-heatmap></app-heatmap>
+            </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel [expanded]="true">
+            <mat-expansion-panel-header class="header">
+                Statistics
+            </mat-expansion-panel-header>
+            <div matExpansionPanelContent *ngIf="connected; else loading">
+                <div class="stats-container">
+                    <app-pie-chart [title]="'Current distribution of driver types'"></app-pie-chart>
+                    <app-vehicle-population></app-vehicle-population>
                 </div>
-            </mat-expansion-panel>
-            
-            <mat-expansion-panel [expanded]="true">
-                <mat-expansion-panel-header class="header">
-                    Statystyki
-                </mat-expansion-panel-header>
-                <div matExpansionPanelContent *ngIf="connected; else loading">
-                    <div class="stats-container">
-                        <app-statistics></app-statistics>
-                        <app-vehicle-population></app-vehicle-population>
-                    </div>
-                </div>
-                
-            </mat-expansion-panel>
-        </mat-accordion>
-    </div>
-    
+            </div>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
+
 <app-summary *ngIf="showSummary" appTime="appTime()"></app-summary>
 
 <ng-template #loading>
     <div class="loader d-flex justify-content-center">
-        <ngx-spinner [fullScreen]="false" type="ball-clip-rotate-multiple" size="medium" color="#3c1053" bdColor="rgba(0,0,0,0)">
+        <ngx-spinner [fullScreen]="false" type="ball-clip-rotate-multiple" size="medium" color="#3c1053"
+            bdColor="rgba(0,0,0,0)">
             <p class="loader-msg">waiting for simulation app...</p>
         </ngx-spinner>
     </div>

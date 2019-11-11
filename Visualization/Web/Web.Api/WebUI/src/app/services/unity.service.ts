@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { retry, catchError } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { SimulationPreferences } from '../interfaces/scene-preferences';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,14 @@ export class UnityService {
 
   run() {
     return this.httpClient.get(this.url + '/run');
+  }
+
+  getPreferences() : Observable<SimulationPreferences> {
+    return this.httpClient.get<SimulationPreferences>(`${this.url}/preferences`);
+  }
+
+  savePreferences(preferences: SimulationPreferences) : Observable<SimulationPreferences> {
+    return this.httpClient.put<SimulationPreferences>(`${this.url}/preferences`, preferences);
   }
 
   handleError(error) {

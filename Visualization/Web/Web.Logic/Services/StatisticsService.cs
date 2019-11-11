@@ -1,7 +1,6 @@
 ﻿namespace Web.Logic.Services
 {
     using Common.Models;
-    using GeoCoordinatePortable;
     using Microsoft.AspNetCore.SignalR;
     using System;
     using System.Collections.Generic;

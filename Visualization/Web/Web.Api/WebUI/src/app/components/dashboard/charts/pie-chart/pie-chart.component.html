@@ -1,0 +1,21 @@
+<mat-card class="chart-card">
+    <mat-card-header class="chart-header">
+        <div mat-card-avatar>
+            <i class="material-icons icon">insert_chart_outlined</i>
+        </div>
+        <mat-card-title class="chart-title">
+            <h6>{{title}}:</h6>
+        </mat-card-title>
+    </mat-card-header>
+    <hr />
+    <div style="display: block;">
+        <canvas baseChart 
+        [data]="pieChartData" 
+        [labels]="pieChartLabels" 
+        [chartType]="pieChartType"
+        [options]="pieChartOptions" 
+        [plugins]="pieChartPlugins" 
+        [legend]="pieChartLegend">
+        </canvas>
+    </div>
+</mat-card>

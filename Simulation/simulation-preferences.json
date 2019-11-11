@@ -1,0 +1,25 @@
+{
+  "currentScene": "New York City",
+  "availableScenes": [
+    "Politechnika Gdańska",
+    "New York City"
+  ],
+  "scenePreferences": {
+    "vehicleSpawnFrequency": 5,
+    "vehicleCountMaximum": 10,
+    "vehicleSpawnChances": [
+      {
+        "routeType": "Do pracy",
+        "spawnChance": 50
+      },
+      {
+        "routeType": "Na zakupy",
+        "spawnChance": 25
+      },
+      {
+        "routeType": "Turystycznie",
+        "spawnChance": 25
+      }
+    ]
+  }
+}
