@@ -37,6 +37,7 @@
     <Compile Include="Enums\UnityAppState.cs" />
     <Compile Include="Exceptions\SignalHubException.cs" />
     <Compile Include="IMessage.cs" />
+    <Compile Include="Models\DriverType.cs" />
     <Compile Include="Models\GeoPosition.cs" />
     <Compile Include="Models\SimulationPreferences.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

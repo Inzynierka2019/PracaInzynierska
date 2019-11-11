@@ -6,7 +6,7 @@ namespace Common.Models
     public class VehiclePopulation : IMessage
     {
         public DateTime TimeStamp = DateTime.Now;
-        public List<GeoPosition> VehiclePositions = new List<GeoPosition>();
+        public List<VehicleStatus> VehiclePositions = new List<VehicleStatus>();
         public int VehicleCount => VehiclePositions.Count;
 
         public override string ToString()

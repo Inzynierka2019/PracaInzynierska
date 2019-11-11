@@ -16,6 +16,11 @@ class AppUpdater
         await this.ApiClient.SendAsync(population, Endpoints.VehiclePopulation);
     }
 
+    public async Task Update(DriverReport report)
+    {
+        await this.ApiClient.SendAsync(report, Endpoints.VehiclePopulation);
+    }
+
     public async Task Start()
     {
         await ApiClient.GetAsync(Endpoints.Connect);

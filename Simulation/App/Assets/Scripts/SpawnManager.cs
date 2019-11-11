@@ -50,6 +50,8 @@ public class SpawnManager : MonoBehaviour
     float[] routeTypeWeights = Enumerable.Repeat(1f, routeTypeCount).ToArray();
     float routeTypeWeightsSum = routeTypeCount;
     float spawnPeriod = 1f;
+    int vehicleCountMaximum;
+    int vehicleCount;
 
     public void CalculateDistribution()
     {
@@ -91,6 +93,7 @@ public class SpawnManager : MonoBehaviour
         }
 
         this.spawnPeriod = 1f / scenePreference.vehicleSpawnFrequency;
+        this.vehicleCountMaximum = scenePreference.vehicleCountMaximum;
     }
 
     void Start()
@@ -121,8 +124,18 @@ public class SpawnManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(spawnPeriod);
-            RouteType rt = ChooseRouteType();
-            SimulationManager.VehicleManager.Create(ChooseNode(rt.spawnType), ChooseNode(rt.targetType));
+            if(vehicleCount < vehicleCountMaximum)
+            {
+                RouteType rt = ChooseRouteType();
+                SimulationManager.VehicleManager.Create(ChooseNode(rt.spawnType), ChooseNode(rt.targetType));
+                vehicleCount++;
+            }
         }
+    }
+
+    void NotifyVehicleRouteFinished(Vehicle vehicle)
+    {
+        vehicleCount--;
+        //TODO
     }
 }

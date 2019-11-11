@@ -1,9 +1,13 @@
-﻿namespace Common.Models
+﻿using Common.Models.Models;
+using System;
+
+namespace Common.Models
 {
-    public class DriverReport
+    public class DriverReport : IMessage
     {
-        public string AvgSpeed { get; set; }
-        public string MinSpeed { get; set; }
-        public string MaxSpeed { get; set; }
+        public float AvgSpeed { get; set; }
+        public TimeSpan TravelTime { get; set; }
+        public IDriver Driver { get; set; }
+        public string RouteTarget { get; set; }
     }
 }
