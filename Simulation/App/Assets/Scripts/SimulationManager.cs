@@ -92,9 +92,14 @@ public class SimulationManager : MonoBehaviour
             go.transform.SetParent(transform);
             spawnManager = go.AddComponent<SpawnManager>();
         }
+        if(!(dataAggregationModule = gameObject.GetComponent<DataAggregationModule>()))
+        {
+            dataAggregationModule =
+                gameObject.AddComponent<DataAggregationModule>();
+
+        }
 
         Rebuild();
-        dataAggregationModule = gameObject.AddComponent<DataAggregationModule>();
         dataAggregationModule.Init(vehicleManager);
 
         spawnManager.SetParameters(this.ScenePreference);
