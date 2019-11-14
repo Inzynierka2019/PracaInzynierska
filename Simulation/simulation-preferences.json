@@ -9,8 +9,8 @@
     "slowDriverSpawnChance" : 25,
     "normalDriverSpawnChance" : 25,
     "aggresiveDriverSpawnChance" : 50,
-    "vehicleSpawnFrequency": 5,
-    "vehicleCountMaximum": 10,
+    "vehicleSpawnFrequency": 30,
+    "vehicleCountMaximum": 150,
     "vehicleSpawnChances": [
       {
         "routeType": "Do pracy",

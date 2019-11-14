@@ -1,5 +1,4 @@
 ﻿using Common.Models;
-using Common.Models.Models;
 using System;
 using System.Collections;
 using System.Threading;
@@ -34,9 +33,9 @@ public class DataAggregationModule : MonoBehaviour
         communicationModule.AddMessageToQueue(new DriverReport()
         {
             TravelTime = TimeSpan.FromSeconds(new System.Random().Next(10, 543)),
-            AvgSpeed = new System.Random().Next(10, 543),
+            AvgSpeed = new System.Random().Next(10, 120),
             RouteTarget = vehicle.roadTypeName,
-            Driver = new SlowDriver()
+            Driver = vehicle.driver
         });
     }
 
@@ -47,13 +46,14 @@ public class DataAggregationModule : MonoBehaviour
             var vehiclePopulation = new VehiclePopulation();
             foreach (Transform vehicleTransform in vehicleManager.transform)
             {
-                vehiclePopulation.VehiclePositions.Add(
+                vehiclePopulation.VehicleStatuses.Add(
                     new VehicleStatus
                     {
                         Id = vehicleTransform.GetComponent<Vehicle>().id,
                         Latitude = vehicleTransform.position.y,
                         Longitude = vehicleTransform.position.x,
-                        CurrentSpeed = vehicleTransform.GetComponent<Vehicle>().velocity
+                        CurrentSpeed = vehicleTransform.GetComponent<Vehicle>().velocity,
+                        Personality = vehicleTransform.GetComponent<Vehicle>().driver.Personality
                     });
 
                 if (cancellationToken.IsCancellationRequested)

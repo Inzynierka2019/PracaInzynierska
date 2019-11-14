@@ -25,15 +25,20 @@
         public void ExecuteRunSimulationWindows()
         {
             var unityAppExe = this.config["UnityAppExe"];
-            var cmd = Path.Combine(directoryPath, AppDomain.CurrentDomain.BaseDirectory, unityAppExe);
-            ExecuteCommand(cmd, false);
+            var unityAppDirectory = this.config["UnityAppDirectory"];
+            var workingDirectory = Path.Combine(directoryPath, AppDomain.CurrentDomain.BaseDirectory, unityAppDirectory);
+            var command = Path.Combine(workingDirectory, unityAppExe);
+            ExecuteCommand(command, workingDirectory, false);
         }
 
-        private bool ExecuteCommand(string command, bool waitForExit)
+        private bool ExecuteCommand(string command, string workingDirectory, bool waitForExit)
         {
+            this.Log.Info($"Working directory: {workingDirectory}");
+
             var processInfo = new ProcessStartInfo("cmd.exe", "/c " + command);
             processInfo.CreateNoWindow = false;
-            processInfo.UseShellExecute = true;
+            processInfo.UseShellExecute = false;
+            processInfo.WorkingDirectory = workingDirectory;
             processInfo.RedirectStandardError = true;
             processInfo.RedirectStandardOutput = true;
             var process = Process.Start(processInfo);

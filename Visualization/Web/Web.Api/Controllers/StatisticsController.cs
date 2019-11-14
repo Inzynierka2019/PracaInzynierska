@@ -1,10 +1,12 @@
 ﻿namespace Web.Api.Controllers
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using Common.Models;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.SignalR;
+    using Newtonsoft.Json;
     using Web.Logic.Hubs;
     using Web.Logic.Services;
 
@@ -31,13 +33,42 @@
             {
                 if (TryValidateModel(population))
                 {
+                    this.Log.Info($"Receiving vehicle data from simulation: {population}");
+
+                    await this.statisticsService.UpdatePersonalityStats(population);
                     await this.statisticsService.UpdateVehiclePopulation(population);
+                    await this.statisticsService.UpdateMomentarySpeeds(population);
 
                     return Ok();
                 }
                 else
                 {
-                    return UnprocessableEntity();
+                    return ValidationProblem();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut]
+        [Route("driverReport")]
+        public IActionResult UpdateDriverReport([FromBody] DriverReport report)
+        {
+            try
+            {
+                if (TryValidateModel(report))
+                {
+                    this.Log.Info($"Receiving driver report: {report}");
+
+                    this.statisticsService.UpdateDriverReports(report);
+
+                    return Ok();
+                }
+                else
+                {
+                    return ValidationProblem();
                 }
             }
             catch (Exception ex)
@@ -52,7 +83,17 @@
         {
             try
             {
-                return this.Ok();
+                this.Log.Info($"Requesting drivers statistics from simulation");
+                var reports = this.statisticsService.GetDriverReports();
+
+                if(reports != null) {
+                    return this.Ok(reports);
+                }
+                else
+                {
+                    return this.NotFound();
+                }
+
             }
             catch (Exception ex)
             {

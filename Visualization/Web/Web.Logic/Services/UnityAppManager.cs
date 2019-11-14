@@ -15,12 +15,14 @@
 
         private readonly ILog Log;
         private readonly IHubContext<UIHub> hub;
+        private readonly IStatisticsService statisticsService;
         private ActionTimer StateUpdater;
 
-        public UnityAppManager(ILog Log, IHubContext<UIHub> hub)
+        public UnityAppManager(ILog Log, IHubContext<UIHub> hub, IStatisticsService statisticsService)
         {
             this.Log = Log;
             this.hub = hub;
+            this.statisticsService = statisticsService;
             AppTimeSpan = new TimeSpan();
             AppState = UnityAppState.NOT_CONNECTED;
             Log.Success("Unity App Communication Manager is now running.");
@@ -32,6 +34,7 @@
             SendAppState(UnityAppState.CONNECTED);
             AppState = UnityAppState.RUNNING;
             Log.Success("Simulation App is now connected!");
+            statisticsService.InitializeStatisticsService();
             StateUpdater = new ActionTimer(() => SendAppState(), new TimeSpan(0, 0, 5));
         }
 

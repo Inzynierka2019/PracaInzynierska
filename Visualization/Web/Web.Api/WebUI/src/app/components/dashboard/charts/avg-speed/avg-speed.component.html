@@ -9,13 +9,6 @@
     </mat-card-header>
     <hr />
     <div style="display: block;">
-        <canvas baseChart 
-        [data]="pieChartData" 
-        [labels]="pieChartLabels" 
-        [chartType]="pieChartType"
-        [options]="pieChartOptions" 
-        [plugins]="pieChartPlugins" 
-        [legend]="pieChartLegend">
-        </canvas>
+        <canvas #chart></canvas>
     </div>
 </mat-card>

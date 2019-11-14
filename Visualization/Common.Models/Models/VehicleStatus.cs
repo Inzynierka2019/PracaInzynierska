@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Common.Models;
 
 namespace Common.Models
 {
@@ -12,5 +8,6 @@ namespace Common.Models
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public float CurrentSpeed { get; set; }
+        public Personality Personality { get; set; }
     }
 }

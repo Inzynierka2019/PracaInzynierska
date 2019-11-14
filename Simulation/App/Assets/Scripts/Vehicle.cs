@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Common.Models;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -23,12 +24,9 @@ public class Vehicle : MonoBehaviour
     public Node start;
     public Node target;
     public string roadTypeName;
+    public Driver driver;
 
-    public bool IsSelected
-    {
-        get;
-        private set;
-    } = false;
+    public bool IsSelected { get; private set; } = false;
 
     [HideInInspector]
     public static int idsCounter = 0;
