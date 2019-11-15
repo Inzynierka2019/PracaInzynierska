@@ -45,6 +45,10 @@ export class UnityConnectorComponent implements OnInit {
     );
   }
 
+  refresh(): void {
+    window.location.reload();
+  }
+
   getAppStatusClass() : string {
     return this.appStatus.isConnected ? "connected" : "disconnected";
   }

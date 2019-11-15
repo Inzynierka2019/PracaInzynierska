@@ -9,6 +9,8 @@
 
     using Web.Logic.Services;
     using Common.Models.Enums;
+    using System.Collections.Generic;
+    using Common.Models;
 
     public class UIHub : Hub
     {
@@ -45,6 +47,45 @@
             {
                 Log.Error($"Exception was thrown while sending Unity App connection status {ex.Message}");
                 throw new SignalHubException($"Error in SignalForUnityAppConnectionStatus method", ex);
+            }
+        }
+
+        public async Task SignalForDriverReports(DriverReport driverReport)
+        {
+            try
+            {
+                await Clients.All.SendAsync(SignalMethods.SignalForDriverReports.Method, driverReport);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Exception was thrown while sending driver report {ex.Message}");
+                throw new SignalHubException($"Error in SignalForDriverReports method", ex);
+            }
+        }
+
+        public async Task SignalForPersonalityStats(Dictionary<Personality, int> stats)
+        {
+            try
+            {
+                await Clients.All.SendAsync(SignalMethods.SignalForPersonalityStats.Method, stats);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Exception was thrown while sending personality stats {ex.Message}");
+                throw new SignalHubException($"Error in SignalForDriverReports method", ex);
+            }
+        }
+
+        public async Task SignalForAvgSpeedByPersonality(Dictionary<Personality, float> stats)
+        {
+            try
+            {
+                await Clients.All.SendAsync(SignalMethods.SignalForAvgSpeedByPersonality.Method, stats);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Exception was thrown while sending avg speed by personality stats {ex.Message}");
+                throw new SignalHubException($"Error in SignalForDriverReports method", ex);
             }
         }
     }

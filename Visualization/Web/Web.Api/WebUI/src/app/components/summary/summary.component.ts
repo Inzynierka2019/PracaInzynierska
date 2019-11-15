@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AppUnityConnectionStatusService } from 'src/app/services/app-unity-connection-status.service';
 import { DataService } from 'src/app/services/data.service';
-import { VehiclePopulationData } from 'src/app/interfaces/chart-models';
+import { VehiclePopulationData, AvgSpeedStatsData } from 'src/app/interfaces/chart-models';
+import { StatsServiceService } from 'src/app/services/stats-service.service';
+import { SummaryReport } from 'src/app/interfaces/summary-report';
 
 @Component({
   selector: 'app-summary',
@@ -12,21 +14,25 @@ export class SummaryComponent implements OnInit {
   @Input()
   showSummary: Boolean = false;
   vehiclePopulationData: VehiclePopulationData;
-
+  personalityStats: number[];
+  avgSpeedStats: AvgSpeedStatsData;
+  summaryReport: SummaryReport[];
+  
   constructor(
     private appService: AppUnityConnectionStatusService,
-    private dataService: DataService) { }
+    private dataService: DataService,
+    private statsService: StatsServiceService) {}
 
   ngOnInit() {
     this.vehiclePopulationData = this.dataService.getAllVehiclePopulationData();
+    this.personalityStats = this.dataService.getPersonalityStats();
+    this.avgSpeedStats = this.dataService.getAvgSpeedStats();
+    this.statsService.getSummaryReport().subscribe((report) => this.summaryReport = report);
+    console.log(this.personalityStats);
   }
 
   show(): void {
     this.showSummary = true;
-  }
-
-  refresh(): void {
-    window.location.reload();
   }
 
   get appTime(): string {
