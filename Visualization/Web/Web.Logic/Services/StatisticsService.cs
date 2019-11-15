@@ -17,13 +17,15 @@
         private List<VehiclePopulation> vehiclePopulationList;
         private Dictionary<Personality, int> personalityStats;
         private Dictionary<Personality, float> avgSpeedByPersonality { get; set; }
-        private readonly double latitudeReference = 54.373189;
-        private readonly double longitudeReference = 18.609265;
+        private readonly IProcessService processService;
 
-        public StatisticsService(ILog Log, IHubContext<UIHub> hubContext)
+        private SceneData sceneData;
+
+        public StatisticsService(ILog Log, IHubContext<UIHub> hubContext, IProcessService processService)
         {
             this.Log = Log;
             this.hubContext = hubContext;
+            this.processService = processService;
         }
 
         public void InitializeStatisticsService()
@@ -38,6 +40,9 @@
                 this.avgSpeedByPersonality.Add(personality, 0f);
             }
             this.driverReports = new List<DriverReport>();
+
+            SimulationPreferences simulationPreferences = this.processService.GetJsonSimulationPreferences();
+            this.sceneData = simulationPreferences.availableScenes.Find(x => x.scene == simulationPreferences.currentScene);
         }
 
         public IEnumerable<DriverStatistics> GetDriverReports()
@@ -94,8 +99,8 @@
             foreach (var geoPosition in population.VehicleStatuses)
             {
                 var offset = CalcDecimalDegreesFromMeters(
-                    latitude: this.latitudeReference, 
-                    longitude: this.longitudeReference, 
+                    latitude: sceneData.latitude, 
+                    longitude: sceneData.longitude,
                     x: geoPosition.Latitude, 
                     y: geoPosition.Longitude);
 
