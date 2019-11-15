@@ -6,6 +6,8 @@ import { icon, Map, point, marker, polyline } from 'leaflet';
 import { GeoPosition } from 'src/app/interfaces/chart-models';
 import { VehiclePositionsService } from 'src/app/services/vehicle-positions.service';
 import { TileLayers } from './tileLayers';
+import { UnityService } from 'src/app/services/unity.service';
+import { SimulationPreferences } from 'src/app/interfaces/scene-preferences';
 declare var L;
 
 @Component({
@@ -14,16 +16,31 @@ declare var L;
   styleUrls: ['./heatmap.component.css']
 })
 export class HeatmapComponent implements OnInit {
-  constructor(
-    private layers: TileLayers,
-    private geoService: VehiclePositionsService) { }
-
   map: any;
   vehicleMaxCount = 1000;
+  preferences: SimulationPreferences;
+  latRef: number;
+  lonRef: number;
+  options: any;
 
-  ngOnInit() {
+  constructor(
+    private layers: TileLayers,
+    private geoService: VehiclePositionsService,
+    private unityService: UnityService) {
+      this.unityService.getGeoPositionReference().subscribe(
+        (ref) => {
+          this.latRef = ref.latitude;
+          this.lonRef = ref.longitude;
+        });
+        
+        this.options = {
+          layers: [ this.layers.mapBoxStreetsBasic ],
+          zoom: 16,
+          center: latLng([this.latRef, this.lonRef])
+        };
+    }
 
-  }
+  ngOnInit() {}
 
   layersControl = {
     baseLayers: {
@@ -52,10 +69,4 @@ export class HeatmapComponent implements OnInit {
         heat.setLatLngs(newAddressPoints);
     });
   }
-
-  options = {
-    layers: [ this.layers.mapBoxStreetsBasic ],
-    zoom: 16,
-    center: latLng([54.371764, 18.612528])
-  };
 }

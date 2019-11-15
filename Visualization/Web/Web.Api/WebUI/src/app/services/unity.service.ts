@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SimulationPreferences } from '../interfaces/scene-preferences';
+import { GeoPosition } from '../interfaces/chart-models';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,10 @@ export class UnityService {
 
   savePreferences(preferences: SimulationPreferences) : Observable<SimulationPreferences> {
     return this.httpClient.put<SimulationPreferences>(`${this.url}/preferences`, preferences);
+  }
+
+  getGeoPositionReference() : Observable<GeoPosition> {
+    return this.httpClient.get<GeoPosition>(`${this.url}/geoposition`);
   }
 
   handleError(error) {
