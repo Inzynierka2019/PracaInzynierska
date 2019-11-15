@@ -1,7 +1,6 @@
 <div class="container summary">
     <div class="d-flex justify-content-center">
         <button matInput type="button" class="btn btn-outline-dark summary-button" (click)="show()">Simulation summary</button>
-        <button matInput type="button" class="btn btn-outline-primary summary-button" (click)="refresh()">Refresh</button>
     </div>
 
     <ng-container *ngIf="showSummary">
@@ -10,19 +9,21 @@
                 <mat-expansion-panel-header>
                     <b>Simulation summary</b>
                 </mat-expansion-panel-header>
-
-                Czas trwania symulacji: {{ appTime | date: 'mm:ss.SS' }}
-
+                <h6 class="highlight">Duration of the road simulation: {{ appTime | date: 'mm:ss.SS' }}</h6><br />
+                <app-statistics [summaryReport]="summaryReport"></app-statistics>
             </mat-expansion-panel>
         </mat-accordion>
         <mat-accordion multi="true">
-            <mat-expansion-panel [expanded]="true">
+            <mat-expansion-panel [expanded]="true" *ngIf="vehiclePopulationData.data.length > 0">
                 <mat-expansion-panel-header>
                     <b>Statistics</b>
                 </mat-expansion-panel-header>
-
-                <app-vehicle-population [data]="vehiclePopulationData"></app-vehicle-population>
-                <app-statistics></app-statistics>
+                <div class="stats-container">
+                    <app-driver-types 
+                    [title]="'Distribution of driver types'" [simulationData]="personalityStats"></app-driver-types>
+                    <app-vehicle-population [data]="vehiclePopulationData"></app-vehicle-population>
+                    <app-avg-speed [title]="'Average speed per driver type'" [simulationData]="avgSpeedStats"></app-avg-speed>
+                </div>
 
             </mat-expansion-panel>
         </mat-accordion>

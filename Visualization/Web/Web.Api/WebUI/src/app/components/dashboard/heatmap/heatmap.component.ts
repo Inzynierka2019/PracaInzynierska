@@ -3,7 +3,7 @@ import 'leaflet.heat/dist/leaflet-heat.js'
 import * as Leaflet from 'leaflet';
 import { latLng } from 'leaflet';
 import { icon, Map, point, marker, polyline } from 'leaflet';
-import { GeoPosition } from 'src/app/interfaces/chart-models';
+import { VehicleStatus } from 'src/app/interfaces/chart-models';
 import { VehiclePositionsService } from 'src/app/services/vehicle-positions.service';
 import { TileLayers } from './tileLayers';
 import { UnityService } from 'src/app/services/unity.service';
@@ -64,7 +64,7 @@ export class HeatmapComponent implements OnInit {
 
     this.geoService.getAddressPoints().subscribe((geoPoints) => {
 
-        let newAddressPoints = geoPoints.map(function (p: GeoPosition) { return L.latLng(p.latitude, p.longitude); });
+        let newAddressPoints = geoPoints.map(function (p: VehicleStatus) { return L.latLng(p.latitude, p.longitude); });
         var a = L.latLng(50.5, 30.5);
         heat.setLatLngs(newAddressPoints);
     });

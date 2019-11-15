@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import * as $ from 'jquery';
+import { LogsService } from './services/logs.service';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,10 @@ import * as $ from 'jquery';
 })
 export class AppComponent {
   title = 'Visualization';
+
+  constructor(private logsService: LogsService) {
+    this.logsService.init();
+  }
 
   @HostListener('window:scroll')
   onWindowScroll() {

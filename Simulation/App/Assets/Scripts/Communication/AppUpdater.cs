@@ -13,7 +13,13 @@ class AppUpdater
 
     public async Task Update(VehiclePopulation population)
     {
+        population.VehicleStatuses.ForEach(x => x.CurrentSpeed *= 3.6f); // change to km/h
         await this.ApiClient.SendAsync(population, Endpoints.VehiclePopulation);
+    }
+
+    public async Task Update(DriverReport report)
+    {
+        await this.ApiClient.SendAsync(report, Endpoints.DriverReport);
     }
 
     public async Task Start()

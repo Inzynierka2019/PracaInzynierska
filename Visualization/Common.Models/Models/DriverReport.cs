@@ -1,9 +1,18 @@
-﻿namespace Common.Models
+﻿using System;
+
+namespace Common.Models
 {
-    public class DriverReport
+    public class DriverReport : IMessage
     {
-        public string AvgSpeed { get; set; }
-        public string MinSpeed { get; set; }
-        public string MaxSpeed { get; set; }
+        public float AvgSpeed { get; set; }
+        public TimeSpan TravelTime { get; set; }
+        public Driver Driver { get; set; }
+        public string RouteTarget { get; set; }
+        public DateTime TimeStamp = DateTime.Now;
+
+        public override string ToString()
+        {
+            return $"Time: {TravelTime} to \"{RouteTarget}\"";
+        }
     }
 }

@@ -14,7 +14,11 @@ namespace Common.Models
     public class ScenePreference
     {
         public float vehicleSpawnFrequency { get; set; }
+        public int slowDriverSpawnChance { get; set; }
+        public int normalDriverSpawnChance { get; set; }
+        public int aggresiveDriverSpawnChance { get; set; }
         public int vehicleCountMaximum { get; set; }
+        public int trafficLightsPeriod { get; set; }
         public List<VehicleSpawnChance> vehicleSpawnChances { get; set; }
     }
 

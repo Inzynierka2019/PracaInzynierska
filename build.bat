@@ -10,6 +10,4 @@ robocopy %outputDirectory% %projectDirectory%\Simulation\App\Assets\Common Newto
 
 echo Building Simulation executables from Unity cli
 %unityPath% -quit -batchmode -logFile ..\Output\Simulation\buildWindows.log -projectPath %projectDirectory%\Simulation\App -executeMethod SimulationBuilder.BuildWindows
-::%unityPath% -quit -batchmode -logFile ..\Output\Simulation\buildWebGL.log -projectPath %projectDirectory%\Simulation\App -executeMethod SimulationBuilder.BuildWebGL
 robocopy %projectDirectory%\Simulation\App\out\Windows %projectDirectory%\..\Output\Simulation\Windows /E /XO
-::robocopy %projectDirectory%\Simulation\App\out\WebGL %projectDirectory%\..\Output\WebUI\dist\WebUI\assets\unity /E /XO

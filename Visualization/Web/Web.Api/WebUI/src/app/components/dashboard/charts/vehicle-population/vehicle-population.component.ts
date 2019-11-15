@@ -37,8 +37,6 @@ export class VehiclePopulationComponent implements OnInit {
       this.ListenForData();
     }
     else {
-      console.log(this.data);
-      console.log(this.vehicleChart);
       this.vehicleChart.data = [{
         data: this.data.data,
         label: 'vehicle population',
@@ -52,6 +50,7 @@ export class VehiclePopulationComponent implements OnInit {
     this.hub.registerHandler(
       StatisticsMethods.get(HubMethod.VehiclePopulation),
       (vehiclePopulation: VehiclePopulation) => {
+
         let count = vehiclePopulation.vehicleCount;
         let label = new Date().toLocaleTimeString();
 

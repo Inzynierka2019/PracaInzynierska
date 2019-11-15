@@ -89,6 +89,8 @@ public class Node : MonoBehaviour, ISelectable
     //Update is called once per frame
     void Update()
     {
+        var t = DateTime.Now;
+        var t2 = DateTime.Now - t;
         var vehilcesToTransfer = new Dictionary<Vehicle, Node>();
         var vehiclesToRemove = new List<Vehicle>();
 
@@ -100,7 +102,10 @@ public class Node : MonoBehaviour, ISelectable
             if (vehicle.distanceOnCurrentRoadSegment > consequent.Find(c => c.node == vehicle.intermediateTarget.Current).path.length)
             {
                 if (vehicle.intermediateTarget.Current.consequent.Count == 0 || vehicle.IsRouteFinished())
+                {
+                    SimulationManager.SpawnManager.NotifyVehicleRouteFinished(vehicle);
                     vehiclesToRemove.Add(vehicle);
+                }
                 else
                 {
                     var nextHop = vehicle.GetNextTargetNode();

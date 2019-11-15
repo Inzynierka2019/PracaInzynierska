@@ -23,7 +23,8 @@ import { SummaryComponent } from './components/summary/summary.component';
 import { StatisticsComponent } from './components/dashboard/stats/statistics/statistics.component';
 import { HeatmapComponent } from './components/dashboard/heatmap/heatmap.component';
 import { SettingsComponent } from './components/settings/settings.component';
-import { PieChartComponent } from './components/dashboard/charts/pie-chart/pie-chart.component';
+import { DriverTypesComponent } from './components/dashboard/charts/driver-types/driver-types.component';
+import { AvgSpeedComponent } from './components/dashboard/charts/avg-speed/avg-speed.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { PieChartComponent } from './components/dashboard/charts/pie-chart/pie-c
     StatisticsComponent,
     HeatmapComponent,
     SettingsComponent,
-    PieChartComponent,
+    DriverTypesComponent,
+    AvgSpeedComponent,
   ],
   imports: [
     BrowserModule,

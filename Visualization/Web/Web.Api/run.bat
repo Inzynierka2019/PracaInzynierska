@@ -1,3 +1,3 @@
-﻿
+﻿::
 @echo running visualization app
-dotnet Web.Api.dll --urls=http://localhost:80
+dotnet Web.Api.dll --urls=http://localhost:8080
