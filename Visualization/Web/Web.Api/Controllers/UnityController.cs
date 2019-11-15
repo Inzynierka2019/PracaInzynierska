@@ -132,5 +132,21 @@
                 return this.BadRequest(ex);
             }
         }
+
+        [HttpGet]
+        [Route("geoposition")]
+        public IActionResult GetGeoPositionReference()
+        {
+            try
+            {
+                var simPreferences = this.processService.GetJsonSimulationPreferences();
+                //tutaj wez aktualne lat/lon i zwróc w this.Ok(new { latitude = ..., longitude = ...);
+                return this.Ok();
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(ex);
+            }
+        }
     }
 }

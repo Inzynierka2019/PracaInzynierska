@@ -67,3 +67,9 @@ export class AvgSpeedStatsData {
         this.labels = new Array<string>();
     }
 }
+
+export interface GeoPosition {
+  id: number;
+  latitude: number;
+  longitude: number;
+ }
