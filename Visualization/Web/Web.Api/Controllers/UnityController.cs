@@ -34,7 +34,7 @@
         {
             try
             {
-                Log.Warn("Simulation.exe has started.");
+                Log.Info("Simulation.exe has started.");
                 this.processService.ExecuteRunSimulationWindows();
             }
             catch (Exception e)
