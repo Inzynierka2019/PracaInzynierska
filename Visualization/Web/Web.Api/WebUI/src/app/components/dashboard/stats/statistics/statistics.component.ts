@@ -11,7 +11,6 @@ export class StatisticsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.summaryReport);
   }
 
 }

@@ -1,4 +1,5 @@
 ﻿using Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -24,23 +25,49 @@ public class Vehicle : MonoBehaviour
     public Node start;
     public Node target;
     public string roadTypeName;
+    public float tr = 0;
+
+    public Material selectedMaterial;
+    public Material slowDriverMaterial;
+    public Material normalDriverMaterial;
+    public Material aggresiveDriverMaterial;
+    public Material currentMaterial;
+
+    public DateTime createTime;
+
     public Driver driver;
 
+    public float lastDecisionTime;
+
+    public float sumVelocity;
+    public float framesCount;
+
     public bool IsSelected { get; private set; } = false;
+
 
     [HideInInspector]
     public static int idsCounter = 0;
 
+    public Decisions? lastDecision = null;
+
+    public enum Decisions
+    {
+        Accelerate,
+        Decelerate,
+        KeepVelocity
+    }
+
     public void Awake()
     {
         id = idsCounter++;
-        maxVelocity = Random.Range(50f, 90f) * 0.27f; //km/h to m/s
+        maxVelocity = 60 /*Random.Range(50f, 90f)*/ * 0.27f; //km/h to m/s
         velocity = 0;
-        acceleration = Random.Range(3f, 4f);
-        deceleration = Random.Range(6f, 7f);
+        acceleration = 3.5f;/*Random.Range(3f, 4f);*/
+        deceleration = 3.5f;/*Random.Range(6f, 7f);*/
         distanceOnCurrentRoadSegment = 0;
         vehicleLength = 5 /*GetComponent<MeshFilter>().mesh.bounds.size.z*/;
         safeDistance = vehicleLength;
+        createTime = DateTime.Now;
     }
 
     public void UpdatePosition(RoadInfo info)
@@ -49,41 +76,60 @@ public class Vehicle : MonoBehaviour
         var obstacleDistanceToFullStop = 0.5f * (Mathf.Pow(info.nearestObstacleVelocity, 2) / deceleration);
 
         safeDistance = myDistanceToFullStop - obstacleDistanceToFullStop + 1.5F * vehicleLength;
+        myDistanceToFullStop += 1.5f * vehicleLength;
 
         //Debug.Log($"Car #{id} action: accelerate");
         //Przyspieszamy
         var tmpVelocity = velocity + acceleration * Time.deltaTime;
         if (tmpVelocity > maxVelocity) tmpVelocity = maxVelocity;
         var calculatedMoveDistance = tmpVelocity * Time.deltaTime;
-        if (info.distanceToNearestObstacle - calculatedMoveDistance > safeDistance)
+        if (info.distanceToNearestObstacle - calculatedMoveDistance > myDistanceToFullStop && (Time.time - lastDecisionTime > driver.ReactionTime || lastDecision == Decisions.Accelerate || lastDecision == null))
         {
             velocity = tmpVelocity;
             distanceOnCurrentRoadSegment += calculatedMoveDistance;
+            if(lastDecision != Decisions.Accelerate)
+            {
+                lastDecision = Decisions.Accelerate;
+                lastDecisionTime = Time.time;
+            }
         }
         else
         {
-            //Debug.Log($"Car #{id} action: velocity not changed");
-            //Nie zmieniamy
-            calculatedMoveDistance = velocity * Time.deltaTime;
-            if (info.distanceToNearestObstacle - calculatedMoveDistance > safeDistance)
-                distanceOnCurrentRoadSegment += calculatedMoveDistance;
-            else
-            {
-                //Zwalniamy
-                tmpVelocity = velocity - deceleration * Time.deltaTime;
-                if (tmpVelocity < 0) tmpVelocity = 0;
-                calculatedMoveDistance = tmpVelocity * Time.deltaTime;
+            //Zwalniamy
+            tmpVelocity = velocity - deceleration * Time.deltaTime;
+            if (tmpVelocity < 0) tmpVelocity = 0;
+            calculatedMoveDistance = tmpVelocity * Time.deltaTime;
 
-                if (info.distanceToNearestObstacle - calculatedMoveDistance > vehicleLength)
+            if (info.distanceToNearestObstacle - calculatedMoveDistance > vehicleLength)
+            {
+
+                if((Time.time - lastDecisionTime > driver.ReactionTime || lastDecision == Decisions.Decelerate))
                 {
                     //Debug.Log($"Car #{id} action: breaking");
                     velocity = tmpVelocity;
                     distanceOnCurrentRoadSegment += calculatedMoveDistance;
+                    if (lastDecision != Decisions.Decelerate)
+                    {
+                        lastDecision = Decisions.Decelerate;
+                        lastDecisionTime = Time.time;
+                    }
                 }
                 else
-                    velocity = 0;
+                {
+                    //Debug.Log($"Car #{id} action: velocity not changed");
+                    //Nie zmieniamy
+                    calculatedMoveDistance = velocity * Time.deltaTime;
+                    distanceOnCurrentRoadSegment += calculatedMoveDistance;
+                }
+            }
+            else
+            {
+                velocity = 0;
             }
         }
+
+        sumVelocity += velocity;
+        framesCount++;
     }
 
     public Node GetNextTargetNode()
@@ -134,7 +180,7 @@ public class Vehicle : MonoBehaviour
                 if (closed.Contains(interconnection.node))
                     continue;
 
-                var newPath = 
+                var newPath =
                     current.Value.Item1 +
                     (1f / interconnection.weight) +
                     Vector3.Distance(current.Key.transform.position, interconnection.node.transform.position);
@@ -160,6 +206,7 @@ public class Vehicle : MonoBehaviour
             r = path[r];
         }
         this.path.Add(r);
+
         this.path.Add(start);
         this.path.Reverse();
 
@@ -171,8 +218,28 @@ public class Vehicle : MonoBehaviour
     {
         IsSelected = !IsSelected;
         path.ForEach(n => n.Mark(IsSelected));
+        if (IsSelected)
+            GetComponent<Renderer>().material.color = selectedMaterial.color;
+        else
+            GetComponent<Renderer>().material.color = currentMaterial.color;
     }
 
+    public void AssignDriver(Driver driver)
+    {
+        this.driver = driver;
+        switch(driver.Personality)
+        {
+            case Personality.Slow:
+                currentMaterial = slowDriverMaterial;
+                break;
+            case Personality.Normal:
+                currentMaterial = normalDriverMaterial;
+                break;
+            case Personality.Aggresive:
+                currentMaterial = aggresiveDriverMaterial;
+                break;
+        }
 
+        GetComponent<Renderer>().material.color = currentMaterial.color;
+    }
 }
-

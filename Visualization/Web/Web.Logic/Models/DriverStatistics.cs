@@ -13,6 +13,7 @@ namespace Web.Logic.Models
         public float AvgAge { get; set; }
         public float AvgSpeed { get; set; }
         public TimeSpan AvgTravelTime { get; set; }
+        public string AvgTravelTimeText { get; set; }
         public string MostPopularRouteTarget { get; set; }
         public int Count { get; set; }
     }

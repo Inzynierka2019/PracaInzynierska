@@ -1,75 +1,43 @@
-﻿using Common.Models;
-using Random = UnityEngine.Random;
+using Common.Models;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public class VehicleManager : MonoBehaviour
 {
     public List<Vehicle> vehicles;
-    public Dictionary<Personality, int> driverProfiles;
     GameObject prefab;
 
     void Start()
     {
         vehicles = new List<Vehicle>();
         prefab = Resources.Load<GameObject>("VehiclePrefab");
-        driverProfiles = new Dictionary<Personality, int>()
-        {
-            { Personality.Slow, SimulationManager.ScenePreference.slowDriverSpawnChance },
-            { Personality.Normal, SimulationManager.ScenePreference.normalDriverSpawnChance },
-            { Personality.Aggresive, SimulationManager.ScenePreference.aggresiveDriverSpawnChance }
-        };
     }
 
-    public Vehicle Create(Node spawnPoint, Node target, string roadTypeName)
+    public bool Create(Node spawnPoint, Node target, string roadTypeName)
     {
         if (spawnPoint == null || target == null)
         {
             Debug.Log("Could not create vehicle, node is missing.");
-            return null;
+            return false;
         }
 
         Vehicle newVehicle = Instantiate(prefab, spawnPoint.transform.position, Quaternion.identity, transform).GetComponent<Vehicle>();
         newVehicle.roadTypeName = roadTypeName;
-        newVehicle.driver = CreateDriverProfile();
-        newVehicle.CalculateBestPath(spawnPoint.consequent[0].node, target);
-        spawnPoint.vehicles.Add(newVehicle);
+        newVehicle.AssignDriver(DriverFactory.GetRandomDriver());
 
-        vehicles.Add(newVehicle);
-
-        return newVehicle;
-    }
-
-    public Driver CreateDriverProfile()
-    {
-        float threshold = Random.Range(0, driverProfiles.Values.Sum());
-        foreach (var profile in driverProfiles)
+        try
         {
-            threshold -= profile.Value;
-            if (threshold < 0)
-            {
-                return GetDriverProfile(profile.Key) ??
-                    throw new System.Exception(
-                        "Personality doesn't match with the key in dictionary in CreateDriverProfile()");
-            }
+            newVehicle.CalculateBestPath(spawnPoint.consequent[0].node, target);
+            spawnPoint.vehicles.Add(newVehicle);
+            vehicles.Add(newVehicle);
         }
-        // fallback
-        return new NormalDriver();
-    }
-
-    private Driver GetDriverProfile(Personality personality)
-    {
-        switch(personality)
+        catch(System.Exception)
         {
-            case Personality.Slow:
-                return new SlowDriver();
-            case Personality.Normal:
-                return new NormalDriver();
-            case Personality.Aggresive:
-                return new AggresiveDriver();
+            Debug.Log($"Error while calculating route from {spawnPoint} to {target}. Vehicle not created");
+            DestroyImmediate(newVehicle);
+            return false;
         }
-        return null;
+        return true;
     }
 
     public void Delete(Vehicle vehicle)
@@ -78,10 +46,3 @@ public class VehicleManager : MonoBehaviour
         DestroyImmediate(vehicle.gameObject);
     }
 }
-
-/* 
- aggresive: 30%
- normal: 50%
- slow: 20%
-     
-     */

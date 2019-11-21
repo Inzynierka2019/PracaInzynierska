@@ -37,9 +37,6 @@ export class DriverTypesComponent implements OnInit {
       this.simulationData = [1, 1, 1];
       this.ListenForData();
     }
-    else {
-      console.log(this.simulationData);
-    }
 
     this.pieChartData = {
       labels: ["Slow drivers", "Normal drivers", "Aggresive drivers"],

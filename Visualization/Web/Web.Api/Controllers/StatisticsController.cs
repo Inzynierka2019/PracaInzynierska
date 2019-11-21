@@ -86,13 +86,7 @@
                 this.Log.Info($"Requesting drivers statistics from simulation");
                 var reports = this.statisticsService.GetDriverReports();
 
-                if(reports != null) {
-                    return this.Ok(reports);
-                }
-                else
-                {
-                    return this.NotFound();
-                }
+                return this.Ok(reports);
 
             }
             catch (Exception ex)

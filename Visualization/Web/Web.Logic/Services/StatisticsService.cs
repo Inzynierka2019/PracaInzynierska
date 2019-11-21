@@ -42,11 +42,6 @@
 
         public IEnumerable<DriverStatistics> GetDriverReports()
         {
-            if (this.driverReports.Count < 2)
-            {
-                return null;
-            }
-
             return new SummaryDriverReport(this.driverReports).DriversByPersonality.Select(x => x.Value).ToArray();
         }
 

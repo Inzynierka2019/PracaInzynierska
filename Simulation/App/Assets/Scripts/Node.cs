@@ -46,15 +46,15 @@ public class Node : MonoBehaviour, ISelectable
         while (vehiclePathEnumerator.Current != vehicle.intermediateTarget.Current)
             vehiclePathEnumerator.MoveNext();
 
-        float d = vehicle.distanceOnCurrentRoadSegment;
+        float position = vehicle.distanceOnCurrentRoadSegment;
 
         var currentNode = this;
         do
         {
             var nearestInFront =
-                currentNode.FindNearestVehicleInFront(d, vehiclePathEnumerator.Current);
+                currentNode.FindNearestVehicleInFront(position, vehiclePathEnumerator.Current);
 
-            d = 0;
+            position = 0;
 
             if (nearestInFront == null)
             {
@@ -89,8 +89,6 @@ public class Node : MonoBehaviour, ISelectable
     //Update is called once per frame
     void Update()
     {
-        var t = DateTime.Now;
-        var t2 = DateTime.Now - t;
         var vehilcesToTransfer = new Dictionary<Vehicle, Node>();
         var vehiclesToRemove = new List<Vehicle>();
 
@@ -117,7 +115,7 @@ public class Node : MonoBehaviour, ISelectable
             else
             {
                 VertexPath path = consequent.Find(c => c.node == vehicle.intermediateTarget.Current).path;
-                vehicle.transform.position = path.GetPointAtDistance(vehicle.distanceOnCurrentRoadSegment, EndOfPathInstruction.Stop);
+                vehicle.transform.position = path.GetPointAtDistance(vehicle.distanceOnCurrentRoadSegment, EndOfPathInstruction.Stop) + new Vector3(0, 0, -3);
                 vehicle.transform.rotation = path.GetRotationAtDistance(vehicle.distanceOnCurrentRoadSegment, EndOfPathInstruction.Stop);
             }
         }
@@ -130,8 +128,8 @@ public class Node : MonoBehaviour, ISelectable
 
         foreach (var item in vehiclesToRemove)
         {
-            DestroyImmediate(item.gameObject);
             vehicles.Remove(item);
+            SimulationManager.VehicleManager.Delete(item);
         }
     }
 

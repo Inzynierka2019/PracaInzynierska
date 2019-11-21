@@ -90,10 +90,12 @@ public class SpawnManager : MonoBehaviour
                 Debug.LogError("Could not find route type specified in configuration.");
                 Debug.LogError($"Route type name is '{routeType.name}'.");
             }
-        }
+        };
 
         this.spawnPeriod = 1f / scenePreference.vehicleSpawnFrequency;
         this.vehicleCountMaximum = scenePreference.vehicleCountMaximum;
+
+        DriverFactory.driverSpawnChances = scenePreference.driverSpawnChances;
     }
 
     void Start()
@@ -127,8 +129,8 @@ public class SpawnManager : MonoBehaviour
             if(vehicleCount < vehicleCountMaximum)
             {
                 RouteType rt = ChooseRouteType();
-                SimulationManager.VehicleManager.Create(ChooseNode(rt.spawnType), ChooseNode(rt.targetType), rt.name);
-                vehicleCount++;
+                if(SimulationManager.VehicleManager.Create(ChooseNode(rt.spawnType), ChooseNode(rt.targetType), rt.name))
+                    vehicleCount++;
             }
         }
     }
@@ -136,6 +138,8 @@ public class SpawnManager : MonoBehaviour
     public void NotifyVehicleRouteFinished(Vehicle vehicle)
     {
         vehicleCount--;
+        if (vehicle.IsSelected)
+            vehicle.OnMouseUp();
         SimulationManager.dataAggregationModule.CreateDriverReport(vehicle);
     }
 }

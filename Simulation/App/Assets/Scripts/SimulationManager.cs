@@ -104,6 +104,7 @@ public class SimulationManager : MonoBehaviour
         dataAggregationModule.Init(vehicleManager);
 
         spawnManager.SetParameters(ScenePreference);
+        Junction.trafficLightsPeriod = ScenePreference.trafficLightsPeriod;
     }
 
     void Update()

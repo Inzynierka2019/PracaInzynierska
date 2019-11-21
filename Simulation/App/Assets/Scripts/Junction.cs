@@ -13,6 +13,9 @@ public class Junction : MonoBehaviour, ISelectable
     [SerializeField] Material idleMat;
     [SerializeField] Material selectedMat;
 
+    [HideInInspector]
+    public static float trafficLightsPeriod = 1f;
+
     //[HideInInspector]
     public List<Road> entries = new List<Road>();
     //[HideInInspector]

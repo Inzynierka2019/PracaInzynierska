@@ -16,6 +16,10 @@ namespace Web.Logic.Models
         public SummaryDriverReport(List<DriverReport> driverReports)
         {
             this.DriversByPersonality = new Dictionary<Personality, DriverStatistics>();
+
+            if (driverReports.Count < 3)
+                return;
+
             var drivers = new List<DriverStatistics>();
 
             foreach (var report in driverReports)
@@ -37,17 +41,18 @@ namespace Web.Logic.Models
 
             foreach (var group in groupedDrivers)
             {
-                var targetRoute = group.Select(x => x.MostPopularRouteTarget);
-                var debugA = targetRoute.GroupBy(s => s);
-                var debugC = debugA.OrderByDescending(i => i.Count());
-                var debugD =  debugC.Select(t => t.Key).FirstOrDefault();
+                var targetRoute = group.Select(x => x.MostPopularRouteTarget)
+                    .GroupBy(s => s)
+                    .OrderByDescending(i => i.Count())
+                    .Select(t => t.Key).FirstOrDefault();
                 var ageAvg = group.Select(x => x.AvgAge).Average();
                 var speedAvg = group.Select(x => x.AvgSpeed).Average();
                 var ReactionTimeAvg = group.Select(x => x.AvgReactionTime).Average();
                 double doubleAverageTicks = group.Select(x => x.AvgTravelTime).Average(timespan => timespan.Ticks);
                 long longAverageTicks = Convert.ToInt64(doubleAverageTicks);
-                var travelTimeAvg = new TimeSpan(longAverageTicks);
-               
+                var avgTravelTimeText = new TimeSpan(longAverageTicks).ToString(@"hh\:mm\:ss");
+
+
                 this.DriversByPersonality.Add(group.Key, new DriverStatistics()
                 {
                     Personality = group.Key,
@@ -55,8 +60,8 @@ namespace Web.Logic.Models
                     AvgAge = (int)ageAvg,
                     AvgReactionTime = ReactionTimeAvg,
                     AvgSpeed = (int)speedAvg,
-                    AvgTravelTime = travelTimeAvg,
-                    MostPopularRouteTarget = debugD,
+                    AvgTravelTimeText = avgTravelTimeText,
+                    MostPopularRouteTarget = targetRoute,
                     Count = group.Count()
                 });
             }
