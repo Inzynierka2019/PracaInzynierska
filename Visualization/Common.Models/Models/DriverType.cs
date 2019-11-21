@@ -1,29 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Common.Models.Models
+﻿namespace Common.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public enum Personality
     {
         Slow,
         Normal,
         Aggresive,
     }
-    public interface IDriver
+
+    public class Driver
     {
-        Personality Personality {get; }
-        float ReactionTime { get; set; }
-        float Age { get; set; }
+        public Personality Personality { get; set; }
+        public float ReactionTime { get; set; }
+        public float Age { get; set; }
     }
 
     public static class DriverFactory
     {
         public static List<DriverSpawnChance> driverSpawnChances
             = new List<DriverSpawnChance>();
-        public static IDriver CreateDriver(Personality personality)
+        public static Driver CreateDriver(Personality personality)
         {
             switch (personality)
             {
@@ -38,7 +37,7 @@ namespace Common.Models.Models
             }
         }
 
-        public static IDriver GetRandomDriver()
+        public static Driver GetRandomDriver()
         {
             int rand = new Random().Next(0, driverSpawnChances.Select(e => e.spawnChance).Sum());
             foreach(var driverSpawnChance in driverSpawnChances)
@@ -52,24 +51,33 @@ namespace Common.Models.Models
         }
     }
 
-    public class SlowDriver : IDriver
+    public class SlowDriver : Driver
     {
-        public Personality Personality { get; } = Personality.Slow;
-        public float ReactionTime { get; set; } = 0.2f;
-        public float Age { get; set; } = new Random().Next(50, 80);
+        public SlowDriver()
+        {
+            this.Personality = Personality.Slow;
+            this.Age = new Random().Next(50, 80);
+            this.ReactionTime = 0.2f;
+        }
     }
 
-    public class NormalDriver : IDriver
+    public class NormalDriver : Driver
     {
-        public Personality Personality { get; } = Personality.Normal;
-        public float ReactionTime { get; set; } = 0.1f;
-        public float Age { get; set; } = new Random().Next(25, 60);
+        public NormalDriver() : base()
+        {
+            this.Personality = Personality.Normal;
+            this.Age = new Random().Next(25, 60);
+            this.ReactionTime = 0.1f;
+        }
     }
 
-    public class AggresiveDriver : IDriver
+    public class AggresiveDriver : Driver
     {
-        public Personality Personality { get; } = Personality.Aggresive;
-        public float ReactionTime { get; set; } = 0.5f;
-        public float Age { get; set; } = new Random().Next(18, 30);
+        public AggresiveDriver()
+        {
+            this.Personality = Personality.Aggresive;
+            this.Age = new Random().Next(18, 30);
+            this.ReactionTime = 0.5f;
+        }
     }
 }

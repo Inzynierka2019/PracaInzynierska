@@ -1,16 +1,16 @@
 {
-  "currentScene": "New York City",
+  "currentScene": "Politechnika Gdańska",
   "availableScenes": [
     "Politechnika Gdańska",
     "New York City"
   ],
   "scenePreferences": {
-    "trafficLightsPeriod" : 5,
-    "slowDriverSpawnChance" : 25,
-    "normalDriverSpawnChance" : 25,
-    "aggresiveDriverSpawnChance" : 50,
-    "vehicleSpawnFrequency": 5,
-    "vehicleCountMaximum": 10,
+    "vehicleSpawnFrequency": 3.9,
+    "slowDriverSpawnChance": 25,
+    "normalDriverSpawnChance": 25,
+    "aggresiveDriverSpawnChance": 50,
+    "vehicleCountMaximum": 56,
+    "trafficLightsPeriod": 5,
     "vehicleSpawnChances": [
       {
         "routeType": "Do pracy",

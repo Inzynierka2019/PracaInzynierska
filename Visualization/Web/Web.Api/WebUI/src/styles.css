@@ -65,3 +65,22 @@ a:active {
   }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.chart-card {
+  width: 625px;
+  margin: 10px
+}
+
+@media screen and (max-width: 1490px) {
+.chart-card {
+      width: 500px;
+      margin: 5px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .chart-card {
+        width: 700px;
+        margin: 5px;
+    }
+  }

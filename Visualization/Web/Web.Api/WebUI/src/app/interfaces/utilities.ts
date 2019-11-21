@@ -37,8 +37,14 @@ export const LogTypeToColorMap: Map<number, ConsoleColor> = new Map<number, Cons
 
 export enum HubMethod {
     VehiclePopulation,
+    DriverReport,
+    PersonalityStats,
+    AvgSpeedByPersonality
 }
 
 export const StatisticsMethods: Map<HubMethod, string> = new Map<HubMethod, string>([
-    [HubMethod.VehiclePopulation, "SignalForVehiclePopulation"]
+    [HubMethod.VehiclePopulation, "SignalForVehiclePopulation"],
+    [HubMethod.DriverReport, "SignalForDriverReports"],
+    [HubMethod.PersonalityStats, "SignalForPersonalityStats"],
+    [HubMethod.AvgSpeedByPersonality, "SignalForAvgSpeedByPersonality"]
 ]);

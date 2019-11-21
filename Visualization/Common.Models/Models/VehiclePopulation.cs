@@ -6,8 +6,8 @@ namespace Common.Models
     public class VehiclePopulation : IMessage
     {
         public DateTime TimeStamp = DateTime.Now;
-        public List<VehicleStatus> VehiclePositions = new List<VehicleStatus>();
-        public int VehicleCount => VehiclePositions.Count;
+        public List<VehicleStatus> VehicleStatuses = new List<VehicleStatus>();
+        public int VehicleCount => VehicleStatuses.Count;
 
         public override string ToString()
         {

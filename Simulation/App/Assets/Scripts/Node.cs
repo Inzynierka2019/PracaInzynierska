@@ -115,8 +115,7 @@ public class Node : MonoBehaviour, ISelectable
             else
             {
                 VertexPath path = consequent.Find(c => c.node == vehicle.intermediateTarget.Current).path;
-                vehicle.transform.position = path.GetPointAtDistance(vehicle.distanceOnCurrentRoadSegment, EndOfPathInstruction.Stop) + new Vector3(0, 0, -4);
-                //vehicle.transform.Translate(Vector3.forward * 10);
+                vehicle.transform.position = path.GetPointAtDistance(vehicle.distanceOnCurrentRoadSegment, EndOfPathInstruction.Stop) + new Vector3(0, 0, -3);
                 vehicle.transform.rotation = path.GetRotationAtDistance(vehicle.distanceOnCurrentRoadSegment, EndOfPathInstruction.Stop);
             }
         }
@@ -129,8 +128,8 @@ public class Node : MonoBehaviour, ISelectable
 
         foreach (var item in vehiclesToRemove)
         {
-            DestroyImmediate(item.gameObject);
             vehicles.Remove(item);
+            SimulationManager.VehicleManager.Delete(item);
         }
     }
 

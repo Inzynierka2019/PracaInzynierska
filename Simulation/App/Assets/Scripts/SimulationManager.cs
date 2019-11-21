@@ -17,7 +17,7 @@ public class SimulationManager : MonoBehaviour
     [SerializeField] SpawnManager spawnManager;
 
     [HideInInspector]
-    public ScenePreference ScenePreference { get; set; }
+    public static ScenePreference ScenePreference { get; set; }
 
     private static ConcurrentQueue<Action> MainThreadTaskQueue = new ConcurrentQueue<Action>();
 
@@ -67,10 +67,11 @@ public class SimulationManager : MonoBehaviour
         instance = this;
 
         this.LoadSimulationPreferences();
+        Application.runInBackground = true;
 
         Application.runInBackground = true;
 
-        if (junctionManager == null)  
+        if (junctionManager == null)
         {
             GameObject go = new GameObject("JunctionManager");
             go.transform.SetParent(transform);
@@ -104,8 +105,8 @@ public class SimulationManager : MonoBehaviour
         Rebuild();
         dataAggregationModule.Init(vehicleManager);
 
-        spawnManager.SetParameters(this.ScenePreference);
-        Junction.trafficLightsPeriod = this.ScenePreference.trafficLightsPeriod;
+        spawnManager.SetParameters(ScenePreference);
+        Junction.trafficLightsPeriod = ScenePreference.trafficLightsPeriod;
     }
 
     void Update()
@@ -144,7 +145,7 @@ public class SimulationManager : MonoBehaviour
             {
                 var json = reader.ReadToEnd();
                 var simulationPreferences = JsonConvert.DeserializeObject<SimulationPreferences>(json);
-                this.ScenePreference = simulationPreferences.scenePreferences;
+                ScenePreference = simulationPreferences.scenePreferences;
             }
             catch (Exception ex)
             {

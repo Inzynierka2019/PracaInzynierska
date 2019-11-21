@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Common.Models.Models;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -24,6 +22,9 @@ namespace Common.Models
         public float trafficLightsPeriod { get; set; }
         public List<DriverSpawnChance> driverSpawnChances { get; set; }
         public float vehicleSpawnFrequency { get; set; }
+        public int slowDriverSpawnChance { get; set; }
+        public int normalDriverSpawnChance { get; set; }
+        public int aggresiveDriverSpawnChance { get; set; }
         public int vehicleCountMaximum { get; set; }
         public List<VehicleSpawnChance> vehicleSpawnChances { get; set; }
     }

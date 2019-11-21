@@ -1,4 +1,4 @@
-﻿using Common.Models.Models;
+﻿using Common.Models;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -32,7 +32,8 @@ public class Vehicle : MonoBehaviour
     public Material aggresiveDriverMaterial;
     public Material currentMaterial;
 
-    public IDriver driver;
+    public Driver driver;
+
     public float lastDecisionTime;
 
     public bool IsSelected { get; private set; } = false;
@@ -171,7 +172,7 @@ public class Vehicle : MonoBehaviour
                 if (closed.Contains(interconnection.node))
                     continue;
 
-                var newPath = 
+                var newPath =
                     current.Value.Item1 +
                     (1f / interconnection.weight) +
                     Vector3.Distance(current.Key.transform.position, interconnection.node.transform.position);
@@ -215,9 +216,9 @@ public class Vehicle : MonoBehaviour
             GetComponent<Renderer>().material.color = currentMaterial.color;
     }
 
-    public void AssignDriver(IDriver driver)
+    public void AssignDriver(Driver driver)
     {
-        this.driver = driver; 
+        this.driver = driver;
         switch(driver.Personality)
         {
             case Personality.Slow:
@@ -236,4 +237,3 @@ public class Vehicle : MonoBehaviour
 
 
 }
-

@@ -1,12 +1,10 @@
-﻿using Common.Models.Models;
-using System.Collections;
+using Common.Models;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class VehicleManager : MonoBehaviour
 {
     public List<Vehicle> vehicles;
-
     GameObject prefab;
 
     void Start()
@@ -26,7 +24,7 @@ public class VehicleManager : MonoBehaviour
         Vehicle newVehicle = Instantiate(prefab, spawnPoint.transform.position, Quaternion.identity, transform).GetComponent<Vehicle>();
         newVehicle.roadTypeName = roadTypeName;
         newVehicle.AssignDriver(DriverFactory.GetRandomDriver());
-        
+
         try
         {
             newVehicle.CalculateBestPath(spawnPoint.consequent[0].node, target);

@@ -16,6 +16,15 @@
 
         public static readonly SignalMethod SignalForUnityAppConnectionStatus
             = new SignalMethod(typeof(UnityAppState), "SignalForUnityAppConnectionStatus");
+
+        public static readonly SignalMethod SignalForDriverReports
+            = new SignalMethod(typeof(DriverReport), "SignalForDriverReports");
+
+        public static readonly SignalMethod SignalForPersonalityStats
+            = new SignalMethod(typeof(object), "SignalForPersonalityStats");
+
+        public static readonly SignalMethod SignalForAvgSpeedByPersonality
+            = new SignalMethod(typeof(object), "SignalForAvgSpeedByPersonality");
     }
 
     public class SignalMethod

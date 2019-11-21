@@ -15,8 +15,9 @@
             </mat-expansion-panel-header>
             <div matExpansionPanelContent *ngIf="connected; else loading">
                 <div class="stats-container">
-                    <app-pie-chart [title]="'Current distribution of driver types'"></app-pie-chart>
+                    <app-driver-types [title]="'Current distribution of driver types'"></app-driver-types>
                     <app-vehicle-population></app-vehicle-population>
+                    <app-avg-speed [title]="'Current average speed per driver type'"></app-avg-speed>
                 </div>
             </div>
 
