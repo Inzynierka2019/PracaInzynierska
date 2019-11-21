@@ -32,8 +32,8 @@ public class DataAggregationModule : MonoBehaviour
     {
         communicationModule.AddMessageToQueue(new DriverReport()
         {
-            TravelTime = TimeSpan.FromSeconds(new System.Random().Next(10, 543)),
-            AvgSpeed = new System.Random().Next(10, 120),
+            TravelTime = vehicle.createTime - DateTime.Now,
+            AvgSpeed = vehicle.sumVelocity / vehicle.framesCount,
             RouteTarget = vehicle.roadTypeName,
             Driver = vehicle.driver
         });

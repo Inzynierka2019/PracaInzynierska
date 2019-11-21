@@ -1,4 +1,5 @@
 ﻿using Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -32,9 +33,14 @@ public class Vehicle : MonoBehaviour
     public Material aggresiveDriverMaterial;
     public Material currentMaterial;
 
+    public DateTime createTime;
+
     public Driver driver;
 
     public float lastDecisionTime;
+
+    public float sumVelocity;
+    public float framesCount;
 
     public bool IsSelected { get; private set; } = false;
 
@@ -61,6 +67,7 @@ public class Vehicle : MonoBehaviour
         distanceOnCurrentRoadSegment = 0;
         vehicleLength = 5 /*GetComponent<MeshFilter>().mesh.bounds.size.z*/;
         safeDistance = vehicleLength;
+        createTime = DateTime.Now;
     }
 
     public void UpdatePosition(RoadInfo info)
@@ -69,8 +76,6 @@ public class Vehicle : MonoBehaviour
         var obstacleDistanceToFullStop = 0.5f * (Mathf.Pow(info.nearestObstacleVelocity, 2) / deceleration);
 
         safeDistance = myDistanceToFullStop - obstacleDistanceToFullStop + 1.5F * vehicleLength;
-        //driver.ReactionTime = 0;
-
         myDistanceToFullStop += 1.5f * vehicleLength;
 
         //Debug.Log($"Car #{id} action: accelerate");
@@ -122,6 +127,9 @@ public class Vehicle : MonoBehaviour
                 velocity = 0;
             }
         }
+
+        sumVelocity += velocity;
+        framesCount++;
     }
 
     public Node GetNextTargetNode()
@@ -234,6 +242,4 @@ public class Vehicle : MonoBehaviour
 
         GetComponent<Renderer>().material.color = currentMaterial.color;
     }
-
-
 }
