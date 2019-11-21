@@ -1,10 +1,10 @@
 export class SimulationPreferences {
-    currentScene: string;
-    availableScenes: string[];
+    currentSceneName: string;
+    availableScenes: AvailableScene[];
     scenePreferences: ScenePreference;
     constructor() {
-        this.currentScene = '';
-        this.availableScenes = new Array<string>();
+        this.currentSceneName = '';
+        this.availableScenes = new Array<AvailableScene>();
         this.scenePreferences = new ScenePreference();
     }
 }
@@ -27,4 +27,9 @@ export class VehicleSpawnChance {
         this.routeType = '';
         this.spawnChance = '';
     }
+}
+
+export class AvailableScene {
+    scene: string;
+    name: string;
 }

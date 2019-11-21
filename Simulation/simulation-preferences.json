@@ -1,5 +1,5 @@
 {
-  "currentScene": "Vatican",
+  "currentSceneName": "Watykan",
   "availableScenes": [
     {
       "scene": "TestTrack",
@@ -10,8 +10,8 @@
     {
       "scene": "Vatican",
       "name": "Watykan",
-      "latitude": 54.373189,
-      "longitude":  18.609265
+      "latitude": 41.90217,
+      "longitude": 12.453936
     }
   ],
   "scenePreferences": {

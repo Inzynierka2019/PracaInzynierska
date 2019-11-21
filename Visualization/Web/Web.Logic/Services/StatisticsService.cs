@@ -42,7 +42,7 @@
             this.driverReports = new List<DriverReport>();
 
             SimulationPreferences simulationPreferences = this.processService.GetJsonSimulationPreferences();
-            this.sceneData = simulationPreferences.availableScenes.Find(x => x.scene == simulationPreferences.currentScene);
+            this.sceneData = simulationPreferences.availableScenes.Find(x => x.name == simulationPreferences.currentSceneName);
         }
 
         public IEnumerable<DriverStatistics> GetDriverReports()

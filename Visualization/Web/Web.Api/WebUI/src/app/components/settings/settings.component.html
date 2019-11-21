@@ -9,8 +9,8 @@
         <form class="col-md-10" (change)="savePreferences()">
           <div class="form-group">
             <label for="selectScene">Available scenes</label>
-            <select id="selectScene" name="selectScene" class="form-control" [(ngModel)]="settings.currentScene">
-              <option *ngFor="let scene of settings.availableScenes" selected>{{scene}}</option>
+            <select id="selectScene" name="selectScene" class="form-control" [(ngModel)]="settings.currentSceneName">
+              <option *ngFor="let available of settings.availableScenes" selected>{{available.name}}</option>
             </select>
           </div>
 

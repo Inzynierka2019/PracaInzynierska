@@ -24,7 +24,7 @@ namespace Common.Models
 
     public class SimulationPreferences
     {
-        public string currentScene { get; set; }
+        public string currentSceneName { get; set; }
         public List<SceneData> availableScenes { get; set; }
         public ScenePreference scenePreferences { get; set; }
     }

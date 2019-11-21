@@ -22,7 +22,8 @@ public class MapLoader : MonoBehaviour
             {
                 var json = reader.ReadToEnd();
                 var simulationPreferences = JsonConvert.DeserializeObject<SimulationPreferences>(json);
-                SceneManager.LoadScene(simulationPreferences.currentScene);
+                var sceneData = simulationPreferences.availableScenes.Find(x => x.name == simulationPreferences.currentSceneName);
+                SceneManager.LoadScene(sceneData.scene);
             }
             catch (Exception ex)
             {

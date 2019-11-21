@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AppUnityConnectionStatusService } from 'src/app/services/app-unity-connection-status.service';
 import { UnityAppState } from 'src/app/interfaces/unity-app-state';
+import { GeoPosition } from 'src/app/interfaces/chart-models';
+import { UnityService } from 'src/app/services/unity.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,22 +11,28 @@ import { UnityAppState } from 'src/app/interfaces/unity-app-state';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  geoReference: GeoPosition;
+
   constructor(
     private appStatus: AppUnityConnectionStatusService,
-    private spinner: NgxSpinnerService) {
+    private spinner: NgxSpinnerService,
+    private unityService: UnityService) {
+    this.unityService.getGeoPositionReference().subscribe((geoRef) => {
+      this.geoReference = geoRef;
+    });
   }
 
   get connected(): Boolean {
-    switch(this.appStatus.appState) {
+      switch(this.appStatus.appState) {
       case UnityAppState.CONNECTED:
       case UnityAppState.DISCONNECTED:
       case UnityAppState.RUNNING:
-        this.spinner.hide();
-        return true;
+      this.spinner.hide();
+      return true;
       case UnityAppState.NOT_CONNECTED:
-        this.spinner.show();
-        return false;
-    } 
+      this.spinner.show();
+      return false;
+    }
   }
 
   get appTime(): string {

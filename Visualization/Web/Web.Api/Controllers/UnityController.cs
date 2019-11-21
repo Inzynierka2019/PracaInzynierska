@@ -140,8 +140,8 @@
             try
             {
                 var simPreferences = this.processService.GetJsonSimulationPreferences();
-                //tutaj wez aktualne lat/lon i zwróc w this.Ok(new { latitude = ..., longitude = ...);
-                return this.Ok();
+                var sceneData = simPreferences.availableScenes.Find(x => x.name == simPreferences.currentSceneName);
+                return this.Ok(new { sceneData.latitude, sceneData.longitude });
             }
             catch (Exception ex)
             {

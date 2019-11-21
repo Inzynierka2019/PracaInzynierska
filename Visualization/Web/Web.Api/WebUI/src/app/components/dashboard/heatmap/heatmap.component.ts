@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import 'leaflet.heat/dist/leaflet-heat.js'
 import * as Leaflet from 'leaflet';
 import { latLng } from 'leaflet';
 import { icon, Map, point, marker, polyline } from 'leaflet';
-import { VehicleStatus } from 'src/app/interfaces/chart-models';
+import { VehicleStatus, GeoPosition } from 'src/app/interfaces/chart-models';
 import { VehiclePositionsService } from 'src/app/services/vehicle-positions.service';
 import { TileLayers } from './tileLayers';
 import { UnityService } from 'src/app/services/unity.service';
@@ -16,31 +16,26 @@ declare var L;
   styleUrls: ['./heatmap.component.css']
 })
 export class HeatmapComponent implements OnInit {
+  @Input() geoReference: GeoPosition;
   map: any;
   vehicleMaxCount = 1000;
   preferences: SimulationPreferences;
-  latRef: number;
-  lonRef: number;
   options: any;
 
   constructor(
     private layers: TileLayers,
-    private geoService: VehiclePositionsService,
-    private unityService: UnityService) {
-      this.unityService.getGeoPositionReference().subscribe(
-        (ref) => {
-          this.latRef = ref.latitude;
-          this.lonRef = ref.longitude;
-        });
-        
-        this.options = {
-          layers: [ this.layers.mapBoxStreetsBasic ],
-          zoom: 16,
-          center: latLng([this.latRef, this.lonRef])
-        };
+    private geoService: VehiclePositionsService) {
     }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.geoReference);
+    this.options = {
+      layers: [ this.layers.mapBoxStreetsBasic ],
+      zoom: 16,
+      //center: latLng([54.373189, 18.609265])
+      center: latLng([this.geoReference.latitude, this.geoReference.longitude])
+    };
+  }
 
   layersControl = {
     baseLayers: {

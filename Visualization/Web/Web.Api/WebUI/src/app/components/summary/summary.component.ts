@@ -27,8 +27,8 @@ export class SummaryComponent implements OnInit {
     this.vehiclePopulationData = this.dataService.getAllVehiclePopulationData();
     this.personalityStats = this.dataService.getPersonalityStats();
     this.avgSpeedStats = this.dataService.getAvgSpeedStats();
+    console.log("Kurwa");
     this.statsService.getSummaryReport().subscribe((report) => this.summaryReport = report);
-    console.log(this.personalityStats);
   }
 
   show(): void {
