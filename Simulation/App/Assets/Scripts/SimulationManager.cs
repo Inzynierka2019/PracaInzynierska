@@ -69,8 +69,6 @@ public class SimulationManager : MonoBehaviour
         this.LoadSimulationPreferences();
         Application.runInBackground = true;
 
-        Application.runInBackground = true;
-
         if (junctionManager == null)
         {
             GameObject go = new GameObject("JunctionManager");
