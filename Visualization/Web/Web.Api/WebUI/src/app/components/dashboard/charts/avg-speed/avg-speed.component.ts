@@ -116,7 +116,6 @@ export class AvgSpeedComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.simulationData);
     if (this.simulationData) {
       this.lineChartData.datasets[0].data = this.simulationData.slow;
       this.lineChartData.datasets[1].data = this.simulationData.normal;
@@ -141,7 +140,6 @@ export class AvgSpeedComponent implements OnInit {
   }
 
   ListenForData() {
-    console.log("listening for data!");
     this.hub.registerHandler(
       StatisticsMethods.get(HubMethod.AvgSpeedByPersonality),
       (stats: PersonalityStats) => {

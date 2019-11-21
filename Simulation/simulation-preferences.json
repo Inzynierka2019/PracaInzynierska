@@ -20,8 +20,8 @@
         "spawnChance" : 25
       }
     ],
-    "vehicleSpawnFrequency": 5,
-    "vehicleCountMaximum": 90,
+    "vehicleSpawnFrequency": 1,
+    "vehicleCountMaximum": 300,
     "vehicleSpawnChances": [
       {
         "routeType": "Do pracy",

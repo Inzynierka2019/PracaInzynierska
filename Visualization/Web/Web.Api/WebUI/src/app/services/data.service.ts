@@ -48,8 +48,6 @@ export class DataService {
   }
 
   getPersonalityStats() : number[] {
-    console.log(this.personalityStats)
-
     return [ // average
       this.personalityStats.slow / this.personalityStats.count, 
       this.personalityStats.normal / this.personalityStats.count,

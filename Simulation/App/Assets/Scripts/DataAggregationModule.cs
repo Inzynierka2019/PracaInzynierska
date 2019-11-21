@@ -32,7 +32,7 @@ public class DataAggregationModule : MonoBehaviour
     {
         communicationModule.AddMessageToQueue(new DriverReport()
         {
-            TravelTime = vehicle.createTime - DateTime.Now,
+            TravelTime = DateTime.Now.Subtract(vehicle.createTime),
             AvgSpeed = vehicle.sumVelocity / vehicle.framesCount,
             RouteTarget = vehicle.roadTypeName,
             Driver = vehicle.driver
@@ -52,7 +52,8 @@ public class DataAggregationModule : MonoBehaviour
                         Id = vehicle.id,
                         Latitude = vehicle.transform.position.y,
                         Longitude = vehicle.transform.position.x,
-                        CurrentSpeed = vehicle.velocity
+                        CurrentSpeed = vehicle.velocity,
+                        Personality = vehicle.driver.Personality
                     });
 
                 if (cancellationToken.IsCancellationRequested)
