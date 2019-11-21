@@ -5,7 +5,7 @@
     "New York City"
   ],
   "scenePreferences": {
-    "trafficLightsPeriod" : 5,
+    "vehicleSpawnFrequency": 5,
     "driverSpawnChances":[
       {
         "personality" : "slow",
@@ -20,8 +20,8 @@
         "spawnChance" : 25
       }
     ],
-    "vehicleSpawnFrequency": 1,
-    "vehicleCountMaximum": 300,
+    "vehicleCountMaximum": 90,
+    "trafficLightsPeriod" : 5,
     "vehicleSpawnChances": [
       {
         "routeType": "Do pracy",

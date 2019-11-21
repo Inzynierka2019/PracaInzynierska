@@ -8,7 +8,7 @@
     "driverSpawnChances": [
       {
         "personality": "Slow",
-        "spawnChance": 50
+        "spawnChance": 26
       },
       {
         "personality": "Normal",
@@ -16,12 +16,12 @@
       },
       {
         "personality": "Aggresive",
-        "spawnChance": 50
+        "spawnChance": 26
       }
     ],
-    "trafficLightsPeriod": 6.5,
-    "vehicleSpawnFrequency": 5.0,
-    "vehicleCountMaximum": 90,
+    "trafficLightsPeriod": 5.0,
+    "vehicleSpawnFrequency": 5.2,
+    "vehicleCountMaximum": 113,
     "vehicleSpawnChances": [
       {
         "routeType": "Do pracy",
@@ -29,7 +29,7 @@
       },
       {
         "routeType": "Na zakupy",
-        "spawnChance": 26
+        "spawnChance": 25
       },
       {
         "routeType": "Turystycznie",
