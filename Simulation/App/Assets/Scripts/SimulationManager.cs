@@ -68,7 +68,9 @@ public class SimulationManager : MonoBehaviour
 
         this.LoadSimulationPreferences();
 
-        if (junctionManager == null)
+        Application.runInBackground = true;
+
+        if (junctionManager == null)  
         {
             GameObject go = new GameObject("JunctionManager");
             go.transform.SetParent(transform);
@@ -103,6 +105,7 @@ public class SimulationManager : MonoBehaviour
         dataAggregationModule.Init(vehicleManager);
 
         spawnManager.SetParameters(this.ScenePreference);
+        Junction.trafficLightsPeriod = this.ScenePreference.trafficLightsPeriod;
     }
 
     void Update()

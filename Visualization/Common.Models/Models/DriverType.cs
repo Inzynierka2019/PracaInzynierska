@@ -19,6 +19,39 @@ namespace Common.Models.Models
         float Age { get; set; }
     }
 
+    public static class DriverFactory
+    {
+        public static List<DriverSpawnChance> driverSpawnChances
+            = new List<DriverSpawnChance>();
+        public static IDriver CreateDriver(Personality personality)
+        {
+            switch (personality)
+            {
+                case Personality.Slow:
+                    return new SlowDriver();
+                case Personality.Normal:
+                    return new NormalDriver();
+                case Personality.Aggresive:
+                    return new AggresiveDriver();
+                default:
+                    return null;
+            }
+        }
+
+        public static IDriver GetRandomDriver()
+        {
+            int rand = new Random().Next(0, driverSpawnChances.Select(e => e.spawnChance).Sum());
+            foreach(var driverSpawnChance in driverSpawnChances)
+            {
+                rand -= driverSpawnChance.spawnChance;
+                if (rand <= 0)
+                    return CreateDriver(driverSpawnChance.personality);
+            }
+
+            return null;
+        }
+    }
+
     public class SlowDriver : IDriver
     {
         public Personality Personality { get; } = Personality.Slow;

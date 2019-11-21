@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Common.Models.Models;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Converters;
 
 namespace Common.Models
 {
@@ -11,8 +12,17 @@ namespace Common.Models
         public int spawnChance { get; set; }
     }
 
+    public class DriverSpawnChance
+    {
+        [JsonConverter(typeof(StringEnumConverter))]
+        public Personality personality { get; set; }
+        public int spawnChance { get; set; }
+    }
+
     public class ScenePreference
     {
+        public float trafficLightsPeriod { get; set; }
+        public List<DriverSpawnChance> driverSpawnChances { get; set; }
         public float vehicleSpawnFrequency { get; set; }
         public int vehicleCountMaximum { get; set; }
         public List<VehicleSpawnChance> vehicleSpawnChances { get; set; }

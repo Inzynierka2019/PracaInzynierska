@@ -36,7 +36,7 @@ public class DataAggregationModule : MonoBehaviour
             TravelTime = TimeSpan.FromSeconds(new System.Random().Next(10, 543)),
             AvgSpeed = new System.Random().Next(10, 543),
             RouteTarget = vehicle.roadTypeName,
-            Driver = new SlowDriver()
+            Driver = vehicle.driver
         });
     }
 
@@ -45,15 +45,15 @@ public class DataAggregationModule : MonoBehaviour
         while (!cancellationToken.IsCancellationRequested)
         {
             var vehiclePopulation = new VehiclePopulation();
-            foreach (Transform vehicleTransform in vehicleManager.transform)
+            foreach (Vehicle vehicle in vehicleManager.vehicles)
             {
                 vehiclePopulation.VehiclePositions.Add(
                     new VehicleStatus
                     {
-                        Id = vehicleTransform.GetComponent<Vehicle>().id,
-                        Latitude = vehicleTransform.position.y,
-                        Longitude = vehicleTransform.position.x,
-                        CurrentSpeed = vehicleTransform.GetComponent<Vehicle>().velocity
+                        Id = vehicle.id,
+                        Latitude = vehicle.transform.position.y,
+                        Longitude = vehicle.transform.position.x,
+                        CurrentSpeed = vehicle.velocity
                     });
 
                 if (cancellationToken.IsCancellationRequested)
