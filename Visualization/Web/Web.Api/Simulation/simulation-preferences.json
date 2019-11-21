@@ -6,9 +6,20 @@
   ],
   "scenePreferences": {
     "vehicleSpawnFrequency": 3.9,
-    "slowDriverSpawnChance": 25,
-    "normalDriverSpawnChance": 25,
-    "aggresiveDriverSpawnChance": 50,
+    "driverSpawnChances": [
+      {
+        "personality": "slow",
+        "spawnChance": 25
+      },
+      {
+        "personality": "normal",
+        "spawnChance": 50
+      },
+      {
+        "personality": "aggresive",
+        "spawnChance": 25
+      }
+    ],
     "vehicleCountMaximum": 56,
     "trafficLightsPeriod": 5,
     "vehicleSpawnChances": [
