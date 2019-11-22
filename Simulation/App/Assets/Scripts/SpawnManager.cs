@@ -59,9 +59,10 @@ public class SpawnManager : MonoBehaviour
         weightSums = Enumerable.Repeat(0f, spawnTypeCount).ToArray();
         foreach (Road r in SimulationManager.RoadManager.roads)
         {
+            int length = r.nodes.Count;
             for (int i = 0; i < spawnTypeCount; i++)
             {
-                weightSums[i] += r.spawnWeights[i];
+                weightSums[i] += r.spawnWeights[i] * length;
                 distributions[i].Add(weightSums[i]);
             }
         }
