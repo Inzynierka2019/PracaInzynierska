@@ -211,18 +211,21 @@ public class RoadManager : MonoBehaviour
 
                 currentStepNodes[l].consequent.Add(new Node.InternodeConnection(node, CreateVertexPath(pathSegment), road.pathWeight));
 
-                if (l > 0)
+                if(i <= 1f - firstNodesOffset - 1.5f * stepLength)
                 {
-                    pathSegment[0] = vertexPaths[l - 1].GetPoint(i, EndOfPathInstruction.Stop);
-                    pathSegment[1] = (pathSegment[0] + pathSegment[2]) / 2;
-                    currentStepNodes[l - 1].consequent.Add(new Node.InternodeConnection(node, CreateVertexPath(pathSegment), road.pathWeight * laneChangePathWeightMultiplier));
-                }
+                    if (l > 0)
+                    {
+                        pathSegment[0] = vertexPaths[l - 1].GetPoint(i, EndOfPathInstruction.Stop);
+                        pathSegment[1] = (pathSegment[0] + pathSegment[2]) / 2;
+                        currentStepNodes[l - 1].consequent.Add(new Node.InternodeConnection(node, CreateVertexPath(pathSegment), road.pathWeight * laneChangePathWeightMultiplier));
+                    }
 
-                if (l < laneCount - 1)
-                {
-                    pathSegment[0] = vertexPaths[l + 1].GetPoint(i, EndOfPathInstruction.Stop);
-                    pathSegment[1] = (pathSegment[0] + pathSegment[2]) / 2;
-                    currentStepNodes[l + 1].consequent.Add(new Node.InternodeConnection(node, CreateVertexPath(pathSegment), road.pathWeight * laneChangePathWeightMultiplier));
+                    if (l < laneCount - 1)
+                    {
+                        pathSegment[0] = vertexPaths[l + 1].GetPoint(i, EndOfPathInstruction.Stop);
+                        pathSegment[1] = (pathSegment[0] + pathSegment[2]) / 2;
+                        currentStepNodes[l + 1].consequent.Add(new Node.InternodeConnection(node, CreateVertexPath(pathSegment), road.pathWeight * laneChangePathWeightMultiplier));
+                    }
                 }
 
                 nextStepNodes[l] = node;
