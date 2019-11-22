@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 44cdc2159446b174a81f505e943cf458
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - start: {instanceID: 0}
+  - target: {instanceID: 0}
+  - selectedMaterial: {fileID: 2100000, guid: 8dc3e9fd617ad1449ae94e9eef127cf3, type: 2}
+  - slowDriverMaterial: {fileID: 2100000, guid: e2a5d4d02e07a6440b335e1cdccbc398,
+      type: 2}
+  - normalDriverMaterial: {fileID: 2100000, guid: abe2460cc5e564946871896f87656f24,
+      type: 2}
+  - aggresiveDriverMaterial: {fileID: 2100000, guid: 5e1bc213f09b00e4883895a2dbd69b8c,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

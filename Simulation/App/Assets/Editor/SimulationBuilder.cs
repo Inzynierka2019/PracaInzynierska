@@ -1,24 +1,27 @@
 ﻿using UnityEditor;
+using System.IO;
 
-class SimulationBuilder {
-
+class SimulationBuilder
+{
     private static string[] GetScenes()
     {
         return new string[] {
-            "Assets/Scenes/CitySimulation.unity",
+            "Assets/Scenes/MapLoader.unity",
+            "Assets/Scenes/Vatican.unity",
+            "Assets/Scenes/TestTrack.unity",
         };
     }
 
     static void BuildWindows()
     {
-        string pathToDeploy = @"D:\Dokumenty\Inzynierka\PracaInzynierska\Simulation\App\out\Simulation.exe";
+        var pathToDeploy = Path.Combine(Directory.GetCurrentDirectory(), "out\\Windows\\App.exe");
 
         BuildPipeline.BuildPlayer(GetScenes(), pathToDeploy, BuildTarget.StandaloneWindows64, BuildOptions.ShowBuiltPlayer);
     }
 
     static void BuildWebGL()
     {
-        string pathToDeploy = @"D:\Dokumenty\Inzynierka\PracaInzynierska\Simulation\App\out\";
+        var pathToDeploy = Path.Combine(Directory.GetCurrentDirectory(), "out\\WebGL\\");
 
         BuildPipeline.BuildPlayer(GetScenes(), pathToDeploy, BuildTarget.WebGL, BuildOptions.ShowBuiltPlayer);
     }

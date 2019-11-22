@@ -1,0 +1,35 @@
+.container-flex {
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+.loader {
+    position: relative;
+    height: 140px;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+.loader-msg {
+    position: relative;
+    top: 8vh;
+    font-size: 20px; 
+    color: #ad5389;
+}
+
+.header {
+    margin: 0px;
+    height: 50px !important;
+}
+
+:host >>> .icon {
+    position: relative;
+    bottom: 5px;
+    font-size: 30px;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}

@@ -1,0 +1,21 @@
+<mat-card class="chart-card">
+        <mat-card-header class="chart-header">
+                <div mat-card-avatar>
+                    <i class="material-icons icon">insert_chart_outlined</i>
+                </div>
+                <mat-card-title class="chart-title">
+                    <h6>{{ title }} 
+                    <span class="badge badge-secondary">{{ currentPopulation }}</span></h6>
+                </mat-card-title>
+            </mat-card-header>
+            <hr />
+    <div class="chart">
+        <canvas baseChart
+                [datasets]="vehicleChart.data"
+                [labels]="vehicleChart.chartLabels"
+                [options]="vehicleChart.chartOptions"
+                [legend]="vehicleChart.chartLegend"
+                [chartType]="vehicleChart.chartType">
+        </canvas>
+    </div>
+</mat-card>

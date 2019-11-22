@@ -1,0 +1,31 @@
+<div class="container summary">
+    <div class="d-flex justify-content-center">
+        <button matInput type="button" class="btn btn-outline-dark summary-button" (click)="show()">Simulation summary</button>
+    </div>
+
+    <ng-container *ngIf="showSummary">
+        <mat-accordion multi="true">
+            <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header>
+                    <b>Simulation summary</b>
+                </mat-expansion-panel-header>
+                <h4><span class="badge badge-info">Duration of the road simulation: {{ appTime | date: 'mm:ss.SS' }}</span></h4><br />
+                <app-statistics [summaryReport]="summaryReport"></app-statistics>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <mat-accordion multi="true">
+            <mat-expansion-panel [expanded]="true" *ngIf="vehiclePopulationData.data.length > 0">
+                <mat-expansion-panel-header>
+                    <b>Statistics</b>
+                </mat-expansion-panel-header>
+                <div class="stats-container">
+                    <app-driver-types 
+                    [title]="'Distribution of driver types'" [simulationData]="personalityStats"></app-driver-types>
+                    <app-vehicle-population [title]="'Amount of vehicles in simulation'" [data]="vehiclePopulationData"></app-vehicle-population>
+                    <app-avg-speed [title]="'Average speed per driver type'" [simulationData]="avgSpeedStats"></app-avg-speed>
+                </div>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+    </ng-container>
+</div>

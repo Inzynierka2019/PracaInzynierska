@@ -1,0 +1,77 @@
+.console {
+	font-size: 13px;
+	font-family: Consolas;
+	overflow: auto;
+	min-height: 400px;
+	height: 70vh;
+}
+
+.log-message {
+	margin-left: 3px;
+	color: inherit;
+	background-color: transparent;
+}
+
+.console-color-White {
+	color:white;
+}
+
+.console-color-Cyan {
+	color: cyan;
+}
+
+.console-color-Black {
+	color: black;
+}
+
+.console-color-Blue {
+	color: blue;
+}
+
+.console-color-Magenta {
+	color: magenta;
+}
+
+.console-color-DarkGreen {
+	color: darkgreen;
+}
+.console-color-Gray {
+	color: gray;
+}
+
+.console-color-DarkYellow {
+	color: darkgoldenrod;
+}
+
+.console-color-Green {
+	color: green;
+}
+
+.console-color-DarkBlue {
+	color: darkblue;
+}
+
+.console-color-Orange {
+	color: orange;
+}
+
+.console-color-DarkMagenta {
+	color: darkmagenta;
+}
+
+.console-color-Red {
+	color: red;
+}
+
+.console-color-DarkCyan {
+	color: darkcyan;
+}
+
+.console-color-Yellow{
+	color: yellow;
+}
+
+.console-color-DarkRed {
+	color: #8b0000;
+	background-color: white;
+}

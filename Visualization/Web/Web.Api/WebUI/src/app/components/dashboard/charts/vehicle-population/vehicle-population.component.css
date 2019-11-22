@@ -1,0 +1,12 @@
+.chart-header {
+    margin-bottom: -20px;
+}
+
+.chart-title {
+    margin: 0 -10px;
+}
+
+hr {
+    margin-left: -16px;
+    width: calc(100% + 32px);
+}
