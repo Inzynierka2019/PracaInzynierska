@@ -11,6 +11,7 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./vehicle-population.component.css']
 })
 export class VehiclePopulationComponent implements OnInit {
+  @Input() title: string;
   @Input() data: VehiclePopulationData;
 
   readonly maxLabelCount = 10;
