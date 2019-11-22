@@ -17,7 +17,7 @@ public class VehicleManager : MonoBehaviour
     {
         if (spawnPoint == null || target == null)
         {
-            Debug.Log("Could not create vehicle, node is missing.");
+            //Debug.Log("Could not create vehicle, node is missing.");
             return false;
         }
 

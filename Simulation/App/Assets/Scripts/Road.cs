@@ -22,7 +22,7 @@ public class Road : MonoBehaviour
             return array.GetEnumerator();
         }
 
-        public static implicit operator Node[](NodeArray na)
+        public static implicit operator Node[] (NodeArray na)
         {
             return na.array;
         }
@@ -50,7 +50,7 @@ public class Road : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        if(nodes != null)
+        if (nodes != null)
         {
             try
             {
@@ -71,13 +71,17 @@ public class Road : MonoBehaviour
                 Handles.Label(transform.position, spawnWeights.Select(w => w.ToString()).Aggregate((w1, w2) => $"{w1}\n{w2}"));
 #endif
             }
-            catch {}
+            catch { }
         }
     }
 
     public Node GetRandomNode()
     {
-        Node[] step = nodes[Random.Range(0, nodes.Count)];
-        return step[Random.Range(0, step.Length)];
+        List<Node> emptyNodes = ((Node[])nodes.Aggregate((a1, a2) => a1.array.Concat(a2.array).ToArray())).Where(n => n.vehicles.Count == 0).ToList();
+        int emptyCount = emptyNodes.Count;
+        if (emptyCount > 0)
+            return emptyNodes[Random.Range(0, emptyCount)];
+        else
+            return null;
     }
 }
