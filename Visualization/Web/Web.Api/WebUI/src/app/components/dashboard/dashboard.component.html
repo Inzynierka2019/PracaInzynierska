@@ -16,7 +16,7 @@
             <div matExpansionPanelContent *ngIf="connected; else loading">
                 <div class="stats-container">
                     <app-driver-types [title]="'Current distribution of driver types'"></app-driver-types>
-                    <app-vehicle-population></app-vehicle-population>
+                    <app-vehicle-population [title]="'Current amount of vehicles'"></app-vehicle-population>
                     <app-avg-speed [title]="'Current average speed per driver type'"></app-avg-speed>
                 </div>
             </div>
