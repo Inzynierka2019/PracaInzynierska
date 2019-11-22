@@ -3,10 +3,11 @@ using System.IO;
 
 class SimulationBuilder
 {
-
     private static string[] GetScenes()
     {
         return new string[] {
+            "Assets/Scenes/MapLoader.unity",
+            "Assets/Scenes/Vatican.unity",
             "Assets/Scenes/TestTrack.unity",
         };
     }

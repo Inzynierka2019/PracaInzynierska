@@ -27,10 +27,10 @@ export enum ConsoleColor {
 }
 
 export const LogTypeToColorMap: Map<number, ConsoleColor> = new Map<number, ConsoleColor>([
-   [LogType.Info, ConsoleColor.White],
-   [LogType.Warning, ConsoleColor.Yellow],
+   [LogType.Info, ConsoleColor.Yellow],
+   [LogType.Warning, ConsoleColor.Orange],
    [LogType.Error, ConsoleColor.Red],
-   [LogType.Debug, ConsoleColor.Cyan],
+   [LogType.Debug, ConsoleColor.White],
    [LogType.Fatal, ConsoleColor.DarkRed],
    [LogType.Success, ConsoleColor.Green]
 ]);

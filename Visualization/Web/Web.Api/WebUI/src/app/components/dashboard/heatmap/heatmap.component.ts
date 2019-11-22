@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import 'leaflet.heat/dist/leaflet-heat.js'
 import * as Leaflet from 'leaflet';
 import { latLng } from 'leaflet';
 import { icon, Map, point, marker, polyline } from 'leaflet';
-import { VehicleStatus } from 'src/app/interfaces/chart-models';
+import { VehicleStatus, GeoPosition } from 'src/app/interfaces/chart-models';
 import { VehiclePositionsService } from 'src/app/services/vehicle-positions.service';
 import { TileLayers } from './tileLayers';
+import { UnityService } from 'src/app/services/unity.service';
+import { SimulationPreferences } from 'src/app/interfaces/scene-preferences';
+import { AppUnityConnectionStatusService } from 'src/app/services/app-unity-connection-status.service';
 declare var L;
 
 @Component({
@@ -14,15 +17,42 @@ declare var L;
   styleUrls: ['./heatmap.component.css']
 })
 export class HeatmapComponent implements OnInit {
+  geoReference: GeoPosition;
+  map: any;
+  zoom: number = 12;
+  vehicleMaxCount = 1000;
+  preferences: SimulationPreferences;
+  options: any;
+  defaultLatLon = { lat: 52.0, lng: 20.0 }; // Poland
+
   constructor(
     private layers: TileLayers,
-    private geoService: VehiclePositionsService) { }
+    private geoService: VehiclePositionsService,
+    private appStatus: AppUnityConnectionStatusService,
+    private unityService: UnityService) {
 
-  map: any;
-  vehicleMaxCount = 1000;
+    this.appStatus.isConnectedEvent.subscribe((isConnected: boolean) => {
+      this.loadGeoReference();
+    });
+  }
 
-  ngOnInit() {
+  public ngOnInit() {
+    this.loadGeoReference();
 
+    this.options = {
+      layers: [this.layers.mapBoxStreetsBasic],
+      zoom: 6,
+      center: latLng(this.defaultLatLon)
+    };
+  }
+
+  loadGeoReference() {
+    this.unityService.getGeoPositionReference().subscribe((geoRef) => {
+      this.geoReference = geoRef;
+      setTimeout(() =>
+        this.map.flyTo([this.geoReference.latitude, this.geoReference.longitude], this.zoom + 1),
+        3000);
+    });
   }
 
   layersControl = {
@@ -47,15 +77,9 @@ export class HeatmapComponent implements OnInit {
 
     this.geoService.getAddressPoints().subscribe((geoPoints) => {
 
-        let newAddressPoints = geoPoints.map(function (p: VehicleStatus) { return L.latLng(p.latitude, p.longitude); });
-        var a = L.latLng(50.5, 30.5);
-        heat.setLatLngs(newAddressPoints);
+      let newAddressPoints = geoPoints.map(function (p: VehicleStatus) { return L.latLng(p.latitude, p.longitude); });
+      var a = L.latLng(50.5, 30.5);
+      heat.setLatLngs(newAddressPoints);
     });
   }
-
-  options = {
-    layers: [ this.layers.mapBoxStreetsBasic ],
-    zoom: 16,
-    center: latLng([54.371764, 18.612528])
-  };
 }

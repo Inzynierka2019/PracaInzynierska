@@ -44,7 +44,7 @@
             AppTimeSpan = DateTime.Now.Subtract(AppStart);
             SendAppState();
             StateUpdater.Dispose();
-            Log.Warn("Simulation App has disconnected.");
+            Log.Info("Simulation App has disconnected.");
         }
 
         public void UpdateState(UnityAppState status)

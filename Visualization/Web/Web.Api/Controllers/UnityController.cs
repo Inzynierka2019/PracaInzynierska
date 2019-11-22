@@ -34,7 +34,7 @@
         {
             try
             {
-                Log.Warn("Simulation.exe has started.");
+                Log.Info("Simulation.exe has started.");
                 this.processService.ExecuteRunSimulationWindows();
             }
             catch (Exception e)
@@ -126,6 +126,22 @@
                 }
 
                 return this.ValidationProblem();
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(ex);
+            }
+        }
+
+        [HttpGet]
+        [Route("geoposition")]
+        public IActionResult GetGeoPositionReference()
+        {
+            try
+            {
+                var simPreferences = this.processService.GetJsonSimulationPreferences();
+                var sceneData = simPreferences.availableScenes.Find(x => x.name == simPreferences.currentSceneName);
+                return this.Ok(new { sceneData.latitude, sceneData.longitude });
             }
             catch (Exception ex)
             {

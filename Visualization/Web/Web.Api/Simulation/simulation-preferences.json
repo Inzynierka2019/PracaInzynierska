@@ -1,14 +1,24 @@
 {
-  "currentScene": "Politechnika Gdańska",
+  "currentSceneName": "Politechnika Gdańska",
   "availableScenes": [
-    "Politechnika Gdańska",
-    "New York City"
+    {
+      "scene": "TestTrack",
+      "name": "Politechnika Gdańska",
+      "latitude": 54.373189,
+      "longitude": 18.609265
+    },
+    {
+      "scene": "Vatican",
+      "name": "Watykan",
+      "latitude": 41.90217,
+      "longitude": 12.453936
+    }
   ],
   "scenePreferences": {
     "driverSpawnChances": [
       {
         "personality": "Slow",
-        "spawnChance": 26
+        "spawnChance": 25
       },
       {
         "personality": "Normal",
@@ -16,12 +26,12 @@
       },
       {
         "personality": "Aggresive",
-        "spawnChance": 26
+        "spawnChance": 25
       }
     ],
     "trafficLightsPeriod": 5.0,
-    "vehicleSpawnFrequency": 5.2,
-    "vehicleCountMaximum": 113,
+    "vehicleSpawnFrequency": 5.0,
+    "vehicleCountMaximum": 90,
     "vehicleSpawnChances": [
       {
         "routeType": "Do pracy",

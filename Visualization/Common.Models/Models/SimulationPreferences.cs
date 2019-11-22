@@ -28,8 +28,16 @@ namespace Common.Models
 
     public class SimulationPreferences
     {
-        public string currentScene { get; set; }
-        public List<string> availableScenes { get; set; }
+        public string currentSceneName { get; set; }
+        public List<SceneData> availableScenes { get; set; }
         public ScenePreference scenePreferences { get; set; }
+    }
+
+    public class SceneData
+    {
+        public string scene { get; set; }
+        public string name { get; set; }
+        public double latitude { get; set; }
+        public double longitude { get; set; }
     }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UnityService } from 'src/app/services/unity.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { SimulationPreferences } from 'src/app/interfaces/scene-preferences';
+import { GeoPosition } from 'src/app/interfaces/chart-models';
 
 @Component({
   selector: 'app-settings',

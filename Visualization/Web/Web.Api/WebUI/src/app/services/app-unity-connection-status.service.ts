@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { SignalRService } from './signal-r.service';
 import { SnackBarService } from './snack-bar.service';
 import { UnityAppState } from '../interfaces/unity-app-state';
@@ -12,6 +12,7 @@ export class AppUnityConnectionStatusService {
   public appTimeSpan: string;
   public appState: UnityAppState;
   private timeSpanUrl = "/api/unity/timespan"
+  @Output() isConnectedEvent: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
     private signalR: SignalRService,
@@ -24,16 +25,20 @@ export class AppUnityConnectionStatusService {
 
   connected() {
     this.isConnected = true;
+    this.isConnectedEvent.emit(true);
     this.snackBar.open("Simulator app is now connected!");
   }
 
   notConnected() {
     this.isConnected = false;
+    this.isConnectedEvent.emit(false);
   }
 
   disconnected() {
     this.snackBar.open("Simulator app has ended!");
     this.isConnected = false;
+    this.isConnectedEvent.emit(false);
+
     this.httpClient.get(this.timeSpanUrl).subscribe(
       (timespan: any) => {
         this.appTimeSpan = timespan;

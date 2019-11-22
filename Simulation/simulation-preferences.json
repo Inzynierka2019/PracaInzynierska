@@ -1,8 +1,18 @@
 {
-  "currentScene": "New York City",
+  "currentSceneName": "Watykan",
   "availableScenes": [
-    "Politechnika Gdańska",
-    "New York City"
+    {
+      "scene": "TestTrack",
+      "name": "Politechnika Gdańska",
+      "latitude": 54.373189,
+      "longitude": 18.609265
+    },
+    {
+      "scene": "Vatican",
+      "name": "Watykan",
+      "latitude": 41.90217,
+      "longitude": 12.453936
+    }
   ],
   "scenePreferences": {
     "vehicleSpawnFrequency": 5,
