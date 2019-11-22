@@ -32,8 +32,8 @@ public class DataAggregationModule : MonoBehaviour
     {
         communicationModule.AddMessageToQueue(new DriverReport()
         {
-            TravelTime = TimeSpan.FromSeconds(new System.Random().Next(10, 543)),
-            AvgSpeed = new System.Random().Next(10, 120),
+            TravelTime = DateTime.Now.Subtract(vehicle.createTime),
+            AvgSpeed = vehicle.sumVelocity / vehicle.framesCount,
             RouteTarget = vehicle.roadTypeName,
             Driver = vehicle.driver
         });
@@ -44,16 +44,16 @@ public class DataAggregationModule : MonoBehaviour
         while (!cancellationToken.IsCancellationRequested)
         {
             var vehiclePopulation = new VehiclePopulation();
-            foreach (Transform vehicleTransform in vehicleManager.transform)
+            foreach (Vehicle vehicle in vehicleManager.vehicles)
             {
                 vehiclePopulation.VehicleStatuses.Add(
                     new VehicleStatus
                     {
-                        Id = vehicleTransform.GetComponent<Vehicle>().id,
-                        Latitude = vehicleTransform.position.y,
-                        Longitude = vehicleTransform.position.x,
-                        CurrentSpeed = vehicleTransform.GetComponent<Vehicle>().velocity,
-                        Personality = vehicleTransform.GetComponent<Vehicle>().driver.Personality
+                        Id = vehicle.id,
+                        Latitude = vehicle.transform.position.y,
+                        Longitude = vehicle.transform.position.x,
+                        CurrentSpeed = vehicle.velocity,
+                        Personality = vehicle.driver.Personality
                     });
 
                 if (cancellationToken.IsCancellationRequested)

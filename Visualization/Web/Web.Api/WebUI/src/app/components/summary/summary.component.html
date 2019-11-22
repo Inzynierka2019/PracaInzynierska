@@ -9,7 +9,7 @@
                 <mat-expansion-panel-header>
                     <b>Simulation summary</b>
                 </mat-expansion-panel-header>
-                <h6 class="highlight">Duration of the road simulation: {{ appTime | date: 'mm:ss.SS' }}</h6><br />
+                <h4><span class="badge badge-info">Duration of the road simulation: {{ appTime | date: 'mm:ss.SS' }}</span></h4><br />
                 <app-statistics [summaryReport]="summaryReport"></app-statistics>
             </mat-expansion-panel>
         </mat-accordion>

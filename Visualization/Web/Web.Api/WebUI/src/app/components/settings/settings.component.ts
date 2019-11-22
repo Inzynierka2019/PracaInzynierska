@@ -21,7 +21,6 @@ export class SettingsComponent implements OnInit {
 
     this.unityService.getPreferences().subscribe((settings) => {
       this.settings = settings;
-      console.log(this.settings);
     });
   }
 

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AppUnityConnectionStatusService } from 'src/app/services/app-unity-connection-status.service';
 import { UnityAppState } from 'src/app/interfaces/unity-app-state';
-import { GeoPosition } from 'src/app/interfaces/chart-models';
 import { UnityService } from 'src/app/services/unity.service';
 
 @Component({
@@ -11,15 +10,9 @@ import { UnityService } from 'src/app/services/unity.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  geoReference: GeoPosition;
-
   constructor(
     private appStatus: AppUnityConnectionStatusService,
-    private spinner: NgxSpinnerService,
-    private unityService: UnityService) {
-    this.unityService.getGeoPositionReference().subscribe((geoRef) => {
-      this.geoReference = geoRef;
-    });
+    private spinner: NgxSpinnerService) {
   }
 
   get connected(): Boolean {

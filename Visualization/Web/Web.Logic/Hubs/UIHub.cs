@@ -10,7 +10,6 @@
     using Web.Logic.Services;
     using Common.Models.Enums;
     using System.Collections.Generic;
-    using Common.Models;
 
     public class UIHub : Hub
     {

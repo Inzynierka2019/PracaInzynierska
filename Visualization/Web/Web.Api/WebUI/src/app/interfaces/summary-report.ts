@@ -6,7 +6,7 @@ export interface SummaryReport {
     avgReactionTime: number;
     avgAge: number;
     avgSpeed: number;
-    avgTravelTime: Date;
+    avgTravelTimeText: string;
     mostPopularRouteTarget: string;
     count: number;
 }

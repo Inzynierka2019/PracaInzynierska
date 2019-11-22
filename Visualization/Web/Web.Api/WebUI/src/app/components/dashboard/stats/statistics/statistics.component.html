@@ -1,4 +1,4 @@
-<ng-container *ngIf="summaryReport && summaryReport.length > 0">
+<ng-container *ngIf="summaryReport && summaryReport.length > 0; else tooShortSimulation">
     <h6>Summary report of reached destinations by driver type</h6>
     
     <table class="table table-bordered table-hover">
@@ -19,10 +19,16 @@
                 <td>{{report.avgAge}}</td>
                 <td>{{report.avgReactionTime}} s</td>
                 <td>{{report.avgSpeed}} km/h</td>
-                <td>{{report.avgTravelTime}}</td>
+                <td>{{report.avgTravelTimeText}}</td>
                 <td>{{report.mostPopularRouteTarget}}</td>
                 <td>{{report.count}}</td>
             </tr>
         </tbody>
     </table>
 </ng-container>
+
+<ng-template #tooShortSimulation>
+    <h5>
+        <span class="badge badge-warning">Simulation took too little time and couldn't provide enough data to display!</span>
+    </h5>
+</ng-template>

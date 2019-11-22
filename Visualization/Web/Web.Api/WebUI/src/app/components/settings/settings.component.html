@@ -25,23 +25,45 @@
 
           <label for="customRange2">Vehicle spawn frequency: {{settings.scenePreferences.vehicleSpawnFrequency}}
             [vehicle/s]</label>
-          <input type="range" class="custom-range" min="0.1" max="5" step="0.1" id="customRange2"
+          <input type="range" class="custom-range" min="0.1" max="10" step="0.1" id="customRange2"
             name="vehicleSpawnFrequency" [(ngModel)]="settings.scenePreferences.vehicleSpawnFrequency">
+
+          <label for="customRange3">traffic lights period: {{settings.scenePreferences.trafficLightsPeriod}}
+            [s]</label>
+          <input type="range" class="custom-range" min="1" max="30" step="0.5" id="customRange3"
+            name="trafficLightsPeriod" [(ngModel)]="settings.scenePreferences.trafficLightsPeriod">
 
           <hr>
           <h6>Route preferences:</h6>
           <br />
 
-          <p class="route-label">Route types / vehicle spawn chance in percents</p>
-          <form class="form-group row"
-            *ngFor="let spawnOption of settings.scenePreferences.vehicleSpawnChances; let i = index;">
+          <div class="row">
+            <div class="col">
 
-            <label for="spawnOption.routeType" class="col-sm-2 col-form-label">{{spawnOption.routeType}}:</label>
-            <input type="number" class="form-control col-sm-2" id="spawnOption.routeType" placeholder="chance %"
-              name="chance" [(ngModel)]="spawnOption.spawnChance" min="0" max="100">
+              <p class="route-label">Route types / vehicle spawn chance in percents</p>
+              <form class="form-group row"
+                *ngFor="let spawnOption of settings.scenePreferences.vehicleSpawnChances; let i = index;">
 
-          </form>
+                <label for="spawnOption.routeType" class="col-sm-4 col-form-label">{{spawnOption.routeType}}:</label>
+                <input type="number" class="form-control col-sm-2" id="spawnOption.routeType" placeholder="chance %"
+                  name="chance" [(ngModel)]="spawnOption.spawnChance" min="0" max="100">
+              </form>
 
+            </div>
+            <div class="col">
+
+              <p class="route-label">Driver types / spawn chance in percents</p>
+              <form class="form-group row"
+                *ngFor="let spawnOption of settings.scenePreferences.driverSpawnChances; let i = index;">
+
+                <label for="spawnOption.personality"
+                  class="col-sm-4 col-form-label">{{spawnOption.personality}}:</label>
+                <input type="number" class="form-control col-sm-2" id="spawnOption.personality" placeholder="chance %"
+                  name="chance" [(ngModel)]="spawnOption.spawnChance" min="0" max="100">
+              </form>
+
+            </div>
+          </div>
 
           <br />
           <button type="submit" class="btn btn-outline-dark" (click)="savePreferences()">Save</button>

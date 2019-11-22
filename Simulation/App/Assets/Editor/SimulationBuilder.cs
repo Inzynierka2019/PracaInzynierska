@@ -3,7 +3,6 @@ using System.IO;
 
 class SimulationBuilder
 {
-
     private static string[] GetScenes()
     {
         return new string[] {

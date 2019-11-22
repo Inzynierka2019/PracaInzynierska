@@ -8,6 +8,7 @@ import { VehiclePositionsService } from 'src/app/services/vehicle-positions.serv
 import { TileLayers } from './tileLayers';
 import { UnityService } from 'src/app/services/unity.service';
 import { SimulationPreferences } from 'src/app/interfaces/scene-preferences';
+import { AppUnityConnectionStatusService } from 'src/app/services/app-unity-connection-status.service';
 declare var L;
 
 @Component({
@@ -16,25 +17,42 @@ declare var L;
   styleUrls: ['./heatmap.component.css']
 })
 export class HeatmapComponent implements OnInit {
-  @Input() geoReference: GeoPosition;
+  geoReference: GeoPosition;
   map: any;
+  zoom: number = 12;
   vehicleMaxCount = 1000;
   preferences: SimulationPreferences;
   options: any;
+  defaultLatLon = { lat: 52.0, lng: 20.0 }; // Poland
 
   constructor(
     private layers: TileLayers,
-    private geoService: VehiclePositionsService) {
-    }
+    private geoService: VehiclePositionsService,
+    private appStatus: AppUnityConnectionStatusService,
+    private unityService: UnityService) {
 
-  ngOnInit() {
-    console.log(this.geoReference);
+    this.appStatus.isConnectedEvent.subscribe((isConnected: boolean) => {
+      this.loadGeoReference();
+    });
+  }
+
+  public ngOnInit() {
+    this.loadGeoReference();
+
     this.options = {
-      layers: [ this.layers.mapBoxStreetsBasic ],
-      zoom: 16,
-      //center: latLng([54.373189, 18.609265])
-      center: latLng([this.geoReference.latitude, this.geoReference.longitude])
+      layers: [this.layers.mapBoxStreetsBasic],
+      zoom: 6,
+      center: latLng(this.defaultLatLon)
     };
+  }
+
+  loadGeoReference() {
+    this.unityService.getGeoPositionReference().subscribe((geoRef) => {
+      this.geoReference = geoRef;
+      setTimeout(() =>
+        this.map.flyTo([this.geoReference.latitude, this.geoReference.longitude], this.zoom + 1),
+        3000);
+    });
   }
 
   layersControl = {
@@ -59,9 +77,9 @@ export class HeatmapComponent implements OnInit {
 
     this.geoService.getAddressPoints().subscribe((geoPoints) => {
 
-        let newAddressPoints = geoPoints.map(function (p: VehicleStatus) { return L.latLng(p.latitude, p.longitude); });
-        var a = L.latLng(50.5, 30.5);
-        heat.setLatLngs(newAddressPoints);
+      let newAddressPoints = geoPoints.map(function (p: VehicleStatus) { return L.latLng(p.latitude, p.longitude); });
+      var a = L.latLng(50.5, 30.5);
+      heat.setLatLngs(newAddressPoints);
     });
   }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4537562961008120435}
   - component: {fileID: 6775308486997001129}
   - component: {fileID: 66857851258115320}
-  - component: {fileID: 7815547113702157306}
+  - component: {fileID: -5641568344699949736}
   m_Layer: 0
   m_Name: VehiclePrefab
   m_TagString: Untagged
@@ -92,7 +92,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7815547113702157306
+--- !u!114 &-5641568344699949736
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,9 +109,19 @@ MonoBehaviour:
   acceleration: 0
   deceleration: 0
   safeDistance: 0
-  criticalDistance: 0
   distanceOnCurrentRoadSegment: 0
-  currentIntermidiateTarget: {fileID: 0}
-  isWaitingAtNode: 0
   id: 0
   vehicleLength: 0
+  path: []
+  start: {fileID: 0}
+  target: {fileID: 0}
+  roadTypeName: 
+  tr: 0
+  selectedMaterial: {fileID: 2100000, guid: 8dc3e9fd617ad1449ae94e9eef127cf3, type: 2}
+  slowDriverMaterial: {fileID: 2100000, guid: e2a5d4d02e07a6440b335e1cdccbc398, type: 2}
+  normalDriverMaterial: {fileID: 2100000, guid: abe2460cc5e564946871896f87656f24,
+    type: 2}
+  aggresiveDriverMaterial: {fileID: 2100000, guid: 5e1bc213f09b00e4883895a2dbd69b8c,
+    type: 2}
+  currentMaterial: {fileID: 0}
+  lastDecisionTime: 0
