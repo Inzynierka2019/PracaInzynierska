@@ -29,21 +29,37 @@
         "spawnChance": 25
       }
     ],
-    "trafficLightsPeriod": 5.0,
+    "trafficLightsPeriod": 15.0,
     "vehicleSpawnFrequency": 5.0,
-    "vehicleCountMaximum": 90,
+    "vehicleCountMaximum": 500,
     "vehicleSpawnChances": [
       {
         "routeType": "Do pracy",
-        "spawnChance": 50
+        "spawnChance": 30
       },
       {
-        "routeType": "Na zakupy",
-        "spawnChance": 25
+        "routeType": "Z pracy",
+        "spawnChance": 5
+      },
+      {
+        "routeType": "Do pracy przez szkołę",
+        "spawnChance": 30
+      },
+      {
+        "routeType": "Z pracy przez szkołę",
+        "spawnChance": 5
+      },
+      {
+        "routeType": "Zakupy",
+        "spawnChance": 10
       },
       {
         "routeType": "Turystycznie",
-        "spawnChance": 25
+        "spawnChance": 10
+      },
+      {
+        "routeType": "Przejazdem",
+        "spawnChance": 10
       }
     ]
   }

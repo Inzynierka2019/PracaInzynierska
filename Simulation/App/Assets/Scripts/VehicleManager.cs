@@ -34,7 +34,7 @@ public class VehicleManager : MonoBehaviour
         catch(System.Exception)
         {
             Debug.Log($"Error while calculating route from {spawnPoint} to {target}. Vehicle not created");
-            DestroyImmediate(newVehicle);
+            DestroyImmediate(newVehicle.gameObject);
             return false;
         }
         return true;

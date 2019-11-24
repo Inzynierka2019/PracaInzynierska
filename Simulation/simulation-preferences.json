@@ -15,35 +15,51 @@
     }
   ],
   "scenePreferences": {
-    "vehicleSpawnFrequency": 5,
-    "driverSpawnChances":[
+    "driverSpawnChances": [
       {
-        "personality" : "slow",
-        "spawnChance" : 25
+        "personality": "Slow",
+        "spawnChance": 25
       },
       {
-        "personality" : "normal",
-        "spawnChance" : 50
-      },
-      {
-        "personality" : "aggresive",
-        "spawnChance" : 25
-      }
-    ],
-    "vehicleCountMaximum": 90,
-    "trafficLightsPeriod" : 5,
-    "vehicleSpawnChances": [
-      {
-        "routeType": "Do pracy",
+        "personality": "Normal",
         "spawnChance": 50
       },
       {
-        "routeType": "Na zakupy",
+        "personality": "Aggresive",
         "spawnChance": 25
+      }
+    ],
+    "trafficLightsPeriod": 15.0,
+    "vehicleSpawnFrequency": 5.0,
+    "vehicleCountMaximum": 500,
+    "vehicleSpawnChances": [
+      {
+        "routeType": "Do pracy",
+        "spawnChance": 30
+      },
+      {
+        "routeType": "Z pracy",
+        "spawnChance": 5
+      },
+      {
+        "routeType": "Do pracy przez szkołę",
+        "spawnChance": 30
+      },
+      {
+        "routeType": "Z pracy przez szkołę",
+        "spawnChance": 5
+      },
+      {
+        "routeType": "Zakupy",
+        "spawnChance": 10
       },
       {
         "routeType": "Turystycznie",
-        "spawnChance": 25
+        "spawnChance": 10
+      },
+      {
+        "routeType": "Przejazdem",
+        "spawnChance": 10
       }
     ]
   }
