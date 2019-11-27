@@ -77,7 +77,7 @@
         {
             this.Personality = Personality.Aggresive;
             this.Age = new Random().Next(18, 30);
-            this.ReactionTime = 0.5f;
+            this.ReactionTime = 0.05f;
         }
     }
 }
