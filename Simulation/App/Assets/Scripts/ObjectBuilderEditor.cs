@@ -204,6 +204,10 @@ public class ObjectBuilderEditor : Editor
             SimulationManager.RoadManager.spawnWeightsSetting[i] = EditorGUILayout.Slider($"{SpawnManager.spawnTypes[i]}:", SimulationManager.RoadManager.spawnWeightsSetting[i], 0f, 1f);
         }
 
+        GUILayout.Space(10);
+
+        SimulationManager.JunctionManager.ifLightsSetting = EditorGUILayout.Toggle("Lights on next junction:", SimulationManager.JunctionManager.ifLightsSetting);
+
         GUILayout.Space(20);
     }
 }
