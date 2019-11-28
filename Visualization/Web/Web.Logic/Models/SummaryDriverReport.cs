@@ -46,12 +46,11 @@ namespace Web.Logic.Models
                     .OrderByDescending(i => i.Count())
                     .Select(t => t.Key).FirstOrDefault();
                 var ageAvg = group.Select(x => x.AvgAge).Average();
-                var speedAvg = group.Select(x => x.AvgSpeed).Average();
+                var speedAvg = group.Select(x => x.AvgSpeed).Average() * 3.6f;
                 var ReactionTimeAvg = group.Select(x => x.AvgReactionTime).Average();
                 double doubleAverageTicks = group.Select(x => x.AvgTravelTime).Average(timespan => timespan.Ticks);
                 long longAverageTicks = Convert.ToInt64(doubleAverageTicks);
                 var avgTravelTimeText = new TimeSpan(longAverageTicks).ToString(@"hh\:mm\:ss");
-
 
                 this.DriversByPersonality.Add(group.Key, new DriverStatistics()
                 {

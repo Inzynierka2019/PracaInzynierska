@@ -35,8 +35,8 @@
         "spawnChance": 25
       }
     ],
-    "trafficLightsPeriod": 15.0,
-    "vehicleSpawnFrequency": 5.0,
+    "trafficLightsPeriod": 7.0,
+    "vehicleSpawnFrequency": 2.0,
     "vehicleCountMaximum": 500,
     "vehicleSpawnChances": [
       {
