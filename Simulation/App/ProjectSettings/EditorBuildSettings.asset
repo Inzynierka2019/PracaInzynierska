@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Manhattan.unity
     guid: b91f3e770fb10e8469c26d204f10c49a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Wersal.unity
     guid: 6f828c5795ec7874dab8b386c011ab86
   m_configObjects: {}

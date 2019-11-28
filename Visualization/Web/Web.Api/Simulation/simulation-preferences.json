@@ -12,12 +12,6 @@
       "name": "Manhattan",
       "latitude": 40.7164,
       "longitude": -73.9977
-    },
-    {
-      "scene": "Wersal",
-      "name": "Wersal",
-      "latitude": 48.7996,
-      "longitude": 2.1362
     }
   ],
   "scenePreferences": {
