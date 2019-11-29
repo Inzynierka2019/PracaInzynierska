@@ -9,9 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/MapLoader.unity
     guid: e29b1a62b377b1340b5824e8bea7385c
   - enabled: 1
-    path: Assets/Scenes/TestTrack.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/Wrzeszcz.unity
+    guid: 9a03a13af12036948a584852cc8241b1
   - enabled: 1
-    path: Assets/Scenes/Vatican.unity
-    guid: 16372734e5037a441ad4da5bdd5a0fe4
+    path: Assets/Scenes/Manhattan.unity
+    guid: b91f3e770fb10e8469c26d204f10c49a
+  - enabled: 0
+    path: Assets/Scenes/Wersal.unity
+    guid: 6f828c5795ec7874dab8b386c011ab86
   m_configObjects: {}

@@ -13,8 +13,7 @@ public class Junction : MonoBehaviour, ISelectable
     [SerializeField] Material idleMat;
     [SerializeField] Material selectedMat;
 
-    [HideInInspector]
-    public static float trafficLightsPeriod = 1f;
+    public bool ifLights;
 
     //[HideInInspector]
     public List<Road> entries = new List<Road>();
@@ -105,7 +104,7 @@ public class Junction : MonoBehaviour, ISelectable
 
     private IEnumerator TrafficLightsControlerCoroutine()
     {
-        if (entries.Count > 0)
+        if (this.ifLights && entries.Count > 0)
         {
             int entryRoadIndex = 0;
             while (Application.isPlaying)
@@ -115,7 +114,7 @@ public class Junction : MonoBehaviour, ISelectable
 
                 entryRoadIndex = (entryRoadIndex + 1) % entries.Count();
 
-                yield return new WaitForSeconds(5f);
+                yield return new WaitForSeconds(SimulationManager.ScenePreference.trafficLightsPeriod);
             }
         }
     }

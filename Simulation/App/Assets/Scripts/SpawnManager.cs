@@ -13,7 +13,9 @@ public class SpawnManager : MonoBehaviour
         "Osiedle",
         "Praca",
         "Sklepy",
-        "Atrakcje"
+        "Szkoły",
+        "Atrakcje",
+        "Wyjazd"
     };
 
     public static readonly int spawnTypeCount = spawnTypes.Length;
@@ -30,15 +32,23 @@ public class SpawnManager : MonoBehaviour
             name = n;
             spawnType = Array.IndexOf(spawnTypes, spawnName);
             targetType = Array.IndexOf(spawnTypes, targetName);
-            routeTypeWeight = 1f;
+            routeTypeWeight = 0f;
         }
     }
 
     public static readonly RouteType[] RouteTypes =
     {
         new RouteType("Do pracy", "Osiedle", "Praca"),
-        new RouteType("Na zakupy", "Osiedle", "Sklepy"),
-        new RouteType("Turystycznie", "Osiedle", "Atrakcje")
+        new RouteType("Z pracy", "Praca", "Osiedle"),
+        new RouteType("Do pracy przez szkołę", "Osiedle", "Szkoły"),
+        new RouteType("Do pracy przez szkołę", "Szkoły", "Praca"),
+        new RouteType("Z pracy przez szkołę", "Praca", "Szkoły"),
+        new RouteType("Z pracy przez szkołę", "Szkoły", "Osiedle"),
+        new RouteType("Zakupy", "Osiedle", "Sklepy"),
+        new RouteType("Zakupy", "Sklepy", "Osiedle"),
+        new RouteType("Turystycznie", "Wyjazd", "Atrakcje"),
+        new RouteType("Turystycznie", "Atrakcje", "Wyjazd"),
+        new RouteType("Przejazdem", "Wyjazd", "Wyjazd")
     };
 
     public static readonly int routeTypeCount = RouteTypes.Length;
@@ -47,7 +57,7 @@ public class SpawnManager : MonoBehaviour
     List<float>[] distributions;
     float[] weightSums;
 
-    float[] routeTypeWeights = Enumerable.Repeat(1f, routeTypeCount).ToArray();
+    float[] routeTypeWeights = Enumerable.Repeat(0f, routeTypeCount).ToArray();
     float routeTypeWeightsSum = routeTypeCount;
     float spawnPeriod = 1f;
     int vehicleCountMaximum;
@@ -70,28 +80,30 @@ public class SpawnManager : MonoBehaviour
 
     public void SetParameters(ScenePreference scenePreference)
     {
-        if (scenePreference.vehicleSpawnChances.Count != routeTypeCount)
-            Debug.LogError("There is different number of declared route types and incoming parameters.");
-
-        routeTypeWeightsSum = 0f;
-        int index = 0;
-
-        foreach (var routeType in SpawnManager.RouteTypes)
+        foreach (VehicleSpawnChance vsc in scenePreference.vehicleSpawnChances)
         {
-            var spawnOption = scenePreference.vehicleSpawnChances.Where(x => x.routeType == routeType.name).FirstOrDefault();
-            if(spawnOption != null)
+            RouteType[] selectedRoutes = RouteTypes.Where(rt => rt.name == vsc.routeType).ToArray();
+            int selectedCount = selectedRoutes.Length;
+            if (selectedCount > 0)
             {
-                routeType.routeTypeWeight = spawnOption.spawnChance / 100.0f;
-                this.routeTypeWeights[index] = routeType.routeTypeWeight;
-                routeTypeWeightsSum += routeTypeWeights[index];
-                index++;
+                foreach(var rt in selectedRoutes)
+                {
+                    rt.routeTypeWeight = (float)vsc.spawnChance / selectedCount;
+                }
             }
             else
             {
                 Debug.LogError("Could not find route type specified in configuration.");
-                Debug.LogError($"Route type name is '{routeType.name}'.");
+                Debug.LogError($"Route type name is '{vsc.routeType}'.");
             }
-        };
+        }
+
+        routeTypeWeightsSum = 0f;
+        for(int i = 0; i < routeTypeCount; i++)
+        {
+            routeTypeWeights[i] = RouteTypes[i].routeTypeWeight;
+            routeTypeWeightsSum += routeTypeWeights[i];
+        }
 
         this.spawnPeriod = 1f / scenePreference.vehicleSpawnFrequency;
         this.vehicleCountMaximum = scenePreference.vehicleCountMaximum;
@@ -104,10 +116,20 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(Spawning());
     }
 
-    Node ChooseNode(int spawnType)
+    Road ChooseRoad(int spawnType, Road disqualifiedRoad = null)
     {
-        float threshold = Random.Range(0, weightSums[spawnType]);
-        return SimulationManager.RoadManager.roads.ElementAt(distributions[spawnType].FindIndex(0, p => p > threshold)).GetRandomNode();
+        Road result = null;
+        for(int tries = 0; tries < 10; tries++)
+        {
+            float threshold = Random.Range(0, weightSums[spawnType]);
+            int index = distributions[spawnType].FindIndex(p => p > threshold);
+            if (index < 0)
+                return null;
+            result = SimulationManager.RoadManager.roads.ElementAt(index);
+            if (result != disqualifiedRoad)
+                break;
+        }
+        return result;
     }
 
     RouteType ChooseRouteType()
@@ -130,7 +152,9 @@ public class SpawnManager : MonoBehaviour
             if(vehicleCount < vehicleCountMaximum)
             {
                 RouteType rt = ChooseRouteType();
-                if(SimulationManager.VehicleManager.Create(ChooseNode(rt.spawnType), ChooseNode(rt.targetType), rt.name))
+                Road spawnRoad = ChooseRoad(rt.spawnType);
+                Road targetRoad = ChooseRoad(rt.targetType, spawnRoad);
+                if(SimulationManager.VehicleManager.Create(spawnRoad?.GetRandomNode(), targetRoad?.GetRandomNode(), rt.name))
                     vehicleCount++;
             }
         }

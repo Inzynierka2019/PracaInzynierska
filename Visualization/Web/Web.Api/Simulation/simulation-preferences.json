@@ -1,17 +1,17 @@
 {
-  "currentSceneName": "Politechnika Gdańska",
+  "currentSceneName": "Gdańsk Wrzeszcz",
   "availableScenes": [
     {
-      "scene": "TestTrack",
-      "name": "Politechnika Gdańska",
-      "latitude": 54.373189,
-      "longitude": 18.609265
+      "scene": "Wrzeszcz",
+      "name": "Gdańsk Wrzeszcz",
+      "latitude": 54.3773,
+      "longitude": 18.6073
     },
     {
-      "scene": "Vatican",
-      "name": "Watykan",
-      "latitude": 41.90217,
-      "longitude": 12.453936
+      "scene": "Manhattan",
+      "name": "Manhattan",
+      "latitude": 40.7164,
+      "longitude": -73.9977
     }
   ],
   "scenePreferences": {
@@ -29,21 +29,37 @@
         "spawnChance": 25
       }
     ],
-    "trafficLightsPeriod": 5.0,
+    "trafficLightsPeriod": 15.0,
     "vehicleSpawnFrequency": 5.0,
-    "vehicleCountMaximum": 90,
+    "vehicleCountMaximum": 500,
     "vehicleSpawnChances": [
       {
         "routeType": "Do pracy",
-        "spawnChance": 50
+        "spawnChance": 30
       },
       {
-        "routeType": "Na zakupy",
-        "spawnChance": 25
+        "routeType": "Z pracy",
+        "spawnChance": 5
+      },
+      {
+        "routeType": "Do pracy przez szkołę",
+        "spawnChance": 30
+      },
+      {
+        "routeType": "Z pracy przez szkołę",
+        "spawnChance": 5
+      },
+      {
+        "routeType": "Zakupy",
+        "spawnChance": 10
       },
       {
         "routeType": "Turystycznie",
-        "spawnChance": 25
+        "spawnChance": 10
+      },
+      {
+        "routeType": "Przejazdem",
+        "spawnChance": 10
       }
     ]
   }

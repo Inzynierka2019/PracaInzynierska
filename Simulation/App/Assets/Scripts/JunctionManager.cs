@@ -11,6 +11,9 @@ public class JunctionManager : MonoBehaviour
 
     GameObject prefab;
 
+    [HideInInspector]
+    public bool ifLightsSetting = true;
+
     void Awake()
     {
         junctions = new List<Junction>(GetComponentsInChildren<Junction>());
@@ -21,7 +24,7 @@ public class JunctionManager : MonoBehaviour
     public Junction Create(Vector3 position, Junction predecessor = null)
     {
         Junction newJunction = Instantiate(prefab, position, Quaternion.identity, transform).GetComponent<Junction>();
-
+        newJunction.ifLights = ifLightsSetting;
         
         if(predecessor != null)
         {
