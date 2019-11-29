@@ -2,23 +2,40 @@
 
 public class MyCamera : MonoBehaviour
 {
-    public float zoomSpeed = 2f;
-    public float dragSpeed = 6f;
+    [SerializeField] float zoomSpeed;
+    [SerializeField] float maxZoom;
+
     private float zoom = 0f;
+    Vector2 oldPosition;
+
+    Camera camera;
 
     private void Awake()
     {
-        zoom = GetComponent<Camera>().orthographicSize;
+        camera = GetComponent<Camera>();
+        zoom = camera.orthographicSize;
+        oldPosition = camera.ScreenToViewportPoint(Input.mousePosition);
     }
 
     void Update()
     {
-        if (Input.GetMouseButton(2))
+        if (Input.GetMouseButtonDown(0))
         {
-            transform.Translate(-Input.GetAxisRaw("Mouse X") * Time.deltaTime * dragSpeed, -Input.GetAxisRaw("Mouse Y") * Time.deltaTime * dragSpeed, 0);
+            oldPosition = camera.ScreenToViewportPoint(Input.mousePosition);
         }
 
-        zoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+        if (Input.GetMouseButton(0))
+        {
+            Vector2 newPosition = camera.ScreenToViewportPoint(Input.mousePosition);
+            transform.Translate(camera.ViewportToWorldPoint(oldPosition) - camera.ViewportToWorldPoint(newPosition));
+            oldPosition = newPosition;
+        }
+
+        zoom -= Input.mouseScrollDelta.y * zoomSpeed;
+        if(zoom < maxZoom)
+        {
+            zoom = maxZoom;
+        }
         GetComponent<Camera>().orthographicSize = zoom;
     }
 }
