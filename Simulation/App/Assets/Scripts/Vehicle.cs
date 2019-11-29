@@ -183,7 +183,7 @@ public class Vehicle : MonoBehaviour
                 var newPath =
                     current.Value.Item1 +
                     (1f / interconnection.weight) +
-                    Vector3.Distance(current.Key.transform.position, interconnection.node.transform.position);
+                    Vector3.Distance(current.Key.transform.position, target.transform.position);
 
                 if (!open.ContainsKey(interconnection.node) || open[interconnection.node].Item1 + open[interconnection.node].Item2 > newPath)
                 {
