@@ -8,7 +8,7 @@ class SimulationBuilder
         return new string[] {
             "Assets/Scenes/MapLoader.unity",
             "Assets/Scenes/Manhattan.unity",
-            "Assets/Scenes/Wrzeszcz.unity",
+            "Assets/Scenes/Wrzeszcz.unity"
         };
     }
 
